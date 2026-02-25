@@ -1,43 +1,69 @@
 #!/bin/bash
 
+# ============================================
+# OSINT.AI - PM2 Start Script
+# Author: Suleyman Akmuhammedow
+# ============================================
+
+APP_NAME="suleyman-osint"
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Colors
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+echo -e "${CYAN}"
 echo "╔══════════════════════════════════════════════════════════════╗"
-echo "║                    OSINT.AI - Starting...                     ║"
-echo "║         AI-Assisted OSINT Tools for Cybersecurity             ║"
+echo "║                    OSINT.AI Tools                             ║"
+echo "║         Author: Suleyman Akmuhammedow                         ║"
 echo "╚══════════════════════════════════════════════════════════════╝"
-echo ""
+echo -e "${NC}"
 
-# Check if node_modules exist
-if [ ! -d "backend/node_modules" ]; then
-    echo "Installing backend dependencies..."
-    cd backend && npm install && cd ..
+# Check pm2
+if ! command -v pm2 &> /dev/null; then
+    echo -e "${YELLOW}Installing pm2 globally...${NC}"
+    npm install -g pm2
 fi
 
-if [ ! -d "frontend/node_modules" ]; then
-    echo "Installing frontend dependencies..."
-    cd frontend && npm install && cd ..
+# Install dependencies if needed
+if [ ! -d "$SCRIPT_DIR/backend/node_modules" ]; then
+    echo -e "${YELLOW}Installing backend dependencies...${NC}"
+    cd "$SCRIPT_DIR/backend" && npm install
 fi
 
-# Start backend in background
-echo "Starting backend server..."
-cd backend && npm start &
-BACKEND_PID=$!
+if [ ! -d "$SCRIPT_DIR/frontend/node_modules" ]; then
+    echo -e "${YELLOW}Installing frontend dependencies...${NC}"
+    cd "$SCRIPT_DIR/frontend" && npm install
+fi
 
-# Wait for backend to start
-sleep 2
+# Stop existing processes
+pm2 delete "${APP_NAME}-backend" 2>/dev/null
+pm2 delete "${APP_NAME}-frontend" 2>/dev/null
+
+# Start backend
+echo -e "${GREEN}Starting backend on port 7003...${NC}"
+cd "$SCRIPT_DIR/backend"
+pm2 start npm --name "${APP_NAME}-backend" -- start
 
 # Start frontend
-echo "Starting frontend..."
-cd ../frontend && npm run dev &
-FRONTEND_PID=$!
+echo -e "${GREEN}Starting frontend on port 7004...${NC}"
+cd "$SCRIPT_DIR/frontend"
+pm2 start npm --name "${APP_NAME}-frontend" -- run dev
+
+pm2 save --force 2>/dev/null
 
 echo ""
-echo "═══════════════════════════════════════════════════════════════"
-echo "  Backend:  http://localhost:3000"
-echo "  Frontend: http://localhost:5173"
-echo "═══════════════════════════════════════════════════════════════"
-echo ""
-echo "Press Ctrl+C to stop all servers"
+echo -e "${GREEN}"
+echo "╔══════════════════════════════════════════════════════════════╗"
+echo "║  Application is running with PM2!                            ║"
+echo "║                                                              ║"
+echo "║  Frontend: http://localhost:7004                             ║"
+echo "║  Backend:  http://localhost:7003                             ║"
+echo "║                                                              ║"
+echo "║  PM2: pm2 status | pm2 logs | pm2 stop all                   ║"
+echo "╚══════════════════════════════════════════════════════════════╝"
+echo -e "${NC}"
 
-# Wait for user interrupt
-trap "kill $BACKEND_PID $FRONTEND_PID 2>/dev/null; exit" INT
-wait
+pm2 status

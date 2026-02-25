@@ -3,7 +3,7 @@ const cors = require('cors')
 const analyzeRoutes = require('./routes/analyze')
 
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 7003
 
 // Middleware
 app.use(cors())

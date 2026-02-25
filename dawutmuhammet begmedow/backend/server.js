@@ -4,7 +4,7 @@ const crypto = require('crypto')
 const { v4: uuidv4 } = require('uuid')
 
 const app = express()
-const PORT = 3000
+const PORT = 7007
 
 app.use(cors())
 app.use(express.json())
