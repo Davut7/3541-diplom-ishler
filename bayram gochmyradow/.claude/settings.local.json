@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod:*)",
+      "Bash(npm install)",
+      "Bash(pip3 install:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(npm install:*)",
+      "Bash(open:*)",
+      "Bash(pkill:*)",
+      "Bash(bash:*)",
+      "Bash(curl:*)",
+      "Bash(./start.sh)",
+      "Bash(npx vite --port 3000)",
+      "Bash(yarn install)",
+      "Bash(yarn dev --port 3000)",
+      "Bash(timeout 5 node:*)",
+      "Bash(npm run build:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill:*)"
+    ]
+  }
+}
