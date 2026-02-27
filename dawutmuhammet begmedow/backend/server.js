@@ -74,7 +74,7 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'VirusDetect Pro API running', version: '1.0.0' })
 })
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`
 ╔══════════════════════════════════════════════════════════════╗
 ║              VirusDetect Pro Backend Server                   ║

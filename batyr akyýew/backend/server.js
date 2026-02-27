@@ -432,7 +432,7 @@ app.post('/api/test-attack', (req, res) => {
 })
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`
 ╔══════════════════════════════════════════════════════════════╗
 ║       WAF with Behavioral Analysis - Backend Server          ║

@@ -11,7 +11,9 @@
       "Bash(find:*)",
       "Bash(xargs:*)",
       "Bash(chmod:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(ipconfig getifaddr:*)",
+      "Bash(ip route:*)"
     ]
   }
 }
