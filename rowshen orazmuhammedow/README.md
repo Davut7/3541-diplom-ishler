@@ -137,4 +137,4 @@ Vue.js bilen frontend, Node.js bilen backend döredildi. Windows proses gözegç
 
 ---
 
-© 2024 Rowshen Orazmuhammedow - Diplom Taslamasy
+© 2026 Rowshen Orazmuhammedow - Diplom Taslamasy

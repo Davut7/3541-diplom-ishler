@@ -31,7 +31,7 @@
     </main>
 
     <footer class="app-footer">
-      <p>&copy; 2024 VirusDetect Pro - {{ t.footer.diploma }}</p>
+      <p>&copy; 2026 VirusDetect Pro - {{ t.footer.diploma }}</p>
       <p>{{ t.footer.author }}: Dawutmuhammet Begmedow</p>
     </footer>
   </div>

@@ -25,6 +25,10 @@
           <i class="pi pi-play"></i>
           {{ t.nav.simulator }}
         </router-link>
+        <router-link to="/statistics" class="nav-link">
+          <i class="pi pi-chart-bar"></i>
+          {{ t.nav.statistics }}
+        </router-link>
         <router-link to="/how-it-works" class="nav-link">
           <i class="pi pi-question-circle"></i>
           {{ t.nav.howItWorks }}
@@ -51,7 +55,7 @@
     </main>
 
     <footer class="app-footer">
-      <p>&copy; 2024 GAN Security - {{ t.footer.diploma }}</p>
+      <p>&copy; 2026 GAN Security - {{ t.footer.diploma }}</p>
       <p>{{ t.footer.author }}: Selbi Weliýewa</p>
     </footer>
   </div>

@@ -94,4 +94,4 @@ Vue.js bilen frontend, Node.js bilen backend döretdim. Faýl derňewi üçin ha
 
 ---
 
-© 2024 Dawutmuhammet Begmedow - Diplom Taslamasy
+© 2026 Dawutmuhammet Begmedow - Diplom Taslamasy

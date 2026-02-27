@@ -4,6 +4,7 @@ export default {
     attacks: 'Hüjümler',
     defense: 'Gorag',
     simulator: 'Simulýator',
+    statistics: 'Statistika',
     howItWorks: 'Nähili işleýär',
     about: 'Hakynda'
   },
@@ -149,6 +150,24 @@ export default {
       success: 'Hüjüm üstünligi',
       detected: 'Gorag tapdy'
     }
+  },
+  statistics: {
+    title: 'GAN Howpsuzlyk Statistikasy',
+    subtitle: 'Hüjümleriň, goraglaryň we olaryň netijeliliginiň wizual derňewi',
+    attackEffectiveness: 'Hüjüm Üstünlik Derejesi',
+    defenseEffectiveness: 'Gorag Netijeliligi',
+    riskDistribution: 'Howp Paýlanyşy',
+    timeline: 'GAN Howpsuzlyk Senenamalary (2019-2026)',
+    comparisonTable: 'Hüjüm we Gorag Deňeşdirmesi',
+    keyInsights: 'Möhüm Netijeler',
+    totalAttacks: 'Hüjüm Görnüşleri',
+    totalDefenses: 'Gorag Usullary',
+    avgEffectiveness: 'Ort. Netijelilik',
+    criticalRisks: 'Howply Ýagdaýlar',
+    attack: 'Hüjüm',
+    riskLevel: 'Howp Derejesi',
+    bestDefense: 'Iň Gowy Gorag',
+    effectiveness: 'Netijelilik'
   },
   howItWorks: {
     title: 'GAN-lar we Hüjümler Nähili Işleýär',

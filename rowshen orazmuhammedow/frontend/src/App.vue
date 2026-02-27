@@ -27,7 +27,7 @@
       <router-view :t="t" :language="language" />
     </main>
     <footer class="app-footer">
-      <p>&copy; 2024 Rowshen Orazmuhammedow - Diploma Project</p>
+      <p>&copy; 2026 Rowshen Orazmuhammedow - Diploma Project</p>
     </footer>
   </div>
 </template>

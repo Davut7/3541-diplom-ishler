@@ -73,7 +73,7 @@
           <router-link to="/about">{{ t('nav.about') }}</router-link>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2024 Android Security Analyzer. {{ t('footer.rights') }}</p>
+          <p>&copy; 2026 Android Security Analyzer. {{ t('footer.rights') }}</p>
           <p class="disclaimer">{{ t('footer.disclaimer') }}</p>
         </div>
       </div>

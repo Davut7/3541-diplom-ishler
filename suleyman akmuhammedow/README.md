@@ -132,14 +132,14 @@ npm install
 ```bash
 cd backend
 npm start
-# Server: http://localhost:3000
+# Server: http://localhost:7003
 ```
 
 ### Frontend development server
 ```bash
 cd frontend
 npm run dev
-# App: http://localhost:5173
+# App: http://localhost:7004
 ```
 
 ### Production build
@@ -247,4 +247,4 @@ It helps cybersecurity professionals assess system security. By identifying open
 Bu taslama bilim maksatlary üçin döredildi.
 This project was created for educational purposes.
 
-© 2024 Süleýman Akmuhammedow - Diplom Taslamasy / Diploma Project
+© 2026 Süleýman Akmuhammedow - Diplom Taslamasy / Diploma Project

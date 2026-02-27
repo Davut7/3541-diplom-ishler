@@ -361,7 +361,7 @@ router.get('/demo', (req, res) => {
     whois: {
       registrar: 'RESERVED-Internet Assigned Numbers Authority',
       created: '1995-08-14',
-      expires: '2024-08-13'
+      expires: '2026-08-13'
     },
     issues: [],
     warnings: ['Standard web ports are open'],

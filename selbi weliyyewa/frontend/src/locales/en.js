@@ -4,6 +4,7 @@ export default {
     attacks: 'Attacks',
     defense: 'Defense',
     simulator: 'Simulator',
+    statistics: 'Statistics',
     howItWorks: 'How It Works',
     about: 'About'
   },
@@ -149,6 +150,24 @@ export default {
       success: 'Attack Success',
       detected: 'Defense Detected'
     }
+  },
+  statistics: {
+    title: 'GAN Security Statistics',
+    subtitle: 'Visual analysis of attacks, defenses, and their effectiveness',
+    attackEffectiveness: 'Attack Success Rate',
+    defenseEffectiveness: 'Defense Effectiveness',
+    riskDistribution: 'Risk Distribution',
+    timeline: 'GAN Security Timeline (2019-2026)',
+    comparisonTable: 'Attack vs Defense Comparison',
+    keyInsights: 'Key Insights',
+    totalAttacks: 'Attack Types',
+    totalDefenses: 'Defense Methods',
+    avgEffectiveness: 'Avg. Effectiveness',
+    criticalRisks: 'Critical Risks',
+    attack: 'Attack',
+    riskLevel: 'Risk Level',
+    bestDefense: 'Best Defense',
+    effectiveness: 'Effectiveness'
   },
   howItWorks: {
     title: 'How GANs and Attacks Work',

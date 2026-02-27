@@ -1,69 +1,37 @@
 #!/bin/bash
 
 # ============================================
-# VirusDetect Pro - PM2 Start Script
+# VirusDetect Pro - Desktop Application
 # Author: Dawutmuhammet Begmedow
 # ============================================
 
-APP_NAME="dawut-virus-detect"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Colors
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m'
-
-echo -e "${RED}"
 echo "╔══════════════════════════════════════════════════════════════╗"
-echo "║              VirusDetect Pro                                  ║"
-echo "║         Author: Dawutmuhammet Begmedow                        ║"
+echo "║       VirusDetect Pro - Desktop Application                  ║"
+echo "║           Author: Dawutmuhammet Begmedow                     ║"
 echo "╚══════════════════════════════════════════════════════════════╝"
-echo -e "${NC}"
+echo ""
 
-# Check pm2
-if ! command -v pm2 &> /dev/null; then
-    echo -e "${YELLOW}Installing pm2 globally...${NC}"
-    npm install -g pm2
+# Install root dependencies (Electron)
+if [ ! -d "$SCRIPT_DIR/node_modules" ]; then
+    echo "Installing Electron dependencies..."
+    cd "$SCRIPT_DIR" && npm install --cache /tmp/npm-cache
 fi
 
-# Install dependencies if needed
-if [ ! -d "$SCRIPT_DIR/backend/node_modules" ]; then
-    echo -e "${YELLOW}Installing backend dependencies...${NC}"
-    cd "$SCRIPT_DIR/backend" && npm install
-fi
-
+# Install frontend dependencies
 if [ ! -d "$SCRIPT_DIR/frontend/node_modules" ]; then
-    echo -e "${YELLOW}Installing frontend dependencies...${NC}"
-    cd "$SCRIPT_DIR/frontend" && npm install
+    echo "Installing frontend dependencies..."
+    cd "$SCRIPT_DIR/frontend" && npm install --cache /tmp/npm-cache
 fi
-
-# Stop existing processes
-pm2 delete "${APP_NAME}-backend" 2>/dev/null
-pm2 delete "${APP_NAME}-frontend" 2>/dev/null
-
-# Start backend
-echo -e "${GREEN}Starting backend on port 7007...${NC}"
-cd "$SCRIPT_DIR/backend"
-pm2 start npm --name "${APP_NAME}-backend" -- start
-
-# Start frontend
-echo -e "${GREEN}Starting frontend on port 7008...${NC}"
-cd "$SCRIPT_DIR/frontend"
-pm2 start npm --name "${APP_NAME}-frontend" -- run dev
-
-pm2 save --force 2>/dev/null
 
 echo ""
-echo -e "${GREEN}"
 echo "╔══════════════════════════════════════════════════════════════╗"
-echo "║  Application is running with PM2!                            ║"
-echo "║                                                              ║"
-echo "║  Frontend: http://localhost:7008                             ║"
-echo "║  Backend:  http://localhost:7007                             ║"
-echo "║                                                              ║"
-echo "║  PM2: pm2 status | pm2 logs | pm2 stop all                   ║"
+echo "║  Starting VirusDetect Pro Desktop App...                     ║"
+echo "║  Frontend Dev Server: http://localhost:7008                  ║"
+echo "║  Press Ctrl+C to stop                                        ║"
 echo "╚══════════════════════════════════════════════════════════════╝"
-echo -e "${NC}"
+echo ""
 
-pm2 status
+# Start in development mode
+cd "$SCRIPT_DIR" && npm run dev

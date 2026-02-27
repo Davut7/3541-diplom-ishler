@@ -6,7 +6,7 @@ const fs = require('fs');
 const analyzeRoutes = require('./routes/analyze');
 
 const app = express();
-const PORT = process.env.PORT || 7001;
+const PORT = process.env.PORT || 4002;
 
 // Middleware
 app.use(cors());

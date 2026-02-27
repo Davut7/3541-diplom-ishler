@@ -19,12 +19,39 @@ export const translations = {
     },
     scan: {
       title: 'File Scanner',
-      subtitle: 'Upload a file or analyze a hash to detect hidden malware',
+      subtitle: 'Scan files for malware using advanced detection techniques',
       uploadFile: 'Upload File',
-      dropzone: 'Drag & drop files here or click to upload',
+      dropzone: 'Select a File to Scan',
+      clickOrDrag: 'Click to browse or drag & drop',
+      scanFolder: 'Scan Entire Folder',
+      selectFolder: 'Select folder to scan all files',
       scanning: 'Scanning...',
-      results: { title: 'Scan Results', fileName: 'File Name', fileSize: 'File Size', hash: 'SHA-256 Hash', status: 'Status', threatLevel: 'Threat Level', details: 'Details' },
-      status: { clean: 'Clean', suspicious: 'Suspicious', malware: 'Malware Detected', unknown: 'Unknown' }
+      folderResults: 'Folder Scan Results',
+      scannedFiles: 'Files scanned',
+      openLocation: 'Open Location',
+      saveReport: 'Save to History',
+      settings: 'Settings',
+      results: {
+        title: 'Scan Results',
+        fileName: 'File Name',
+        fileSize: 'File Size',
+        fileType: 'File Type',
+        hash: 'SHA-256 Hash',
+        hashes: 'File Hashes',
+        entropy: 'Entropy',
+        status: 'Status',
+        threatLevel: 'Threat Level',
+        threatScore: 'Threat Score',
+        details: 'Details',
+        suspiciousPatterns: 'Suspicious Patterns Detected'
+      },
+      status: {
+        clean: 'Clean',
+        suspicious: 'Suspicious',
+        malware: 'Malware Detected',
+        potentially_unwanted: 'Potentially Unwanted',
+        unknown: 'Unknown'
+      }
     },
     techniques: {
       title: 'Evasion Techniques & Detection',
@@ -39,28 +66,42 @@ export const translations = {
         sandboxEvasion: { title: 'Sandbox Evasion', desc: 'Detects analysis environments and delays execution', detection: 'Multiple environment simulation and timing analysis' }
       }
     },
-    history: { title: 'Scan History', subtitle: 'View your previous scan results', empty: 'No scan history yet', columns: { file: 'File', status: 'Status', date: 'Date', actions: 'Actions' } },
+    history: {
+      title: 'Scan History',
+      subtitle: 'View your previous scan results',
+      empty: 'No scan history yet. Scan a file to get started!',
+      clearHistory: 'Clear History',
+      columns: { file: 'File', status: 'Status', date: 'Date', threat: 'Threat', actions: 'Actions' }
+    },
     howItWorks: {
       title: 'How Detection Works',
       subtitle: 'Understanding our multi-layer detection approach',
       steps: {
-        step1: { title: 'File Upload', desc: 'User uploads suspicious file for analysis' },
-        step2: { title: 'Static Analysis', desc: 'Examine file structure, entropy, and embedded strings' },
-        step3: { title: 'Dynamic Analysis', desc: 'Execute in sandbox and monitor behavior' },
-        step4: { title: 'AI Analysis', desc: 'Machine learning models classify the sample' },
-        step5: { title: 'Report Generation', desc: 'Comprehensive threat report is generated' }
+        step1: { title: 'File Selection', desc: 'User selects file or folder for analysis' },
+        step2: { title: 'Hash Calculation', desc: 'Calculate MD5, SHA1, SHA256 file fingerprints' },
+        step3: { title: 'Entropy Analysis', desc: 'Detect packed or encrypted content' },
+        step4: { title: 'Pattern Scanning', desc: 'Search for suspicious strings and API calls' },
+        step5: { title: 'VirusTotal Check', desc: 'Query against 70+ antivirus engines' }
       },
       faq: {
         q1: { question: 'Why cant traditional antivirus detect all malware?', answer: 'Traditional antivirus relies on signature databases. New malware or variants without known signatures can evade detection.' },
-        q2: { question: 'What is heuristic analysis?', answer: 'Heuristic analysis examines code behavior and patterns to identify suspicious activities, even without a known signature.' },
-        q3: { question: 'What is behavioral detection?', answer: 'Behavioral detection monitors how a file behaves when executed, looking for malicious actions like file encryption or network connections.' },
-        q4: { question: 'How does AI help in malware detection?', answer: 'AI models are trained on millions of samples to recognize patterns and can identify new malware variants that humans might miss.' }
+        q2: { question: 'What is entropy analysis?', answer: 'Entropy measures the randomness of data. High entropy indicates compression or encryption, often used by malware to hide its payload.' },
+        q3: { question: 'What is VirusTotal?', answer: 'VirusTotal is a service that aggregates results from 70+ antivirus engines. We use their API to check file hashes against known malware.' },
+        q4: { question: 'What patterns do you detect?', answer: 'We scan for suspicious strings like PowerShell commands, registry modifications, network functions, and known malware signatures.' }
       }
     },
     about: {
       title: 'About VirusDetect Pro',
-      subtitle: 'Advanced Malware Detection System',
-      description: 'This project demonstrates advanced techniques for detecting malware that evades traditional antivirus solutions using heuristic analysis, behavioral detection, and AI.',
+      subtitle: 'Advanced Malware Detection Desktop Application',
+      description: 'This desktop application provides real malware detection capabilities including file hash calculation, entropy analysis, pattern detection, and VirusTotal integration.',
+      features: [
+        'Real SHA256/MD5/SHA1 hash calculation',
+        'Entropy analysis for packed file detection',
+        'Suspicious pattern scanning',
+        'VirusTotal API integration',
+        'Folder scanning support',
+        'Persistent scan history'
+      ],
       author: { title: 'Author', name: 'Dawutmuhammet Begmedow', project: 'Diploma Project', topic: 'Detecting viruses that evade antivirus detection', topicTk: 'Antiwiruslaryň anyklamasyndan gaçýan wirusleri anyklamak we seljermek' }
     }
   },
@@ -84,12 +125,39 @@ export const translations = {
     },
     scan: {
       title: 'Faýl Skaner',
-      subtitle: 'Gizlin zyýanly programmany anyklamak üçin faýl ýükläň',
+      subtitle: 'Ösen anyklaýyş usullaryny ulanyp faýllary skanirläň',
       uploadFile: 'Faýl ýükle',
-      dropzone: 'Faýllary şu ýere süýräň ýa-da ýüklemek üçin basyň',
+      dropzone: 'Skanirlemek üçin faýl saýlaň',
+      clickOrDrag: 'Basmak ýa-da süýräp goýmak',
+      scanFolder: 'Bütin Bukjany Skanirle',
+      selectFolder: 'Ähli faýllary skanirlemek üçin bukja saýlaň',
       scanning: 'Skanirlenýär...',
-      results: { title: 'Skan Netijeleri', fileName: 'Faýl Ady', fileSize: 'Faýl Ölçegi', hash: 'SHA-256 Hash', status: 'Ýagdaý', threatLevel: 'Howp Derejesi', details: 'Jikme-jiklikler' },
-      status: { clean: 'Arassa', suspicious: 'Şübheli', malware: 'Zyýanly Programma Tapyldy', unknown: 'Näbelli' }
+      folderResults: 'Bukja Skan Netijeleri',
+      scannedFiles: 'Skanirlen faýllar',
+      openLocation: 'Ýerleşýän ýerini aç',
+      saveReport: 'Taryha ýatda sakla',
+      settings: 'Sazlamalar',
+      results: {
+        title: 'Skan Netijeleri',
+        fileName: 'Faýl Ady',
+        fileSize: 'Faýl Ölçegi',
+        fileType: 'Faýl Görnüşi',
+        hash: 'SHA-256 Hash',
+        hashes: 'Faýl Hashlary',
+        entropy: 'Entropiýa',
+        status: 'Ýagdaý',
+        threatLevel: 'Howp Derejesi',
+        threatScore: 'Howp Baly',
+        details: 'Jikme-jiklikler',
+        suspiciousPatterns: 'Şübheli Nagyşlar Tapyldy'
+      },
+      status: {
+        clean: 'Arassa',
+        suspicious: 'Şübheli',
+        malware: 'Zyýanly Programma Tapyldy',
+        potentially_unwanted: 'Potensial Islenilmeýän',
+        unknown: 'Näbelli'
+      }
     },
     techniques: {
       title: 'Gaçmak Usullary we Anyklaýyş',
@@ -104,28 +172,42 @@ export const translations = {
         sandboxEvasion: { title: 'Sandbox Gaçmak', desc: 'Derňew gurşawyny anyklap ýerine ýetirişi gijikdirýär', detection: 'Köp gurşaw simulýasiýasy we wagt derňewi' }
       }
     },
-    history: { title: 'Skan Taryhy', subtitle: 'Öňki skan netijeleriňizi görüň', empty: 'Entek skan taryhy ýok', columns: { file: 'Faýl', status: 'Ýagdaý', date: 'Sene', actions: 'Hereketler' } },
+    history: {
+      title: 'Skan Taryhy',
+      subtitle: 'Öňki skan netijeleriňizi görüň',
+      empty: 'Entek skan taryhy ýok. Başlamak üçin faýl skanirläň!',
+      clearHistory: 'Taryhy arassala',
+      columns: { file: 'Faýl', status: 'Ýagdaý', date: 'Sene', threat: 'Howp', actions: 'Hereketler' }
+    },
     howItWorks: {
       title: 'Anyklaýyş Nähili Işleýär',
       subtitle: 'Köp gatlakly anyklaýyş usulymyza düşünmek',
       steps: {
-        step1: { title: 'Faýl Ýüklemek', desc: 'Ulanyjy şübheli faýly derňew üçin ýükleýär' },
-        step2: { title: 'Statik Derňew', desc: 'Faýl gurluşyny, entropiýany we ýerleşdirilen setirleri barlaýar' },
-        step3: { title: 'Dinamik Derňew', desc: 'Sandboxda ýerine ýetirýär we özüni alyp barşyny gözegçilikde saklaýar' },
-        step4: { title: 'AI Derňewi', desc: 'Maşyn öwreniş modelleri nusgany klassifikasiýalaýar' },
-        step5: { title: 'Hasabat Döretmek', desc: 'Doly howp hasabaty döredilýär' }
+        step1: { title: 'Faýl Saýlamak', desc: 'Ulanyjy derňew üçin faýl ýa-da bukja saýlaýar' },
+        step2: { title: 'Hash Hasaplamak', desc: 'MD5, SHA1, SHA256 faýl barmaklaryny hasaplaýar' },
+        step3: { title: 'Entropiýa Derňewi', desc: 'Gaplanan ýa-da şifrlenen mazmuny anyklaýar' },
+        step4: { title: 'Nagyş Skanirleme', desc: 'Şübheli setirler we API çagyryşlaryny gözleýär' },
+        step5: { title: 'VirusTotal Barlagy', desc: '70+ antiwirus motoryna garşy soraýar' }
       },
       faq: {
         q1: { question: 'Näme üçin adaty antiwirus ähli zyýanly programmalary anyklap bilmeýär?', answer: 'Adaty antiwirus gol maglumat bazalaryna daýanýar. Belli gollary bolmadyk täze zyýanly programmalar ýa-da wariantlar anyklamadan gaçyp biler.' },
-        q2: { question: 'Ewristiki derňew näme?', answer: 'Ewristiki derňew, belli gol bolmasa-da şübheli hereketleri kesgitlemek üçin kod özüni alyp barşyny we nagyşlaryny barlaýar.' },
-        q3: { question: 'Özüni alyp baryş anyklaýjysy näme?', answer: 'Özüni alyp baryş anyklaýjysy faýlyň ýerine ýetirilende nähili özüni alyp barýandygyny gözegçilikde saklaýar, faýl şifrleme ýa-da tor birikmelerini gözleýär.' },
-        q4: { question: 'AI zyýanly programma anyklamakda nähili kömek edýär?', answer: 'AI modelleri nagyşlary tanamak üçin millionlarça nusgada türgenleşdirilýär we adamlaryň sypdyryp biljek täze zyýanly programma wariantlaryny kesgitläp biler.' }
+        q2: { question: 'Entropiýa derňewi näme?', answer: 'Entropiýa maglumatlaryň tötänliligini ölçeýär. Ýokary entropiýa gyşdyrma ýa-da şifrlemäni görkezýär, köplenç zyýanly programmalaryň ýüklerini gizlemek üçin ulanylýar.' },
+        q3: { question: 'VirusTotal näme?', answer: 'VirusTotal 70+ antiwirus motorynyň netijelerini birleşdirýän hyzmatdyr. Faýl hashlaryny belli zyýanly programmalar bilen barlamak üçin olaryň API-sini ulanýarys.' },
+        q4: { question: 'Haýsy nagyşlary anyklaýarsyňyz?', answer: 'PowerShell buýruklary, reestr üýtgeşmeleri, tor funksiýalary we belli zyýanly programma gollary ýaly şübheli setirleri skanirleýäris.' }
       }
     },
     about: {
       title: 'VirusDetect Pro Hakynda',
-      subtitle: 'Ösen Zyýanly Programma Anyklaýyş Ulgamy',
-      description: 'Bu taslama ewristiki derňew, özüni alyp baryş anyklaýjysy we AI ulanyp adaty antiwirus çözgütlerinden gaçýan zyýanly programmalary anyklamak üçin ösen usullary görkezýär.',
+      subtitle: 'Ösen Zyýanly Programma Anyklaýyş Desktop Programmasy',
+      description: 'Bu desktop programmasy faýl hash hasaplamasy, entropiýa derňewi, nagyş anyklaýyş we VirusTotal integrasiýasyny öz içine alýan hakyky zyýanly programma anyklaýyş mümkinçiliklerini üpjün edýär.',
+      features: [
+        'Hakyky SHA256/MD5/SHA1 hash hasaplamasy',
+        'Gaplanan faýl anyklamak üçin entropiýa derňewi',
+        'Şübheli nagyş skanirleme',
+        'VirusTotal API integrasiýasy',
+        'Bukja skanirleme goldawy',
+        'Hemişelik skan taryhy'
+      ],
       author: { title: 'Awtor', name: 'Dawutmuhammet Begmedow', project: 'Diplom Taslamasy', topic: 'Detecting viruses that evade antivirus detection', topicTk: 'Antiwiruslaryň anyklamasyndan gaçýan wirusleri anyklamak we seljermek' }
     }
   }

@@ -62,7 +62,7 @@
 
     <!-- Footer -->
     <footer class="app-footer">
-      <p>&copy; 2024 OSINT.AI - {{ t.footer.diploma }}</p>
+      <p>&copy; 2026 OSINT.AI - {{ t.footer.diploma }}</p>
       <p>{{ t.footer.author }}: Süleýman Akmuhammedow</p>
     </footer>
   </div>
