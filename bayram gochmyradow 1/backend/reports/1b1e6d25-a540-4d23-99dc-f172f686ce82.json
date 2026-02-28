@@ -1,0 +1,70 @@
+{
+  "id": "1b1e6d25-a540-4d23-99dc-f172f686ce82",
+  "originalFileName": "test.apk",
+  "basicInfo": {
+    "fileName": "93746c2d-7c80-4d14-b266-d195ca06ce20-test.apk",
+    "fileSize": 49813338,
+    "fileSizeFormatted": "47.51 MB",
+    "totalFiles": 67,
+    "dexCount": 1,
+    "nativeLibraries": [
+      "libapp.so",
+      "libflutter.so"
+    ],
+    "hasAssets": true,
+    "hasResources": true,
+    "createdAt": "2026-02-27T19:26:38.645Z",
+    "modifiedAt": "2026-02-27T19:26:38.837Z"
+  },
+  "manifest": {
+    "packageName": "Unknown",
+    "versionCode": "Unknown",
+    "versionName": "Unknown",
+    "minSdkVersion": null,
+    "targetSdkVersion": null,
+    "permissions": [],
+    "activities": [],
+    "services": [],
+    "receivers": [],
+    "providers": [],
+    "flags": {
+      "debuggable": false,
+      "allowBackup": false,
+      "hasExportedComponents": false
+    },
+    "exportedComponents": []
+  },
+  "permissions": {
+    "total": 0,
+    "analyzed": [],
+    "byRisk": {
+      "critical": [],
+      "high": [],
+      "medium": [],
+      "low": []
+    },
+    "byCategory": {},
+    "riskScore": {
+      "score": 0,
+      "percentage": 0,
+      "level": "low"
+    }
+  },
+  "security": {
+    "issues": [],
+    "warnings": [],
+    "recommendations": [
+      {
+        "en": "Always download apps from official stores like Google Play.",
+        "tk": "Hemişe programmalary Google Play ýaly resmi dükanlardan ýükläň."
+      },
+      {
+        "en": "Keep your device and apps updated to receive security patches.",
+        "tk": "Howpsuzlyk düzedişlerini almak üçin enjamyňyzy we programmalaryňyzy täzeläň."
+      }
+    ],
+    "overallRisk": "low",
+    "riskScore": 0
+  },
+  "analyzedAt": "2026-02-27T19:26:38.865Z"
+}

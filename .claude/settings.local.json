@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install)",
+      "Bash(timeout 5 npm start)",
+      "Bash(node -c:*)",
+      "Bash(npm run build:*)",
+      "Bash(for dir in \"batyr akyýew 1\" \"bayram gochmyradow 0\" \"daniyar nurmedow 1\" \"dawutmuhammet begmedow 0\" \"rowshen palwanow 0\" \"selbi weliyyewa 1\" \"shanur gulmyradow 0\" \"shatlyk rahmanov 0\" \"suleyman akmuhammedow 0\")",
+      "Bash(do echo \"Checking: $dir\")",
+      "Bash(echo:*)",
+      "Bash(done)",
+      "Bash(npm run dev:*)"
+    ]
+  }
+}

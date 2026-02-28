@@ -1,0 +1,56 @@
+{
+  "name": "keyguard-desktop",
+  "version": "1.0.0",
+  "description": "KeyGuard - Keylogger Detection for Windows/macOS/Linux",
+  "main": "electron/main.js",
+  "author": "Rowshen Orazmuhammedow",
+  "license": "MIT",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "electron": "electron .",
+    "electron:dev": "cross-env NODE_ENV=development electron .",
+    "start": "npm run build && electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux"
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "cross-env": "^7.0.3"
+  },
+  "build": {
+    "appId": "com.keyguard.app",
+    "productName": "KeyGuard",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "electron/**/*",
+      "frontend/dist/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "frontend/public/icon.icns",
+      "target": ["dmg", "zip"]
+    },
+    "win": {
+      "icon": "frontend/public/icon.ico",
+      "target": ["nsis", "portable"]
+    },
+    "linux": {
+      "icon": "frontend/public/icon.png",
+      "target": ["AppImage", "deb"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
