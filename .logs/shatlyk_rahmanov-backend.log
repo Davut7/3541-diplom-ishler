@@ -1,0 +1,17 @@
+
+> ai-firewall-backend@1.0.0 start
+> node server.js
+
+
+╔══════════════════════════════════════════════════════════════╗
+║        AI Firewall - Intelligent Network Protection           ║
+║                    Backend Server v2.0.0                      ║
+╠══════════════════════════════════════════════════════════════╣
+║  Author: Shatlyk Rahmanov                                     ║
+║  AI Model: Deep Neural Network Classifier                    ║
+║  Accuracy: 97.8%                                          ║
+║  Capabilities: 8 threat detection methods                    ║
+╚══════════════════════════════════════════════════════════════╝
+
+Server running on http://localhost:7081
+  

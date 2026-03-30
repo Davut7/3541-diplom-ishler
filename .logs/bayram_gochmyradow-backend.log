@@ -1,0 +1,14 @@
+
+> android-security-analyzer-backend@1.0.0 start
+> node server.js
+
+Database loaded with 7 analyses
+Database initialized successfully
+
+    ╔═══════════════════════════════════════════════════════╗
+    ║     Android Security Analyzer - Backend Server        ║
+    ║                                                       ║
+    ║     Server running on: http://localhost:7021          ║
+    ║     API Health: http://localhost:7021/api/health      ║
+    ╚═══════════════════════════════════════════════════════╝
+            

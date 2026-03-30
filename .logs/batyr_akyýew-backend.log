@@ -1,0 +1,25 @@
+
+> waf-behavioral-backend@2.0.0 start
+> node server.js
+
+Database initialized successfully
+
+╔══════════════════════════════════════════════════════════════╗
+║       WAF with Behavioral Analysis - Backend Server          ║
+║                       Version 2.0.0                          ║
+╠══════════════════════════════════════════════════════════════╣
+║  Author: Batyr Akyýew                                        ║
+║  Database: SQLite (sql.js)                                   ║
+║  Features:                                                   ║
+║    - SQLite Database for persistent storage                  ║
+║    - Real Rate Limiting (100 req/min)                        ║
+║    - IP Geolocation via ip-api.com                           ║
+║    - PDF Security Reports                                    ║
+║    - Email Alerts (configurable)                             ║
+║    - JWT Authentication                                      ║
+║    - Enhanced Behavioral Analysis                            ║
+║    - Auto-generated test data on startup                     ║
+╚══════════════════════════════════════════════════════════════╝
+
+Server running on http://localhost:7011
+    

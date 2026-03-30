@@ -1,0 +1,16 @@
+
+> osint-analyzer-backend@1.0.0 start
+> node server.js
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                    OSINT.AI Backend Server                    ║
+║                         Version 1.0.0                         ║
+╚══════════════════════════════════════════════════════════════╝
+
+Server running on http://localhost:7091
+API endpoints:
+  POST /api/analyze      - Analyze a target (IP or domain)
+  GET  /api/demo         - Get demo analysis data
+  GET  /api/health       - Health check
+  

@@ -1,0 +1,13 @@
+
+> osint-analyzer-frontend@1.0.0 dev
+> vite
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+  VITE v5.4.21  ready in 528 ms
+
+  ➜  Local:   http://localhost:7090/
+  ➜  Network: http://172.20.30.230:7090/
+  ➜  Network: http://192.168.139.3:7090/
+  ➜  Network: http://192.168.215.0:7090/
+  ➜  Network: http://198.18.0.1:7090/

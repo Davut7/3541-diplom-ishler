@@ -1,0 +1,12 @@
+
+> virus-detector-backend@1.0.0 start
+> node server.js
+
+Database loaded with 10 scans
+
+    ╔══════════════════════════════════════════════════════════════╗
+    ║              VirusDetect Pro Backend Server                   ║
+    ║              ☣  Malware Detection API  ☣                     ║
+    ╚══════════════════════════════════════════════════════════════╝
+    Server running on http://localhost:7041
+    

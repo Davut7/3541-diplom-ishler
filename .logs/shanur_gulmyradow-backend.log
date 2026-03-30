@@ -1,0 +1,16 @@
+
+> wireshark-monitor-backend@1.0.0 start
+> node server.js
+
+
+╔══════════════════════════════════════════════════════════════╗
+║           Wireshark Monitor - Backend Server                  ║
+║                      Version 2.0.0                            ║
+╠══════════════════════════════════════════════════════════════╣
+║  Protocols: 12 types                                        ║
+║  Network Hosts: 10 simulated                                  ║
+║  Features: Packet capture, Analysis, Statistics               ║
+╚══════════════════════════════════════════════════════════════╝
+
+Server running on http://localhost:7071
+  

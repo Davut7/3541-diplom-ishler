@@ -1,0 +1,10 @@
+
+> keylogger-detector-backend@1.0.0 start
+> node server.js
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                KeyGuard Backend Server                        ║
+╚══════════════════════════════════════════════════════════════╝
+Server running on http://localhost:7051
+  
