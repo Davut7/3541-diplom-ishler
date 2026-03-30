@@ -1,5 +1,6 @@
 <template>
   <div class="app-container" :class="{ 'dark-mode': isDarkMode }">
+    <DevNavbar />
     <header class="app-header">
       <div class="header-content">
         <div class="logo" @click="$router.push('/')">
@@ -83,6 +84,7 @@
 </template>
 
 <script setup>
+import DevNavbar from './components/DevNavbar.vue'
 import { ref, inject, computed } from 'vue'
 import { availableLocales } from './locales/index.js'
 

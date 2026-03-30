@@ -1,5 +1,6 @@
 <template>
   <div :class="['app', { 'dark-mode': darkMode }]">
+    <DevNavbar />
     <Toast />
 
     <!-- Scanline effect -->
@@ -88,9 +89,11 @@
 import { ref, computed, onMounted } from 'vue'
 import en from './locales/en.js'
 import tk from './locales/tk.js'
+import DevNavbar from './components/DevNavbar.vue'
 
 export default {
   name: 'App',
+  components: { DevNavbar },
   setup() {
     const darkMode = ref(true)
     const language = ref('en')

@@ -1,5 +1,6 @@
 <template>
   <div :class="['app', { 'dark-mode': darkMode }]">
+    <DevNavbar />
     <Toast position="top-right" />
 
     <!-- Animated Fire Background -->
@@ -84,9 +85,11 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import en from './locales/en.js'
 import tk from './locales/tk.js'
+import DevNavbar from './components/DevNavbar.vue'
 
 export default {
   name: 'App',
+  components: { DevNavbar },
   setup() {
     const darkMode = ref(false)
     const language = ref('en')

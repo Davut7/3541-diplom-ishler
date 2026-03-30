@@ -16,7 +16,10 @@
       "Bash(bash start-all.sh 2>&1)",
       "Bash(ls:*)",
       "Bash(bash start-all.sh)",
-      "Bash(bash start-all.sh --status)"
+      "Bash(bash start-all.sh --status)",
+      "Bash(do)",
+      "Bash(mkdir -p \"/Users/macbookpro/Desktop/projects/diplom_ishler/3541/$dir/frontend/src/components\")",
+      "Bash(md5:*)"
     ]
   }
 }

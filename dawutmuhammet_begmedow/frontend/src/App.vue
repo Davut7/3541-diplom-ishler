@@ -1,5 +1,6 @@
 <template>
   <div :class="{ 'dark-mode': isDarkMode }" class="app-container">
+    <DevNavbar />
     <!-- Biohazard Warning Strip -->
     <div class="biohazard-strip">
       <span v-for="n in 20" :key="n" class="hazard-icon">☣</span>
@@ -56,8 +57,10 @@
 <script>
 import { ref, computed, provide } from 'vue'
 import { translations } from './locales'
+import DevNavbar from './components/DevNavbar.vue'
 
 export default {
+  components: { DevNavbar },
   setup() {
     const language = ref(localStorage.getItem('virus-lang') || 'en')
     const isDarkMode = ref(localStorage.getItem('virus-dark') === 'true')

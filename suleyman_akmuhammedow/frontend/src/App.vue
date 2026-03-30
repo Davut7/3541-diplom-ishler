@@ -1,5 +1,6 @@
 <template>
   <div :class="{ 'dark-mode': isDarkMode }" class="app-container">
+    <DevNavbar />
     <!-- Noir Background -->
     <div class="noir-bg">
       <div class="scan-line"></div>
@@ -83,9 +84,11 @@
 <script>
 import { ref, computed, provide } from 'vue'
 import { translations } from './locales'
+import DevNavbar from './components/DevNavbar.vue'
 
 export default {
   name: 'App',
+  components: { DevNavbar },
   setup() {
     const language = ref(localStorage.getItem('osint-language') || 'en')
     const isDarkMode = ref(localStorage.getItem('osint-darkmode') === 'true')

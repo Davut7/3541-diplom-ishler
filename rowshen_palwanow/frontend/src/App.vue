@@ -1,5 +1,6 @@
 <template>
   <div :class="['app', { 'dark-mode': darkMode }]">
+    <DevNavbar />
     <Toast />
 
     <!-- Sidebar -->
@@ -95,9 +96,11 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import en from './locales/en.js'
 import tk from './locales/tk.js'
+import DevNavbar from './components/DevNavbar.vue'
 
 export default {
   name: 'App',
+  components: { DevNavbar },
   setup() {
     const route = useRoute()
     const darkMode = ref(true)

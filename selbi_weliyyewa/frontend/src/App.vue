@@ -1,5 +1,6 @@
 <template>
   <div :class="{ 'dark-mode': isDarkMode }" class="app-container">
+    <DevNavbar />
     <!-- Neural Network Background Animation -->
     <div class="neural-bg">
       <div class="neural-line" v-for="n in 5" :key="n" :style="{ animationDelay: `${n * 0.5}s` }"></div>
@@ -78,9 +79,11 @@
 <script>
 import { ref, computed, provide } from 'vue'
 import { translations } from './locales'
+import DevNavbar from './components/DevNavbar.vue'
 
 export default {
   name: 'App',
+  components: { DevNavbar },
   setup() {
     const language = ref(localStorage.getItem('gan-language') || 'en')
     const isDarkMode = ref(localStorage.getItem('gan-darkmode') === 'true')
