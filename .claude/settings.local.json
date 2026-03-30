@@ -9,7 +9,11 @@
       "Bash(do echo \"Checking: $dir\")",
       "Bash(echo:*)",
       "Bash(done)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(for dir:*)",
+      "Bash(do echo:*)",
+      "Bash(chmod:*)",
+      "Bash(bash start-all.sh 2>&1)"
     ]
   }
 }

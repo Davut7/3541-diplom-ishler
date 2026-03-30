@@ -4,184 +4,148 @@
 
 module.exports = {
   apps: [
-    // ============================================
     // 1. Batyr Akyýew - WAF Behavioral Analysis
-    // Frontend: http://localhost:3001
-    // Backend: http://localhost:4001
-    // ============================================
     {
       name: 'batyr-backend',
       script: 'npm',
       args: 'start',
-      cwd: './batyr akyýew/backend',
-      env: { PORT: 4001 }
+      cwd: './batyr akyýew 1/backend',
+      env: { PORT: 7011 }
     },
     {
       name: 'batyr-frontend',
       script: 'npm',
       args: 'run dev',
-      cwd: './batyr akyýew/frontend',
-      env: { PORT: 3001 }
+      cwd: './batyr akyýew 1/frontend',
+      env: { PORT: 7010 }
     },
 
-    // ============================================
-    // 2. Bayram Gochmyradow - Network Traffic Analysis
-    // Frontend: http://localhost:3002
-    // Backend: http://localhost:4002
-    // ============================================
+    // 2. Bayram Gochmyradow - Android Security
     {
       name: 'bayram-backend',
       script: 'npm',
       args: 'start',
-      cwd: './bayram gochmyradow/backend',
-      env: { PORT: 4002 }
+      cwd: './bayram gochmyradow 1/backend',
+      env: { PORT: 7021 }
     },
     {
       name: 'bayram-frontend',
       script: 'npm',
       args: 'run dev',
-      cwd: './bayram gochmyradow/frontend',
-      env: { PORT: 3002 }
+      cwd: './bayram gochmyradow 1/frontend',
+      env: { PORT: 7020 }
     },
 
-    // ============================================
-    // 3. Daniyar Nurmedow - Intrusion Detection System
-    // Frontend: http://localhost:3003
-    // Backend: http://localhost:4003
-    // ============================================
+    // 3. Daniyar Nurmedow - XSS Shield
     {
       name: 'daniyar-backend',
       script: 'npm',
       args: 'start',
-      cwd: './daniyar nurmedow/backend',
-      env: { PORT: 4003 }
+      cwd: './daniyar nurmedow 1/backend',
+      env: { PORT: 7031 }
     },
     {
       name: 'daniyar-frontend',
       script: 'npm',
       args: 'run dev',
-      cwd: './daniyar nurmedow/frontend',
-      env: { PORT: 3003 }
+      cwd: './daniyar nurmedow 1/frontend',
+      env: { PORT: 7030 }
     },
 
-    // ============================================
-    // 4. Dawutmuhammet Begmedow - Vulnerability Scanner
-    // Frontend: http://localhost:3004
-    // Backend: http://localhost:4004
-    // ============================================
+    // 4. Dawutmuhammet Begmedow - VirusDetect
     {
       name: 'dawut-backend',
       script: 'npm',
       args: 'start',
-      cwd: './dawutmuhammet begmedow/backend',
-      env: { PORT: 4004 }
+      cwd: './dawutmuhammet begmedow 1/backend',
+      env: { PORT: 7041 }
     },
     {
       name: 'dawut-frontend',
       script: 'npm',
       args: 'run dev',
-      cwd: './dawutmuhammet begmedow/frontend',
-      env: { PORT: 3004 }
+      cwd: './dawutmuhammet begmedow 1/frontend',
+      env: { PORT: 7040 }
     },
 
-    // ============================================
-    // 5. Rowshen Orazmuhammedow - DDoS Protection
-    // Frontend: http://localhost:3005
-    // Backend: http://localhost:4005
-    // ============================================
+    // 5. Rowshen Palwanow - KeyGuard
     {
       name: 'rowshen-backend',
       script: 'npm',
       args: 'start',
-      cwd: './rowshen orazmuhammedow/backend',
-      env: { PORT: 4005 }
+      cwd: './rowshen palwanow 0/backend',
+      env: { PORT: 7051 }
     },
     {
       name: 'rowshen-frontend',
       script: 'npm',
       args: 'run dev',
-      cwd: './rowshen orazmuhammedow/frontend',
-      env: { PORT: 3005 }
+      cwd: './rowshen palwanow 0/frontend',
+      env: { PORT: 7050 }
     },
 
-    // ============================================
-    // 6. Selbi Weliyyewa - GAN Security Analysis
-    // Frontend: http://localhost:3006
-    // Backend: http://localhost:4006
-    // ============================================
+    // 6. Selbi Weliyyewa - GAN Security
     {
       name: 'selbi-backend',
       script: 'npm',
       args: 'start',
-      cwd: './selbi weliyyewa/backend',
-      env: { PORT: 4006 }
+      cwd: './selbi weliyyewa 1/backend',
+      env: { PORT: 7061 }
     },
     {
       name: 'selbi-frontend',
       script: 'npm',
       args: 'run dev',
-      cwd: './selbi weliyyewa/frontend',
-      env: { PORT: 3006 }
+      cwd: './selbi weliyyewa 1/frontend',
+      env: { PORT: 7060 }
     },
 
-    // ============================================
-    // 7. Shanur Gulmyradow - Network Packet Analyzer
-    // Frontend: http://localhost:3007
-    // Backend: http://localhost:4007
-    // ============================================
+    // 7. Shanur Gulmyradow - Wireshark Monitor
     {
       name: 'shanur-backend',
       script: 'npm',
       args: 'start',
-      cwd: './shanur gulmyradow/backend',
-      env: { PORT: 4007 }
+      cwd: './shanur gulmyradow 1/backend',
+      env: { PORT: 7071 }
     },
     {
       name: 'shanur-frontend',
       script: 'npm',
       args: 'run dev',
-      cwd: './shanur gulmyradow/frontend',
-      env: { PORT: 3007 }
+      cwd: './shanur gulmyradow 1/frontend',
+      env: { PORT: 7070 }
     },
 
-    // ============================================
     // 8. Shatlyk Rahmanov - AI Firewall
-    // Frontend: http://localhost:3008
-    // Backend: http://localhost:4008
-    // ============================================
     {
       name: 'shatlyk-backend',
       script: 'npm',
       args: 'start',
-      cwd: './shatlyk rahmanov/backend',
-      env: { PORT: 4008 }
+      cwd: './shatlyk rahmanov 0/backend',
+      env: { PORT: 7081 }
     },
     {
       name: 'shatlyk-frontend',
       script: 'npm',
       args: 'run dev',
-      cwd: './shatlyk rahmanov/frontend',
-      env: { PORT: 3008 }
+      cwd: './shatlyk rahmanov 0/frontend',
+      env: { PORT: 7080 }
     },
 
-    // ============================================
-    // 9. Suleyman Akmuhammedow - OSINT AI Tools
-    // Frontend: http://localhost:3009
-    // Backend: http://localhost:4009
-    // ============================================
+    // 9. Suleyman Akmuhammedow - OSINT.AI
     {
       name: 'suleyman-backend',
       script: 'npm',
       args: 'start',
-      cwd: './suleyman akmuhammedow/backend',
-      env: { PORT: 4009 }
+      cwd: './suleyman akmuhammedow 0/backend',
+      env: { PORT: 7091 }
     },
     {
       name: 'suleyman-frontend',
       script: 'npm',
       args: 'run dev',
-      cwd: './suleyman akmuhammedow/frontend',
-      env: { PORT: 3009 }
+      cwd: './suleyman akmuhammedow 0/frontend',
+      env: { PORT: 7090 }
     }
   ]
 }
