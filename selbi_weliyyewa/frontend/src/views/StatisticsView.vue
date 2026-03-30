@@ -908,9 +908,31 @@ export default {
   .industry-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+@media (max-width: 768px) {
+  .page-header h1 { font-size: 1.5rem; }
+  .stat-box { padding: 1rem; gap: 0.75rem; }
+  .stat-value { font-size: 1.4rem; }
+  .stat-icon { width: 40px; height: 40px; }
+  .stat-icon i { font-size: 1.2rem; }
+  .chart-container { height: 220px; }
+  .chart-card h3 { font-size: 0.9rem; }
+  .comparison-card :deep(.p-datatable) { overflow-x: auto; }
+  .simulations-card :deep(.p-datatable) { overflow-x: auto; }
+  .reference-item { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+  .insight-item { flex-direction: column; text-align: center; align-items: center; }
+}
+
 @media (max-width: 600px) {
   .stats-overview { grid-template-columns: 1fr; }
   .industry-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .stat-box { padding: 0.75rem; }
+  .stat-value { font-size: 1.2rem; }
+  .stat-label { font-size: 0.8rem; }
+  .chart-container { height: 180px; }
+  .summary-value { font-size: 1.5rem; }
 }
 
 /* Real Simulation Data Styles */
@@ -987,5 +1009,6 @@ export default {
 
 @media (max-width: 768px) {
   .simulation-summary { grid-template-columns: 1fr; }
+  .summary-box { padding: 1rem; }
 }
 </style>

@@ -332,5 +332,26 @@ export default { props: { t: Object, language: String } }
   .tech-grid { grid-template-columns: repeat(2, 1fr); }
   .author-info { flex-direction: column; align-items: center; text-align: center; }
   .about-hero h1 { font-size: 1.75rem; }
+  .about-hero { padding: 2rem 1rem; }
+  .hero-biohazard { font-size: 3rem; }
+  .desc-card p { font-size: 0.95rem; }
+  .author-avatar { width: 80px; height: 80px; }
+  .avatar-initials { font-size: 1.5rem; }
+  .author-details h3 { font-size: 1.2rem; }
+  .topic-item { font-size: 0.85rem; flex-direction: column; align-items: center; gap: 0.5rem; }
+}
+
+@media (max-width: 480px) {
+  .about-hero h1 { font-size: 1.4rem; }
+  .hero-biohazard { font-size: 2.5rem; }
+  .about-hero { padding: 1.5rem 0.75rem; }
+  .subtitle { font-size: 0.9rem; }
+  .tech-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .tech-item { padding: 1rem 0.5rem; }
+  .tech-icon { width: 45px; height: 45px; }
+  .tech-icon i { font-size: 1.2rem; }
+  .tech-name { font-size: 0.9rem; }
+  .features-section h2 { font-size: 1rem; }
+  .feature-item { padding: 0.75rem 1rem; font-size: 0.9rem; }
 }
 </style>

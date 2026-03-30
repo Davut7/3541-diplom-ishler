@@ -656,13 +656,95 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .header-content h1 {
+    font-size: 1.4rem;
+  }
+
+  .overview-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
   .behavioral-stats {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .behavioral-stat {
+    padding: 1rem;
+  }
+
+  .behavioral-stat .stat-number {
+    font-size: 1.5rem;
   }
 
   .header-actions {
     flex-direction: column;
     width: 100%;
+  }
+
+  .overview-value {
+    font-size: 1.25rem;
+  }
+
+  .overview-label {
+    font-size: 0.8rem;
+  }
+
+  .chart-card h3 {
+    font-size: 0.95rem;
+  }
+
+  .chart-card canvas {
+    max-height: 250px;
+  }
+
+  :deep(.p-datatable-table-container) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content h1 {
+    font-size: 1.2rem;
+  }
+
+  .overview-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .behavioral-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .behavioral-stat .stat-number {
+    font-size: 1.25rem;
+  }
+
+  .behavioral-stat .stat-name {
+    font-size: 0.75rem;
+  }
+
+  .overview-value {
+    font-size: 1.1rem;
+  }
+
+  .icon-wrapper {
+    width: 42px;
+    height: 42px;
+  }
+
+  .icon-wrapper i {
+    font-size: 1.15rem;
   }
 }
 </style>

@@ -679,9 +679,49 @@ export default {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .hero {
+    padding: 1rem 0 2rem;
+    gap: 1.5rem;
+  }
+
   .hero h1 {
     font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+
+  .hero-description {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-badge {
+    margin-bottom: 1rem;
+  }
+
+  .threat-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .status-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 1.75rem;
   }
 
   .quick-stats,
@@ -693,6 +733,56 @@ export default {
 
   .hero-actions {
     flex-direction: column;
+  }
+
+  .hero-actions a,
+  .hero-actions .primary-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .hero-badge {
+    font-size: 0.65rem;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .stat-card {
+    padding: 0.75rem;
+  }
+
+  .stat-value {
+    font-size: 1.1rem;
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .feature-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .threat-card {
+    padding: 1rem;
+  }
+
+  .status-item {
+    padding: 0.75rem;
+  }
+
+  .action-btn {
+    padding: 1rem;
   }
 }
 </style>

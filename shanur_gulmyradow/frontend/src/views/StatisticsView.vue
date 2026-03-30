@@ -765,9 +765,93 @@ export default {
   .capture-info { grid-template-columns: repeat(2, 1fr); }
 }
 
+@media (max-width: 768px) {
+  .page-header h1 { font-size: 1.5rem; }
+
+  .header-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .stat-box {
+    padding: 1rem;
+  }
+
+  .stat-value { font-size: 1.35rem; }
+
+  .stat-icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .stat-icon i { font-size: 1.25rem; }
+
+  .chart-container { height: 220px; }
+
+  .talkers-card :deep(.p-datatable-wrapper) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .talkers-card :deep(.p-datatable-table) {
+    min-width: 650px;
+  }
+
+  .alert-item {
+    padding: 1rem;
+  }
+
+  .alert-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .protocol-legend {
+    gap: 0.5rem;
+  }
+}
+
 @media (max-width: 600px) {
   .stats-overview { grid-template-columns: 1fr; }
   .connection-states { grid-template-columns: 1fr; }
   .capture-info { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 { font-size: 1.25rem; }
+
+  .stat-value { font-size: 1.15rem; }
+
+  .chart-container { height: 200px; }
+
+  .stat-box {
+    padding: 0.85rem;
+    gap: 0.75rem;
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stat-icon i { font-size: 1.1rem; }
+
+  .info-item {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .info-item i { font-size: 1.25rem; }
+  .info-value { font-size: 0.95rem; }
+
+  .alert-item {
+    flex-direction: column;
+  }
+
+  .state-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
 }
 </style>

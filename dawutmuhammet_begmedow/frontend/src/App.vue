@@ -337,9 +337,36 @@ body {
   .bio-symbol { font-size: 1.4rem; }
 }
 
+@media (max-width: 768px) {
+  .app-main {
+    padding: 1rem;
+  }
+  .app-footer {
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+}
+
 @media (max-width: 640px) {
   .app-header { padding: 0.75rem 1rem; }
   .header-right { gap: 0.5rem; }
   .lang-switch { display: none; }
+  .app-main {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header { padding: 0.5rem 0.75rem; }
+  .logo-text { font-size: 0.95rem; }
+  .biohazard-logo { width: 30px; height: 30px; }
+  .bio-symbol { font-size: 1.2rem; }
+  .logo { gap: 0.5rem; }
+  .header-right { gap: 0.35rem; }
+  .theme-toggle { padding: 0.4rem; font-size: 1rem; }
+  .mobile-menu-btn { padding: 0.4rem; font-size: 1rem; }
+  .app-main { padding: 0.5rem; }
+  .app-footer { padding: 0.75rem; font-size: 0.8rem; }
+  .footer-hazard { font-size: 1.2rem; }
 }
 </style>

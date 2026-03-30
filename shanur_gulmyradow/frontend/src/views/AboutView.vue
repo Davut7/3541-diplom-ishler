@@ -548,5 +548,80 @@ export default {
   .author-info { flex-direction: column; align-items: center; text-align: center; }
   .about-hero h1 { font-size: 1.75rem; }
   .topics { text-align: left; }
+
+  .about-hero {
+    padding: 2.5rem 1.25rem;
+    border-radius: 16px;
+  }
+
+  .hero-emblem {
+    width: 80px;
+    height: 80px;
+    border-radius: 22px;
+  }
+
+  .hero-emblem i {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .author-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .avatar-initials {
+    font-size: 1.5rem;
+  }
+
+  .author-details h3 {
+    font-size: 1.25rem;
+  }
+
+  .desc-card p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-hero {
+    padding: 2rem 1rem;
+  }
+
+  .about-hero h1 {
+    font-size: 1.4rem;
+  }
+
+  .tech-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-item {
+    padding: 1.25rem 1rem;
+  }
+
+  .feature-item {
+    padding: 0.85rem 1rem;
+  }
+
+  .feature-item span {
+    font-size: 0.85rem;
+  }
+
+  .topic-item {
+    padding: 0.7rem 0.85rem;
+    font-size: 0.85rem;
+  }
+
+  .author-info {
+    gap: 1.25rem;
+  }
 }
 </style>

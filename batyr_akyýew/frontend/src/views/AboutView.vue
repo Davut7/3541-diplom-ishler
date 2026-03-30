@@ -240,4 +240,70 @@ export default {
   transform: scale(1.1) translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .about-icon {
+    width: 90px;
+    height: 90px;
+  }
+
+  .about-icon i {
+    font-size: 2.5rem;
+  }
+
+  .author-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .author-avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .author-avatar i {
+    font-size: 1.75rem;
+  }
+
+  .author-details h4 {
+    font-size: 1.15rem;
+  }
+
+  .description-card p {
+    font-size: 1rem;
+  }
+
+  .topic {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .about-icon {
+    width: 75px;
+    height: 75px;
+    margin-bottom: 1rem;
+  }
+
+  .about-icon i {
+    font-size: 2rem;
+  }
+
+  .description-card p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .tech-grid {
+    justify-content: center;
+  }
+}
 </style>

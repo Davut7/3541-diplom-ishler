@@ -838,12 +838,67 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .history-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .history-header h1 {
+    font-size: 1.75rem;
+  }
+
   .statistics {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .chart-card {
+    padding: 1rem;
+  }
+
+  .chart-bars {
+    height: 160px;
+  }
+
+  .chart-bar {
+    width: 40px;
+  }
+
+  .pie-chart {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .pie-segments {
+    width: 120px;
+    height: 120px;
   }
 
   .history-item {
     flex-wrap: wrap;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .item-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .item-icon i {
+    font-size: 1.25rem;
+  }
+
+  .item-info h4 {
+    font-size: 0.9rem;
   }
 
   .item-stats {
@@ -851,6 +906,107 @@ onMounted(() => {
     justify-content: space-around;
     padding-top: 1rem;
     border-top: 1px solid var(--border-color);
+  }
+
+  .item-stats .value {
+    font-size: 1.1rem;
+  }
+
+  .header-actions {
+    flex-direction: column;
+  }
+
+  .search-box {
+    max-width: 100%;
+  }
+
+  .filter-buttons {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .section-header h2 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .history-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .stat-card {
+    gap: 0.75rem;
+    padding: 0.85rem;
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stat-icon i {
+    font-size: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+
+  .history-item {
+    padding: 0.85rem;
+  }
+
+  .item-info p {
+    font-size: 0.75rem;
+  }
+
+  .item-stats .value {
+    font-size: 1rem;
+  }
+
+  .item-stats .label {
+    font-size: 0.65rem;
+  }
+
+  .risk-badge {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.7rem;
+  }
+
+  .filter-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .search-box input {
+    padding: 0.6rem 2.25rem;
+    font-size: 0.85rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .chart-bars {
+    height: 140px;
+  }
+
+  .chart-bar {
+    width: 35px;
+  }
+
+  .bar-value {
+    font-size: 0.75rem;
+  }
+
+  .bar-label {
+    font-size: 0.65rem;
   }
 }
 </style>

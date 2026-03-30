@@ -858,16 +858,20 @@ export default {
 
 @media (max-width: 768px) {
   .cyber-home {
-    margin: -1rem;
-    width: calc(100% + 2rem);
+    margin: -0.75rem;
+    width: calc(100% + 1.5rem);
   }
 
   .terminal-body {
-    padding: 1rem;
+    padding: 0.75rem;
   }
 
   .status-grid,
-  .command-grid,
+  .command-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
   .matrix-grid,
   .xss-types {
     grid-template-columns: 1fr;
@@ -877,9 +881,36 @@ export default {
     display: none;
   }
 
+  .typing-container {
+    font-size: 0.85rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .status-value {
+    font-size: 1.2rem;
+  }
+
+  .command-btn {
+    padding: 1rem;
+  }
+
+  .cmd-text {
+    font-size: 0.8rem;
+  }
+
+  .warning-banner {
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+  }
+
+  .warning-icon {
+    font-size: 1.5rem;
+  }
+
   .cyber-footer {
     flex-wrap: wrap;
     gap: 1rem;
+    padding: 1rem;
   }
 
   .footer-divider {
@@ -888,6 +919,94 @@ export default {
 
   .log-entry {
     flex-wrap: wrap;
+    font-size: 0.75rem;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .log-time {
+    min-width: auto;
+  }
+
+  .log-type {
+    min-width: auto;
+  }
+
+  .log-message {
+    width: 100%;
+  }
+
+  .feed-header {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .payload-item {
+    padding: 0.75rem;
+  }
+
+  .payload-code {
+    font-size: 0.7rem;
+    padding: 0.5rem;
+  }
+
+  .matrix-header {
+    font-size: 0.9rem;
+  }
+
+  .type-card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cyber-home {
+    margin: -0.5rem;
+    width: calc(100% + 1rem);
+  }
+
+  .terminal-body {
+    padding: 0.5rem;
+  }
+
+  .status-grid,
+  .command-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .typing-container {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .status-value {
+    font-size: 1rem;
+  }
+
+  .status-label {
+    font-size: 0.6rem;
+  }
+
+  .command-btn {
+    padding: 0.75rem;
+  }
+
+  .cyber-footer {
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .stat-num {
+    font-size: 1rem;
+  }
+
+  .warning-title {
+    font-size: 0.8rem;
+  }
+
+  .warning-desc {
+    font-size: 0.7rem;
   }
 }
 </style>

@@ -362,5 +362,22 @@ export default {
   .stats-grid { grid-template-columns: 1fr; }
   .file-type-item { grid-template-columns: 40px 1fr auto; }
   .file-type-item :deep(.p-progressbar) { display: none; }
+  .page-header h1 { font-size: 1.2rem; }
+  .stat-value { font-size: 1.5rem; }
+  .stat-icon { width: 45px; height: 45px; }
+  .stat-icon i { font-size: 1.25rem; }
+  .chart-container { height: 220px; }
+  .chart-card h3 { font-size: 0.9rem; }
+  .pattern-item { font-size: 0.8rem; padding: 0.4rem 0.75rem; }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 { font-size: 1.05rem; }
+  .page-header p { font-size: 0.85rem; }
+  .stat-card :deep(.p-card-content) { padding: 0.75rem !important; }
+  .stat-value { font-size: 1.3rem; }
+  .stat-label { font-size: 0.75rem; }
+  .chart-container { height: 200px; }
+  .file-type-item { padding: 0.5rem 0.75rem; font-size: 0.85rem; }
 }
 </style>

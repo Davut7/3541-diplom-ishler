@@ -56,5 +56,18 @@ export default {
 .step-item p { font-size: 0.8rem; color: var(--text-secondary); }
 .faq-card h2 { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
 .faq-card h2 i { color: #ef4444; }
-@media (max-width: 768px) { .steps-flow { flex-direction: column; gap: 1rem; } .steps-flow::before { display: none; } }
+@media (max-width: 768px) {
+  .steps-flow { flex-direction: column; gap: 1rem; }
+  .steps-flow::before { display: none; }
+  .page-header h1 { font-size: 1.3rem; }
+  .step-item { text-align: left; display: flex; align-items: flex-start; gap: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 8px; }
+  .step-number { margin: 0; flex-shrink: 0; }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 { font-size: 1.1rem; }
+  .page-header p { font-size: 0.85rem; }
+  .step-item h3 { font-size: 0.85rem; }
+  .step-item p { font-size: 0.75rem; }
+}
 </style>

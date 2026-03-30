@@ -655,16 +655,39 @@ body {
 
 @media (max-width: 768px) {
   .app-main {
-    padding: 1rem;
+    padding: 0.75rem;
+  }
+
+  .header-container {
+    padding: 0.5rem 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .main-nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding-bottom: 0.25rem;
   }
 
   .nav-item {
     padding: 0.4rem 0.5rem;
     font-size: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .nav-item .nav-prefix {
     display: none;
+  }
+
+  .logo {
+    font-size: 0.95rem;
+  }
+
+  .logo-icon i {
+    font-size: 1rem;
   }
 
   .footer-content {
@@ -676,6 +699,72 @@ body {
   .footer-left {
     flex-direction: column;
     gap: 0.25rem;
+  }
+
+  .footer-text {
+    font-size: 0.75rem;
+  }
+
+  .app-footer {
+    padding: 0.75rem 1rem;
+  }
+
+  .lang-btn,
+  .theme-btn {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .header-right {
+    gap: 0.5rem;
+  }
+
+  /* PrimeVue overrides for mobile */
+  .p-card .p-card-content {
+    padding: 1rem !important;
+  }
+
+  .p-tabview .p-tabview-nav {
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    white-space: nowrap !important;
+    font-size: 0.75rem !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-main {
+    padding: 0.5rem;
+  }
+
+  .header-container {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .logo-text {
+    font-size: 0.85rem;
+  }
+
+  .nav-item {
+    padding: 0.35rem 0.4rem;
+    font-size: 0.7rem;
+  }
+
+  .footer-prompt {
+    font-size: 0.75rem;
+  }
+
+  .footer-text {
+    font-size: 0.7rem;
+  }
+
+  .footer-right .connection-status {
+    font-size: 0.65rem;
   }
 }
 </style>

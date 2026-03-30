@@ -544,12 +544,118 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
   .input-group {
     flex-direction: column;
   }
 
   .sites-grid {
     grid-template-columns: 1fr;
+  }
+
+  .cheatsheet-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vulnerable-demo {
+    padding: 1rem;
+  }
+
+  .url-demo {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .url-demo code {
+    font-size: 0.7rem;
+    word-break: break-all;
+    white-space: normal;
+  }
+
+  .name-input {
+    max-width: 100%;
+  }
+
+  .lab-card h2,
+  .sites-card h2,
+  .cheatsheet-card h2 {
+    font-size: 1.1rem;
+  }
+
+  .lab-desc {
+    font-size: 0.85rem;
+  }
+
+  .comment-header {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .site-item {
+    padding: 0.75rem;
+  }
+
+  .site-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 0.85rem;
+  }
+
+  .site-info h4 {
+    font-size: 0.9rem;
+  }
+
+  .site-info p {
+    font-size: 0.75rem;
+  }
+
+  .cheat-item code {
+    font-size: 0.65rem;
+  }
+
+  .warning-banner i {
+    font-size: 1.5rem;
+  }
+
+  .warning-banner strong {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .vulnerable-demo {
+    padding: 0.75rem;
+  }
+
+  .try-payloads {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .site-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 0.75rem;
+    border-radius: 8px;
+  }
+
+  .lab-desc {
+    font-size: 0.78rem;
+  }
+
+  .cheat-name {
+    font-size: 0.78rem;
+  }
+
+  .cheat-item code {
+    font-size: 0.6rem;
   }
 }
 </style>

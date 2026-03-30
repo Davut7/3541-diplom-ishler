@@ -1056,5 +1056,82 @@ export default {
   .result-actions {
     flex-direction: column;
   }
+
+  .result-actions :deep(.p-button) {
+    width: 100%;
+  }
+
+  .scan-type {
+    padding: 1rem;
+  }
+
+  .scanner-animation {
+    width: 60px;
+    height: 60px;
+  }
+
+  .scanner-animation > i {
+    font-size: 1.5rem;
+  }
+
+  .progress-info h3 {
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .clean-result {
+    padding: 2rem 1rem;
+  }
+
+  .clean-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .clean-icon i {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .scan-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .scan-stat {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .scan-stat .stat-value {
+    font-size: 1.25rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .result-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .result-icon i {
+    font-size: 1.5rem;
+  }
+
+  .result-info h2 {
+    font-size: 1.1rem;
+  }
+
+  .results-header {
+    padding: 1rem;
+  }
+
+  .location-code {
+    max-width: 140px;
+    font-size: 0.7rem;
+  }
 }
 </style>

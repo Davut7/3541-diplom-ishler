@@ -550,8 +550,16 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
   .input-wrapper {
     flex-direction: column;
+  }
+
+  .input-wrapper .p-button {
+    width: 100%;
   }
 
   .overview-grid {
@@ -560,13 +568,80 @@ export default {
     gap: 1.5rem;
   }
 
+  .overview-main h2 {
+    font-size: 1.2rem;
+  }
+
   .quick-info {
     flex-direction: column;
     gap: 0.5rem;
+    align-items: center;
   }
 
   .info-grid {
     grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .score-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .score-value {
+    font-size: 1.5rem;
+  }
+
+  .export-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .export-actions .p-button {
+    width: 100%;
+  }
+
+  .log-output {
+    font-size: 0.75rem;
+    padding: 0.75rem;
+    max-height: 150px;
+  }
+
+  .security-item {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .page-header p {
+    font-size: 0.85rem;
+  }
+
+  .overview-main h2 {
+    font-size: 1.1rem;
+    word-break: break-all;
+  }
+
+  .ip-address {
+    font-size: 0.85rem;
+  }
+
+  .info-card {
+    padding: 0.75rem;
+  }
+
+  .info-card label {
+    font-size: 0.75rem;
+  }
+
+  .info-card span {
+    font-size: 0.85rem;
+    word-break: break-all;
   }
 }
 </style>

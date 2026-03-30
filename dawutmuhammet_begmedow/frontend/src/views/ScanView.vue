@@ -512,5 +512,31 @@ export default {
   .result-grid { grid-template-columns: 1fr; }
   .vt-stats { flex-wrap: wrap; }
   .vt-stat { min-width: 45%; }
+  .result-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+  .threat-score { text-align: left; }
+  .result-actions { flex-direction: column; }
+  .result-actions :deep(.p-button) { width: 100%; }
+  .hash-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .hash-item label { min-width: unset; }
+  .hash-item code { width: 100%; font-size: 0.65rem; }
+  .settings-card { width: calc(100% - 2rem); left: 50%; }
+  .dropzone { padding: 1.5rem 1rem; }
+  .dropzone i { font-size: 2rem; }
+  .page-header h1 { font-size: 1.4rem; }
+  .folder-results-card :deep(.p-datatable) { overflow-x: auto; }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 { font-size: 1.2rem; }
+  .page-header p { font-size: 0.85rem; }
+  .status-badge { font-size: 0.9rem; padding: 0.5rem 1rem; }
+  .score-value { font-size: 1.5rem; }
+  .vt-stat { min-width: 100%; }
+  .vt-stat .num { font-size: 1.5rem; }
+  .dropzone { padding: 1.25rem 0.75rem; }
+  .dropzone i { font-size: 1.75rem; margin-bottom: 0.5rem; }
+  .dropzone p { font-size: 0.9rem; }
+  .settings-card { width: calc(100% - 1rem); }
+  .pattern-item { font-size: 0.8rem; padding: 0.4rem 0.75rem; }
 }
 </style>

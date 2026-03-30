@@ -549,17 +549,88 @@ export default {
     grid-template-columns: 1fr;
   }
 
+  .hero {
+    padding: 1.5rem 0;
+    gap: 1.5rem;
+  }
+
   .hero h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
   }
 
   .shield-icon {
-    width: 160px;
-    height: 160px;
+    width: 140px;
+    height: 140px;
   }
 
   .shield-icon i {
-    font-size: 4rem;
+    font-size: 3.5rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .feature-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .stat-item {
+    padding: 1.25rem 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.75rem;
+  }
+
+  .stats-section h2 {
+    font-size: 1.2rem;
+  }
+
+  .features {
+    margin: 1.5rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .shield-icon {
+    width: 110px;
+    height: 110px;
+  }
+
+  .shield-icon i {
+    font-size: 2.75rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1rem;
+  }
+
+  .feature-card p {
+    font-size: 0.85rem;
   }
 }
 </style>

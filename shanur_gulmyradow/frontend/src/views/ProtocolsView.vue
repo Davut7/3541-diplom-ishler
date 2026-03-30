@@ -306,5 +306,41 @@ export default {
   .layer-name {
     width: auto;
   }
+
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .protocol-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .osi-layer {
+    padding: 0.75rem;
+  }
+
+  .layer-protocols {
+    font-size: 0.8rem;
+  }
+
+  .protocol-header {
+    gap: 0.75rem;
+  }
+
+  .protocol-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .protocol-icon i {
+    font-size: 1.2rem;
+  }
 }
 </style>

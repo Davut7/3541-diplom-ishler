@@ -451,5 +451,83 @@ export default {
   .flow-arrow {
     transform: rotate(90deg);
   }
+
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .types-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .payloads-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .type-item {
+    padding: 1rem;
+  }
+
+  .type-detail {
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.8rem;
+  }
+
+  .type-detail .label {
+    min-width: unset;
+  }
+
+  .flow-item {
+    min-width: 60px;
+    padding: 0.75rem;
+  }
+
+  .flow-item i {
+    font-size: 1.2rem;
+  }
+
+  .payload-item code {
+    font-size: 0.65rem;
+  }
+
+  .attack-flow-card h2,
+  .types-card h2,
+  .payloads-card h2,
+  .faq-card h2 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .step-item h3 {
+    font-size: 0.8rem;
+  }
+
+  .step-item p {
+    font-size: 0.7rem;
+  }
+
+  .step-number {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  .type-header h3 {
+    font-size: 0.95rem;
+  }
+
+  .payload-item h4 {
+    font-size: 0.78rem;
+  }
+
+  .payload-item code {
+    font-size: 0.6rem;
+  }
 }
 </style>

@@ -392,4 +392,32 @@ export default {
   .hero h1 { font-size: 2rem; }
   .biohazard-hero-icon { font-size: 3rem; }
 }
+
+@media (max-width: 768px) {
+  .hero { padding: 2rem 0; }
+  .hero h1 { font-size: 1.6rem; }
+  .biohazard-hero-icon { font-size: 2.5rem; }
+  .subtitle { font-size: 1rem; }
+  .description { font-size: 0.9rem; line-height: 1.6; }
+  .hero-actions { flex-direction: column; align-items: center; gap: 0.75rem; }
+  .hero-badge { font-size: 0.75rem; padding: 0.5rem 1rem; letter-spacing: 1px; }
+  .warning-content { font-size: 0.75rem; letter-spacing: 1.5px; padding: 0.5rem 1rem; }
+  .stats-section { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .stat-value { font-size: 1.8rem; }
+  .features-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .features-section { padding: 2rem 0; }
+  .features-section h2 { font-size: 1.1rem; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 1.5rem 0; }
+  .hero h1 { font-size: 1.3rem; }
+  .biohazard-hero-icon { font-size: 2rem; }
+  .subtitle { font-size: 0.9rem; }
+  .stats-section { grid-template-columns: 1fr; gap: 0.75rem; }
+  .stat-card { padding: 1rem; }
+  .stat-value { font-size: 1.5rem; }
+  .stat-label { font-size: 0.8rem; }
+  .warning-content { font-size: 0.65rem; letter-spacing: 1px; gap: 0.5rem; }
+}
 </style>

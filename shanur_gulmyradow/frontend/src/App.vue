@@ -556,9 +556,23 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  .sidebar {
+    width: var(--sidebar-width);
+  }
+
+  .sidebar-nav a {
+    padding: 0.75rem 1rem;
+  }
+
+  .top-header {
+    padding: 0 1rem;
+  }
+}
+
 @media (max-width: 640px) {
   .app-main {
-    padding: 1rem;
+    padding: 0.75rem;
   }
 
   .header-title h1 {
@@ -567,6 +581,26 @@ body {
 
   .live-badge span:last-child {
     display: none;
+  }
+
+  .top-header {
+    padding: 0 0.75rem;
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-main {
+    padding: 0.5rem;
+  }
+
+  .header-title h1 {
+    font-size: 0.9rem;
+  }
+
+  .sidebar {
+    width: 85vw;
+    max-width: 280px;
   }
 }
 </style>

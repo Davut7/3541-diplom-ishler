@@ -1301,30 +1301,210 @@ function getPermCount(riskLevel) {
 }
 
 @media (max-width: 768px) {
+  .home-view {
+    gap: 2rem;
+  }
+
   .hero-content h1 {
     font-size: 2rem;
   }
 
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn {
+    justify-content: center;
+    padding: 0.85rem 1.5rem;
+  }
+
   .stats {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1.25rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
   }
 
   .features-grid {
     grid-template-columns: 1fr;
   }
 
+  .features h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
 
+  .live-stats {
+    padding: 1.25rem;
+  }
+
+  .sample-apks {
+    padding: 1.25rem;
+  }
+
+  .sample-apks h2 {
+    font-size: 1.25rem;
+  }
+
+  .activity-feed {
+    padding: 1.25rem;
+  }
+
+  .activity-feed h2 {
+    font-size: 1.25rem;
+  }
+
   .activity-item {
     flex-wrap: wrap;
+    padding: 0.75rem;
   }
 
   .activity-status {
     width: 100%;
     text-align: center;
     margin-top: 0.5rem;
+  }
+
+  .how-it-works h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .step {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-view {
+    gap: 1.5rem;
+  }
+
+  .hero-content h1 {
+    font-size: 1.6rem;
+  }
+
+  .hero-content p {
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .stat-card.animated {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .stat-card .stat-number.counter {
+    font-size: 1.4rem;
+  }
+
+  .stat-card .stat-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stat-card .stat-icon i {
+    font-size: 1.1rem;
+  }
+
+  .sample-card {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .sample-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sample-icon i {
+    font-size: 1.1rem;
+  }
+
+  .sample-info h4 {
+    font-size: 0.9rem;
+  }
+
+  .sample-info p {
+    font-size: 0.8rem;
+  }
+
+  .activity-item {
+    gap: 0.75rem;
+    padding: 0.65rem;
+  }
+
+  .activity-content p {
+    font-size: 0.8rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .stat-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .stat-icon i {
+    font-size: 1.25rem;
+  }
+
+  .stat-number {
+    font-size: 1.75rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+  }
+
+  .feature-card {
+    padding: 1.25rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1rem;
+  }
+
+  .feature-card p {
+    font-size: 0.85rem;
+  }
+
+  .step-number {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+  }
+
+  .step-content h3 {
+    font-size: 0.9rem;
+  }
+
+  .step-content p {
+    font-size: 0.8rem;
   }
 }
 </style>

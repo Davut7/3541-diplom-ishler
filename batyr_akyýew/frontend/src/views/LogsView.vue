@@ -464,9 +464,14 @@ code:hover {
     gap: 1rem;
   }
 
+  .header-content h1 {
+    font-size: 1.5rem;
+  }
+
   .header-controls {
     width: 100%;
     justify-content: flex-start;
+    flex-wrap: wrap;
   }
 
   .stats-row {
@@ -475,6 +480,56 @@ code:hover {
 
   .stat-item {
     flex: 1 1 45%;
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .stat-item i {
+    font-size: 1.2rem;
+  }
+
+  .stat-value {
+    font-size: 1.15rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+
+  :deep(.p-datatable-table-container) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .live-indicator {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content h1 {
+    font-size: 1.25rem;
+  }
+
+  .stats-row {
+    gap: 0.5rem;
+  }
+
+  .stat-item {
+    flex: 1 1 100%;
+    flex-direction: row;
+    gap: 0.75rem;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .header-controls {
+    gap: 0.5rem;
+  }
+
+  .header-controls :deep(.p-button) {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
   }
 }
 </style>

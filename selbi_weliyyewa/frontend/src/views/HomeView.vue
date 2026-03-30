@@ -271,4 +271,26 @@ export default {
   .hero-actions { justify-content: center; }
   .stats-section, .features-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+@media (max-width: 768px) {
+  .hero { padding: 1.5rem 0; gap: 2rem; }
+  .hero-title { font-size: 2rem; }
+  .hero-subtitle { font-size: 1.1rem; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .hero-actions :deep(.p-button) { width: 100%; }
+  .section-title { font-size: 1.5rem; }
+  .stats-section { gap: 1rem; padding: 1rem 0; }
+  .stat-card { padding: 1rem; }
+  .stat-icon { font-size: 1.5rem; }
+  .stat-value { font-size: 1.5rem; }
+  .features-section { padding: 1.5rem 0; }
+  .features-grid { gap: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .stats-section { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 1.6rem; }
+  .hero-badge { font-size: 0.75rem; padding: 0.4rem 0.75rem; }
+}
 </style>

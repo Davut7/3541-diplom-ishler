@@ -535,6 +535,10 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
   .attack-test-buttons {
     flex-direction: column;
   }
@@ -551,6 +555,30 @@ export default {
 
   .rules-actions {
     justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  :deep(.p-datatable-table-container) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .attack-test-header h3 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .attack-result {
+    padding: 1rem;
+  }
+
+  .result-value {
+    font-size: 1rem;
   }
 }
 </style>

@@ -158,5 +158,15 @@ export default {
 
 @media (max-width: 768px) {
   .defense-grid { grid-template-columns: 1fr; }
+  .page-header h1 { font-size: 1.5rem; }
+  .defense-header h3 { font-size: 1rem; }
+  .defense-icon { width: 42px; height: 42px; }
+  .defense-icon i { font-size: 1.2rem; }
+}
+
+@media (max-width: 480px) {
+  .defense-header { gap: 0.75rem; }
+  .defense-desc { font-size: 0.8rem; }
+  .defense-details { font-size: 0.85rem; }
 }
 </style>

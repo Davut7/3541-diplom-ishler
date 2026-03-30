@@ -266,5 +266,34 @@ export default {
   .details-grid {
     grid-template-columns: 1fr;
   }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .action-buttons :deep(.p-button) {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .page-header p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    margin-bottom: 1rem;
+  }
+
+  .detail-item code {
+    font-size: 0.75rem;
+    word-break: break-all;
+  }
 }
 </style>

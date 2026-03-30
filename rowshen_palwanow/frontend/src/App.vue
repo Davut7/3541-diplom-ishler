@@ -509,15 +509,42 @@ body {
 
 @media (max-width: 768px) {
   .app-main {
-    padding: 1rem;
+    padding: 0.75rem;
   }
 
   .top-header {
-    padding: 0 1rem;
+    padding: 0 0.75rem;
   }
 
   .header-title h1 {
-    font-size: 1.1rem;
+    font-size: 1rem;
+  }
+
+  .status-text {
+    display: none;
+  }
+
+  .status-indicator {
+    padding: 0.4rem 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-main {
+    padding: 0.5rem;
+  }
+
+  .top-header {
+    padding: 0 0.5rem;
+    height: 52px;
+  }
+
+  .header-title h1 {
+    font-size: 0.9rem;
+  }
+
+  .sidebar {
+    width: 260px;
   }
 }
 
@@ -547,6 +574,53 @@ body {
 
 :deep(.p-button.p-button-primary:hover) {
   box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+/* Global responsive table wrapper */
+@media (max-width: 768px) {
+  :deep(.p-datatable) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  :deep(.p-datatable-wrapper) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  :deep(.p-datatable table) {
+    min-width: 600px;
+  }
+
+  :deep(.p-card .p-card-content) {
+    padding: 0.75rem;
+  }
+
+  :deep(.p-button) {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :deep(.p-datatable table) {
+    min-width: 500px;
+  }
+
+  :deep(.p-card .p-card-content) {
+    padding: 0.5rem;
+  }
+
+  :deep(.p-button) {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  :deep(.p-paginator) {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding: 0.5rem;
+  }
 }
 
 /* Scrollbar */

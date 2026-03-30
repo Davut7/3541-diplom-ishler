@@ -422,4 +422,34 @@ export default {
 .mt-3 {
   margin-top: 1rem;
 }
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .danger-buttons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+}
 </style>

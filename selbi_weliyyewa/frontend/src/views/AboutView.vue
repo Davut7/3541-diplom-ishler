@@ -113,4 +113,20 @@ export default {
 .author-details h3 { margin-bottom: 0.25rem; }
 .author-project { color: var(--primary-color); font-weight: 500; }
 .topic { color: var(--text-secondary); font-size: 0.9rem; margin: 0.25rem 0; }
+
+@media (max-width: 768px) {
+  .about-logo i { font-size: 2rem; }
+  .about-logo h1 { font-size: 1.8rem; }
+  .subtitle { font-size: 0.95rem; }
+  .section-card h2 { font-size: 1.1rem; }
+  .author-info { flex-direction: column; align-items: center; text-align: center; }
+  .author-avatar { width: 64px; height: 64px; }
+  .author-avatar i { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+  .about-logo h1 { font-size: 1.5rem; }
+  .about-logo { gap: 0.5rem; }
+  .topic { font-size: 0.8rem; }
+}
 </style>

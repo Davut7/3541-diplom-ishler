@@ -727,9 +727,21 @@ export default {
     flex-direction: column;
   }
 
+  .header-content h1 {
+    font-size: 1.2rem;
+  }
+
   .header-stats {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .header-stats .stat {
+    padding: 0.75rem 1rem;
+  }
+
+  .header-stats .stat .value {
+    font-size: 1.4rem;
   }
 
   .controls-row {
@@ -739,6 +751,14 @@ export default {
 
   .controls-left,
   .controls-right {
+    width: 100%;
+  }
+
+  .controls-left {
+    flex-direction: column;
+  }
+
+  .controls-right :deep(.p-inputtext) {
     width: 100%;
   }
 
@@ -755,8 +775,54 @@ export default {
     flex-direction: row;
   }
 
+  .suggestion-rule code {
+    font-size: 0.75rem;
+    word-break: break-all;
+  }
+
+  .rules-table {
+    overflow-x: auto;
+  }
+
+  .rules-table :deep(.p-datatable-wrapper) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .rules-table :deep(.p-datatable-table) {
+    min-width: 800px;
+  }
+
   .form-grid {
     grid-template-columns: 1fr;
+  }
+
+  :deep(.p-dialog) {
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-stats {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .header-stats .stat {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .header-stats .stat .value {
+    font-size: 1.2rem;
+  }
+
+  .suggestions-header h3 {
+    font-size: 0.9rem;
+  }
+
+  .suggestion-actions {
+    flex-direction: column;
   }
 }
 </style>

@@ -228,9 +228,60 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .about-logo h1 {
+    font-size: 1.8rem;
+  }
+
+  .about-logo i {
+    font-size: 2.2rem;
+  }
+
+  .author-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .author-avatar {
+    width: 65px;
+    height: 65px;
+  }
+
+  .author-avatar i {
+    font-size: 2rem;
+  }
+
   .tech-grid,
   .features-list {
     grid-template-columns: 1fr;
+  }
+
+  .tech-item {
+    padding: 1rem;
+  }
+
+  .author-card h2,
+  .tech-card h2,
+  .features-card h2 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-logo h1 {
+    font-size: 1.5rem;
+  }
+
+  .about-logo i {
+    font-size: 1.8rem;
+  }
+
+  .topic {
+    font-size: 0.8rem;
+  }
+
+  .desc-card p {
+    font-size: 0.9rem;
   }
 }
 </style>

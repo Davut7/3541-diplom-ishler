@@ -212,6 +212,10 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.4rem;
+  }
+
   .steps-flow {
     flex-direction: column;
     gap: 1rem;
@@ -221,15 +225,62 @@ export default {
     display: none;
   }
 
+  .step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+  }
+
+  .comparison-card h2,
+  .faq-card h2 {
+    font-size: 1.1rem;
+  }
+
   .comparison-header,
   .comparison-row {
     grid-template-columns: 1fr;
     text-align: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
   }
 
   .comparison-header span:first-child,
   .comparison-row span:first-child {
     margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+
+  .comparison-table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .page-header p {
+    font-size: 0.9rem;
+  }
+
+  .step-number {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+
+  .step-item h3 {
+    font-size: 0.85rem;
+  }
+
+  .comparison-row {
+    font-size: 0.85rem;
   }
 }
 </style>

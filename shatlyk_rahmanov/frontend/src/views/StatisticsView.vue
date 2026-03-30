@@ -560,12 +560,118 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.2rem;
+  }
+
   .summary-row {
     grid-template-columns: 1fr;
   }
 
+  .summary-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .summary-value {
+    font-size: 1.3rem;
+  }
+
+  .chart-card h3,
+  .timeline-card h3,
+  .performance-card h3,
+  .rules-stats-card h3,
+  .threats-table-card h3 {
+    font-size: 0.95rem;
+  }
+
+  .performance-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .metric-circle {
+    width: 75px;
+    height: 75px;
+  }
+
+  .metric-circle::before {
+    width: 58px;
+    height: 58px;
+  }
+
+  .metric-value {
+    font-size: 0.95rem;
+  }
+
   .rules-breakdown {
     grid-template-columns: 1fr;
+  }
+
+  .threats-table-card :deep(.p-datatable-wrapper) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .threats-table-card :deep(.p-datatable-table) {
+    min-width: 500px;
+  }
+
+  /* Make charts scale properly on mobile */
+  canvas {
+    max-width: 100%;
+    height: auto !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .summary-value {
+    font-size: 1.1rem;
+  }
+
+  .summary-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .summary-icon i {
+    font-size: 1.2rem;
+  }
+
+  .performance-metrics {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .metric-circle {
+    width: 65px;
+    height: 65px;
+  }
+
+  .metric-circle::before {
+    width: 50px;
+    height: 50px;
+  }
+
+  .metric-value {
+    font-size: 0.85rem;
+  }
+
+  .rule-stat {
+    padding: 0.75rem;
+  }
+
+  .rule-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .rule-value {
+    font-size: 1.2rem;
   }
 }
 </style>

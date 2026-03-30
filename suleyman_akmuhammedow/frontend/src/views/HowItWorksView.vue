@@ -352,16 +352,78 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .steps-section h2,
+  .faq-section h2,
+  .tech-section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
   .steps-grid {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .step-card h3 {
+    font-size: 0.95rem;
+  }
+
+  .step-card p {
+    font-size: 0.8rem;
   }
 
   .process-flow {
     flex-direction: column;
+    gap: 0.75rem;
   }
 
   .flow-arrow {
     transform: rotate(90deg);
+  }
+
+  .flow-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .flow-icon i {
+    font-size: 1.25rem;
+  }
+
+  .flow-item span {
+    font-size: 0.75rem;
+  }
+
+  .intro-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .intro-content p {
+    font-size: 0.9rem;
+  }
+
+  .tech-card h3 {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .page-header p {
+    font-size: 0.85rem;
+  }
+
+  .step-icon i {
+    font-size: 1.5rem;
   }
 }
 </style>

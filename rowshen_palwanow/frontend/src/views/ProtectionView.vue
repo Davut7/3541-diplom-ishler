@@ -291,6 +291,10 @@ export default {
     text-align: center;
   }
 
+  .status-header :deep(.p-button) {
+    width: 100%;
+  }
+
   .settings-grid {
     grid-template-columns: 1fr;
   }
@@ -299,6 +303,55 @@ export default {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
+  }
+
+  .setting-header {
+    flex-wrap: wrap;
+  }
+
+  .status-indicator {
+    width: 60px;
+    height: 60px;
+  }
+
+  .status-indicator i {
+    font-size: 1.5rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .setting-info h3 {
+    font-size: 0.9rem;
+  }
+
+  .setting-info p {
+    font-size: 0.8rem;
+  }
+
+  .setting-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .activity-item {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .activity-message {
+    font-size: 0.85rem;
+  }
+
+  .activity-time {
+    font-size: 0.75rem;
+  }
+
+  .page-header {
+    margin-bottom: 1.5rem;
   }
 }
 </style>

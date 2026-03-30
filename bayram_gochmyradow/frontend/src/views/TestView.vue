@@ -843,4 +843,205 @@ section h2 {
   .analysis-flow { flex-direction: column; }
   .flow-arrow { transform: rotate(90deg); padding: 0; }
 }
+
+@media (max-width: 768px) {
+  .test-header h1 {
+    font-size: 1.75rem;
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  section h2 {
+    font-size: 1.25rem;
+  }
+
+  .flow-step {
+    min-width: unset;
+    padding: 1rem;
+  }
+
+  .step-visual {
+    height: 90px;
+  }
+
+  .sample-card {
+    flex-wrap: wrap;
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .sample-info h3 {
+    font-size: 0.95rem;
+  }
+
+  .sample-info p {
+    font-size: 0.8rem;
+  }
+
+  .analyze-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.6rem 1rem;
+  }
+
+  .modal-overlay {
+    padding: 1rem;
+  }
+
+  .modal-content {
+    padding: 1.25rem;
+  }
+
+  .result-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .risk-score-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .score-value {
+    font-size: 1.25rem;
+  }
+
+  .result-info h2 {
+    font-size: 1.1rem;
+  }
+
+  .result-stats {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .result-stats .stat {
+    flex: 1 1 40%;
+    padding: 0.75rem;
+  }
+
+  .result-stats .value {
+    font-size: 1.25rem;
+  }
+
+  .tech-card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .test-header h1 {
+    font-size: 1.4rem;
+  }
+
+  section h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .flow-step {
+    padding: 0.85rem;
+  }
+
+  .step-visual {
+    height: 75px;
+  }
+
+  .step-info h3 {
+    font-size: 0.85rem;
+  }
+
+  .step-info p {
+    font-size: 0.75rem;
+  }
+
+  .binary-visual {
+    font-size: 0.6rem;
+    padding: 0.5rem;
+  }
+
+  .file-icon {
+    width: 60px;
+    height: 75px;
+  }
+
+  .file-icon i {
+    font-size: 1.5rem;
+  }
+
+  .sample-card {
+    padding: 0.85rem;
+  }
+
+  .sample-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+  }
+
+  .modal-overlay {
+    padding: 0.5rem;
+  }
+
+  .modal-content {
+    padding: 1rem;
+    border-radius: 0.75rem;
+  }
+
+  .result-header {
+    padding: 0.85rem;
+  }
+
+  .result-info h2 {
+    font-size: 0.95rem;
+    word-break: break-all;
+  }
+
+  .result-info p {
+    font-size: 0.75rem;
+  }
+
+  .issue-item {
+    padding: 0.75rem;
+  }
+
+  .issue-item strong {
+    font-size: 0.85rem;
+  }
+
+  .issue-item p {
+    font-size: 0.8rem;
+  }
+
+  .recommendations-section li {
+    padding: 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .perm-tag {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    padding: 0.65rem 1.25rem;
+  }
+
+  .tech-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .tech-card p {
+    font-size: 0.8rem;
+  }
+
+  .tech-card li {
+    font-size: 0.8rem;
+  }
+}
 </style>

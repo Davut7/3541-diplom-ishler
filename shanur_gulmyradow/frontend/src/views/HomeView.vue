@@ -705,11 +705,36 @@ export default {
 /* Responsive */
 @media (max-width: 768px) {
   .hero {
-    padding: 3rem 1.5rem;
+    padding: 2.5rem 1.25rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
   }
 
   .hero h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
+  }
+
+  .hero-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 22px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-icon i {
+    font-size: 2.5rem;
+  }
+
+  .icon-rings {
+    inset: -20px;
+  }
+
+  .subtitle {
+    font-size: 1.05rem;
+  }
+
+  .description {
+    font-size: 0.95rem;
   }
 
   .hero-stats {
@@ -722,23 +747,122 @@ export default {
 
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .stats-card {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+
+  .stats-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .cta-section {
+    padding: 2.5rem 1.25rem;
+    border-radius: 16px;
   }
 
   .cta-content h2 {
     font-size: 1.75rem;
   }
+
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .features {
+    margin-bottom: 2rem;
+  }
+
+  .feature-card {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .feature-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 1rem;
+  }
+
+  .stat-item {
+    padding: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+  }
 }
 
 @media (max-width: 480px) {
+  .hero {
+    padding: 2rem 1rem;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+  }
+
+  .hero-icon i {
+    font-size: 2rem;
+  }
+
+  .hero-badge {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
   .hero-actions {
     flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .hero-actions .btn-primary,
+  .hero-actions .btn-outline {
+    width: 100%;
   }
 
   .hero-stats {
     flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .hero-stat {
+    min-width: 80px;
+  }
+
+  .stat-num {
+    font-size: 1.25rem;
   }
 
   .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-content h2 {
+    font-size: 1.4rem;
+  }
+
+  .cta-content p {
+    font-size: 0.95rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .features-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -838,9 +838,84 @@ export default {
   }
 }
 
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .upload-area {
+    padding: 1.5rem;
+  }
+
+  .upload-area i {
+    font-size: 2rem;
+  }
+
+  .talkers-card :deep(.p-datatable-wrapper),
+  .packets-card :deep(.p-datatable-wrapper) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .talkers-card :deep(.p-datatable-table),
+  .packets-card :deep(.p-datatable-table) {
+    min-width: 600px;
+  }
+
+  .anomaly-item {
+    padding: 1rem;
+  }
+
+  .no-anomalies {
+    padding: 2rem;
+  }
+}
+
 @media (max-width: 600px) {
   .summary-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-item .value {
+    font-size: 1.25rem;
+  }
+
+  .upload-area {
+    padding: 1.25rem;
+  }
+
+  .upload-area i {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .anomaly-item {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .protocol-bar {
+    gap: 0.5rem;
+  }
+
+  .protocol-name {
+    width: 50px;
+    font-size: 0.8rem;
+  }
+
+  .protocol-value {
+    width: 40px;
+    font-size: 0.85rem;
   }
 }
 </style>

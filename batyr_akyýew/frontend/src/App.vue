@@ -840,11 +840,16 @@ body {
 
 @media (max-width: 768px) {
   .app-main {
-    padding: 1rem;
+    padding: 0.75rem;
   }
 
   .top-header {
-    padding: 0 1rem;
+    padding: 0 0.75rem;
+    height: 56px;
+  }
+
+  .page-title {
+    font-size: 1rem;
   }
 
   .header-btn span {
@@ -853,6 +858,71 @@ body {
 
   .header-btn {
     padding: 0.5rem;
+  }
+
+  .app-footer {
+    padding: 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  /* Make PrimeVue DataTables horizontally scrollable on mobile */
+  .p-datatable {
+    overflow-x: auto;
+  }
+
+  .p-datatable-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .p-datatable .p-datatable-thead > tr > th,
+  .p-datatable .p-datatable-tbody > tr > td {
+    white-space: nowrap;
+    font-size: 0.8rem !important;
+    padding: 0.5rem 0.6rem !important;
+  }
+
+  .p-card {
+    border-radius: 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-main {
+    padding: 0.5rem;
+  }
+
+  .top-header {
+    height: 50px;
+    padding: 0 0.5rem;
+  }
+
+  .page-title {
+    font-size: 0.9rem;
+  }
+
+  .mobile-menu-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .header-btn {
+    padding: 0.4rem;
+  }
+
+  .header-btn i {
+    font-size: 0.9rem;
+  }
+
+  .app-footer {
+    font-size: 0.7rem;
+    padding: 0.5rem;
+  }
+
+  .p-datatable .p-datatable-thead > tr > th,
+  .p-datatable .p-datatable-tbody > tr > td {
+    font-size: 0.75rem !important;
+    padding: 0.4rem 0.5rem !important;
   }
 }
 </style>

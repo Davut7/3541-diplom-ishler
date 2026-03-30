@@ -62,5 +62,19 @@ h2 { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
 .detection-method strong { color: #10b981; }
 .detection-method p { margin-top: 0.25rem; color: var(--text-secondary); }
 @media (max-width: 1024px) { .techniques-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 768px) { .techniques-grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) {
+  .techniques-grid { grid-template-columns: 1fr; }
+  .page-header h1 { font-size: 1.3rem; }
+  h2 { font-size: 1.1rem; }
+  .tech-header h3 { font-size: 0.95rem; }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 { font-size: 1.1rem; }
+  .page-header p { font-size: 0.85rem; }
+  .tech-icon { width: 40px; height: 40px; }
+  .tech-icon i { font-size: 1.2rem; }
+  .tech-desc { font-size: 0.85rem; }
+  .detection-method { font-size: 0.8rem; padding: 0.5rem; }
+}
 </style>

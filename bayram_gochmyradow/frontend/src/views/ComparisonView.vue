@@ -587,12 +587,146 @@ section h2 {
     font-size: 1.75rem;
   }
 
+  .comparison-header p {
+    font-size: 0.95rem;
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+
   .advantages-grid {
     grid-template-columns: 1fr;
   }
 
+  .advantage-card {
+    padding: 1.5rem;
+  }
+
   .legend-items {
     gap: 1rem;
+  }
+
+  .tool-card {
+    padding: 1.5rem;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 0.75rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .cta {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .cta h2 {
+    font-size: 1.4rem;
+  }
+
+  .btn {
+    padding: 0.85rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .comparison-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .comparison-header p {
+    font-size: 0.85rem;
+  }
+
+  section h2 {
+    font-size: 1.2rem;
+  }
+
+  .table-wrapper {
+    border-radius: 0.75rem;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 0.6rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .tool-header span {
+    font-size: 0.7rem;
+  }
+
+  .tool-header i {
+    font-size: 1.1rem;
+  }
+
+  .value-yes,
+  .value-no,
+  .value-partial {
+    font-size: 1rem;
+  }
+
+  .legend-item {
+    font-size: 0.85rem;
+  }
+
+  .advantage-card {
+    padding: 1.25rem;
+  }
+
+  .advantage-card h3 {
+    font-size: 1rem;
+  }
+
+  .advantage-card p {
+    font-size: 0.8rem;
+  }
+
+  .advantage-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1rem;
+  }
+
+  .advantage-icon i {
+    font-size: 1.25rem;
+  }
+
+  .tool-card {
+    padding: 1.25rem;
+  }
+
+  .tool-card h3 {
+    font-size: 1rem;
+  }
+
+  .tool-card p {
+    font-size: 0.85rem;
+  }
+
+  .feature-tag {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .cta {
+    padding: 2rem 1rem;
+    border-radius: 1rem;
+  }
+
+  .cta h2 {
+    font-size: 1.2rem;
+  }
+
+  .cta p {
+    font-size: 0.85rem;
   }
 }
 </style>

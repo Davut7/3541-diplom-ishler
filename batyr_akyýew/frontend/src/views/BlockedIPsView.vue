@@ -494,4 +494,53 @@ export default {
   gap: 1rem;
   margin-top: 1.5rem;
 }
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .header-content h1 {
+    font-size: 1.4rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  :deep(.p-datatable-table-container) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .add-dialog {
+    max-width: 95%;
+    margin: 0 0.5rem;
+  }
+
+  .dialog-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content h1 {
+    font-size: 1.2rem;
+    gap: 0.5rem;
+  }
+
+  .stat-icon {
+    font-size: 1.5rem;
+    padding: 0.75rem;
+  }
+
+  .stat-value {
+    font-size: 1.4rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+  }
+}
 </style>

@@ -790,11 +790,54 @@ export default {
 
 @media (max-width: 500px) {
   .login-panel {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
 
   .login-container {
     max-width: 100%;
+  }
+
+  .login-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .login-header p {
+    font-size: 0.8rem;
+  }
+
+  .logo i {
+    font-size: 2.5rem;
+  }
+
+  .login-card :deep(.p-card-content) {
+    padding: 1rem !important;
+  }
+
+  .field {
+    margin-bottom: 1rem;
+  }
+
+  .field :deep(.p-inputtext),
+  .field :deep(.p-password-input) {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.9rem;
+  }
+
+  .submit-btn {
+    padding: 0.75rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .toggle-form {
+    font-size: 0.8rem;
+  }
+
+  .demo-credentials {
+    padding: 0.75rem;
+  }
+
+  .demo-credentials p {
+    font-size: 0.8rem;
   }
 }
 </style>

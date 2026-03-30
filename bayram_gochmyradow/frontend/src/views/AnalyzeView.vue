@@ -1559,13 +1559,30 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .analyze-view h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
   .risk-overview {
     flex-direction: column;
     text-align: center;
+    padding: 1.25rem;
+    gap: 1.5rem;
+  }
+
+  .risk-score-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .risk-score-value .score {
+    font-size: 1.5rem;
   }
 
   .risk-summary {
     justify-content: center;
+    gap: 1.5rem;
   }
 
   .info-grid {
@@ -1582,6 +1599,168 @@ onMounted(() => {
 
   .result-tabs {
     flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .tab-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .tab-content {
+    padding: 1rem;
+  }
+
+  .results-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .results-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .results-actions .btn {
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .dropzone {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .dropzone-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .dropzone-icon i {
+    font-size: 2rem;
+  }
+
+  .permissions-table table {
+    min-width: 600px;
+  }
+
+  .issue-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .summary-item .count {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .analyze-view h1 {
+    font-size: 1.3rem;
+  }
+
+  .risk-overview {
+    padding: 1rem;
+  }
+
+  .risk-score-circle {
+    width: 100px;
+    height: 100px;
+  }
+
+  .risk-score-value .score {
+    font-size: 1.25rem;
+  }
+
+  .risk-level {
+    padding: 0.35rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  .risk-summary {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+    gap: 0.3rem;
+  }
+
+  .tab-content {
+    padding: 0.75rem;
+  }
+
+  .perm-stat {
+    padding: 0.75rem;
+  }
+
+  .perm-stat .count {
+    font-size: 1.5rem;
+  }
+
+  .info-card {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .info-content .value {
+    font-size: 0.85rem;
+  }
+
+  .issue-card {
+    padding: 1rem;
+  }
+
+  .issue-card h4 {
+    font-size: 0.9rem;
+  }
+
+  .issue-card p {
+    font-size: 0.8rem;
+  }
+
+  .dropzone {
+    padding: 2rem 1rem;
+  }
+
+  .dropzone-content h3 {
+    font-size: 0.95rem;
+  }
+
+  .dropzone-content p {
+    font-size: 0.8rem;
+  }
+
+  .signature-status {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .status-text span {
+    font-size: 1.2rem;
+  }
+
+  .cert-item .value {
+    font-size: 0.85rem;
+  }
+
+  .fingerprint {
+    font-size: 0.65rem;
+  }
+
+  .manifest-section h3 {
+    font-size: 0.85rem;
+  }
+
+  .component-list li {
+    font-size: 0.75rem;
   }
 }
 </style>

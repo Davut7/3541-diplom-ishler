@@ -305,5 +305,55 @@ export default {
   .types-grid {
     grid-template-columns: 1fr;
   }
+
+  .api-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .api-item code {
+    font-size: 0.9rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .type-item {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .step-item h3 {
+    font-size: 0.85rem;
+  }
+
+  .step-item p {
+    font-size: 0.75rem;
+  }
+
+  .step-number {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+
+  .type-header i {
+    font-size: 1.25rem;
+  }
+
+  .type-item p {
+    font-size: 0.85rem;
+  }
+
+  .type-examples {
+    font-size: 0.8rem;
+  }
+
+  .api-item p {
+    font-size: 0.8rem;
+  }
 }
 </style>

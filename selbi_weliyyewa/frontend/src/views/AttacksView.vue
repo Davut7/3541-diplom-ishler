@@ -166,5 +166,16 @@ export default {
 
 @media (max-width: 768px) {
   .attacks-grid { grid-template-columns: 1fr; }
+  .page-header h1 { font-size: 1.5rem; }
+  .attack-header h3 { font-size: 1rem; }
+  .attack-icon { width: 42px; height: 42px; }
+  .attack-icon i { font-size: 1.2rem; }
+  .methods-list { gap: 0.35rem; }
+}
+
+@media (max-width: 480px) {
+  .attack-header { gap: 0.75rem; }
+  .attack-desc { font-size: 0.8rem; }
+  .attack-details { font-size: 0.85rem; }
 }
 </style>

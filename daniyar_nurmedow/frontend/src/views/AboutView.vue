@@ -282,5 +282,78 @@ export default {
   .features-list {
     grid-template-columns: 1fr;
   }
+
+  .about-logo h1 {
+    font-size: 1.8rem;
+  }
+
+  .about-logo i {
+    font-size: 2rem;
+  }
+
+  .author-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .author-avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .author-avatar i {
+    font-size: 1.8rem;
+  }
+
+  .tech-item {
+    padding: 1rem;
+  }
+
+  .tech-item i {
+    font-size: 1.5rem;
+  }
+
+  .author-card h2,
+  .tech-card h2,
+  .features-card h2,
+  .resources-card h2 {
+    font-size: 1.1rem;
+  }
+
+  .topic {
+    font-size: 0.8rem;
+  }
+
+  .resource-item {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-logo h1 {
+    font-size: 1.5rem;
+  }
+
+  .about-logo i {
+    font-size: 1.5rem;
+  }
+
+  .desc-card p {
+    font-size: 0.85rem;
+  }
+
+  .features-list li {
+    font-size: 0.85rem;
+  }
+
+  .topic {
+    font-size: 0.75rem;
+  }
+
+  .tech-item p {
+    font-size: 0.8rem;
+  }
 }
 </style>

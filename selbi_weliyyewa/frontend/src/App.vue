@@ -411,6 +411,54 @@ body {
 }
 
 @media (max-width: 1024px) {
-  .header-nav { display: none; }
+  .header-nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    max-width: 50vw;
+    flex-shrink: 1;
+  }
+  .header-nav::-webkit-scrollbar { display: none; }
+  .nav-link { white-space: nowrap; font-size: 0.8rem; padding: 0.5rem 0.75rem; }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+  }
+  .header-left { flex-shrink: 0; }
+  .header-nav {
+    order: 3;
+    max-width: 100%;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    flex-shrink: 1;
+  }
+  .header-nav::-webkit-scrollbar { display: none; }
+  .nav-link { white-space: nowrap; font-size: 0.8rem; padding: 0.5rem 0.6rem; gap: 0.3rem; }
+  .header-right { flex-shrink: 0; }
+  .logo-text { font-size: 1.2rem; }
+  .neural-logo { width: 35px; height: 35px; }
+  .neuron-core { width: 16px; height: 16px; }
+  .app-main { padding: 1rem; }
+  .app-footer { padding: 1rem; }
+  .app-footer p { font-size: 0.85rem; }
+}
+
+@media (max-width: 480px) {
+  .app-header { padding: 0.5rem 0.75rem; }
+  .logo-text { font-size: 1rem; }
+  .nav-link { font-size: 0.75rem; padding: 0.4rem 0.5rem; }
+  .nav-link i { font-size: 0.85rem; }
+  .lang-btn { padding: 0.4rem 0.5rem; font-size: 0.7rem; }
+  .theme-toggle { padding: 0.4rem; font-size: 0.9rem; }
+  .header-right { gap: 0.5rem; }
+  .app-main { padding: 0.75rem; }
 }
 </style>

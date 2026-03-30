@@ -563,8 +563,204 @@ section h2 {
     grid-template-columns: 1fr;
   }
 
+  .about-header {
+    margin-bottom: 2.5rem;
+  }
+
   .about-header h1 {
     font-size: 1.75rem;
+  }
+
+  .about-header p {
+    font-size: 0.95rem;
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .step-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .benefit-card {
+    padding: 1rem;
+  }
+
+  .benefit-card span {
+    font-size: 0.85rem;
+  }
+
+  .author-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .author-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .author-avatar i {
+    font-size: 2.5rem;
+  }
+
+  .author-info h3 {
+    font-size: 1.25rem;
+  }
+
+  .author-badge {
+    position: static;
+    margin-top: 0.5rem;
+  }
+
+  .cta {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .cta h2 {
+    font-size: 1.4rem;
+  }
+
+  .info-card {
+    padding: 1.5rem;
+  }
+
+  .info-card i {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .about-header p {
+    font-size: 0.85rem;
+  }
+
+  section h2 {
+    font-size: 1.2rem;
+  }
+
+  .step-card {
+    padding: 1.25rem 1rem;
+  }
+
+  .step-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .step-icon i {
+    font-size: 1.25rem;
+  }
+
+  .step-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .step-card p {
+    font-size: 0.8rem;
+  }
+
+  .benefit-card {
+    padding: 0.85rem;
+    gap: 0.75rem;
+  }
+
+  .benefit-card i {
+    font-size: 1rem;
+  }
+
+  .benefit-card span {
+    font-size: 0.8rem;
+  }
+
+  .tech-card {
+    padding: 1rem;
+  }
+
+  .tech-card h3 {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .tech-name {
+    font-size: 0.9rem;
+  }
+
+  .tech-desc {
+    font-size: 0.75rem;
+  }
+
+  .info-card {
+    padding: 1.25rem;
+  }
+
+  .info-card i {
+    font-size: 1.75rem;
+  }
+
+  .info-card h3 {
+    font-size: 1rem;
+  }
+
+  .info-card p {
+    font-size: 0.8rem;
+  }
+
+  .author-card {
+    padding: 1.25rem;
+  }
+
+  .author-avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .author-avatar i {
+    font-size: 2rem;
+  }
+
+  .author-info h3 {
+    font-size: 1.1rem;
+  }
+
+  .author-role {
+    font-size: 0.9rem;
+  }
+
+  .author-university,
+  .author-department {
+    font-size: 0.8rem;
+  }
+
+  .cta {
+    padding: 2rem 1rem;
+    border-radius: 1rem;
+  }
+
+  .cta h2 {
+    font-size: 1.2rem;
+  }
+
+  .cta p {
+    font-size: 0.85rem;
+  }
+
+  .btn {
+    padding: 0.85rem 1.5rem;
+    font-size: 0.9rem;
   }
 }
 </style>

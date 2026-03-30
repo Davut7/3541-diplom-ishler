@@ -529,17 +529,40 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .header-content h1 {
+    font-size: 1.2rem;
+  }
+
   .ai-status-row {
     grid-template-columns: 1fr;
+  }
+
+  .model-stats {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .model-stat .value {
+    font-size: 1.1rem;
   }
 
   .capabilities-grid {
     grid-template-columns: 1fr;
   }
 
+  .capability-item {
+    padding: 0.75rem;
+  }
+
   .nn-diagram {
     flex-direction: column;
     gap: 1rem;
+    padding: 1rem;
   }
 
   .nn-connections {
@@ -547,6 +570,52 @@ export default {
     height: 30px;
     background: linear-gradient(180deg, #06b6d4, #8b5cf6, #22c55e);
     margin: 0;
+  }
+
+  .threats-card :deep(.p-datatable-wrapper) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .threats-card :deep(.p-datatable-table) {
+    min-width: 500px;
+  }
+
+  .confidence-bar {
+    flex-wrap: nowrap;
+  }
+
+  .model-card h3,
+  .learning-card h3,
+  .capabilities-card h3,
+  .threats-card h3,
+  .neural-network-card h3 {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .model-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .model-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .model-icon i {
+    font-size: 1.4rem;
+  }
+
+  .learning-item .value {
+    font-size: 1.1rem;
+  }
+
+  .learning-icon {
+    width: 38px;
+    height: 38px;
   }
 }
 </style>

@@ -188,8 +188,19 @@ export default {
 .step p { color: var(--text-secondary); font-size: 0.8rem; }
 
 @media (max-width: 768px) {
-  .gan-flow { flex-direction: column; }
+  .gan-flow { flex-direction: column; gap: 1rem; }
   .flow-arrow { transform: rotate(90deg); }
   .process-steps { grid-template-columns: 1fr; }
+  .page-header h1 { font-size: 1.5rem; }
+  .section-card h2 { font-size: 1.1rem; }
+  .component-icon { width: 60px; height: 60px; }
+  .component-icon i { font-size: 1.5rem; }
+  .gan-component p { max-width: none; }
+}
+
+@media (max-width: 480px) {
+  .step-number { width: 32px; height: 32px; font-size: 0.85rem; }
+  .step h4 { font-size: 0.85rem; }
+  .step p { font-size: 0.75rem; }
 }
 </style>

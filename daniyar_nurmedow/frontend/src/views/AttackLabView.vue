@@ -1412,7 +1412,15 @@ export default {
   }
 
   .glitch-title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+  }
+
+  .page-header {
+    padding: 1.25rem 1rem;
+  }
+
+  .card-content {
+    padding: 1rem;
   }
 
   .payload-buttons {
@@ -1421,6 +1429,81 @@ export default {
 
   .input-row {
     flex-direction: column;
+  }
+
+  .attack-type {
+    padding: 0.75rem;
+  }
+
+  .attack-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .attack-info h4 {
+    font-size: 0.85rem;
+  }
+
+  .attack-info p {
+    font-size: 0.75rem;
+  }
+
+  .preview-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .code-block {
+    font-size: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .execute-btn {
+    font-size: 0.85rem;
+    padding: 0.85rem;
+  }
+
+  .fake-alert {
+    max-width: 100%;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+  }
+
+  .warning-card .warning-text {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .glitch-title {
+    font-size: 1.1rem;
+  }
+
+  .card-content {
+    padding: 0.75rem;
+  }
+
+  .attack-type {
+    padding: 0.6rem;
+    gap: 0.6rem;
+  }
+
+  .payload-btn {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .code-block {
+    font-size: 0.7rem;
+    padding: 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
   }
 }
 
@@ -2090,6 +2173,11 @@ export default {
     flex-direction: column;
   }
 
+  .auto-test-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .results-header {
     flex-direction: column;
     align-items: flex-start;
@@ -2098,6 +2186,7 @@ export default {
 
   .result-item {
     flex-wrap: wrap;
+    padding: 0.6rem 0.75rem;
   }
 
   .result-status {
@@ -2108,18 +2197,98 @@ export default {
   .security-score-section {
     flex-direction: column;
     text-align: center;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .score-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .score-value {
+    font-size: 1.2rem;
   }
 
   .score-details {
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
   .headers-grid {
     flex-direction: column;
   }
 
+  .header-item {
+    font-size: 0.7rem;
+  }
+
   .recommendation-item {
     flex-direction: column;
+  }
+
+  .target-chips {
+    flex-direction: column;
+  }
+
+  .target-chip {
+    width: 100%;
+  }
+
+  .auto-test-description {
+    font-size: 0.8rem;
+  }
+
+  .results-list {
+    max-height: 300px;
+  }
+
+  .vuln-fix-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .summary-box {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .result-name {
+    font-size: 0.75rem;
+  }
+
+  .result-payload {
+    font-size: 0.65rem;
+  }
+
+  .score-circle {
+    width: 70px;
+    height: 70px;
+  }
+
+  .score-value {
+    font-size: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1rem;
+  }
+
+  .rec-title {
+    font-size: 0.8rem;
+  }
+
+  .rec-description {
+    font-size: 0.75rem;
+  }
+
+  .rec-code {
+    font-size: 0.65rem;
   }
 }
 </style>

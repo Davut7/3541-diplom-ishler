@@ -858,8 +858,51 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .hero {
+    padding: 2rem 0.5rem;
+  }
+
+  .hero-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-icon i {
+    font-size: 2.5rem;
+  }
+
+  .orbit-ring {
+    width: 130px;
+    height: 130px;
+  }
+
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.6rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stats-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .stats-header h2 {
+    font-size: 1rem;
   }
 
   .stats-grid,
@@ -867,9 +910,33 @@ export default {
     grid-template-columns: 1fr;
   }
 
+  .stat-item {
+    padding: 0.75rem;
+  }
+
+  .stat-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+  }
+
+  .preview-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .preview-header h2 {
+    font-size: 1rem;
+  }
+
   .neural-diagram {
     flex-direction: column;
     gap: 1rem;
+    padding: 1rem;
   }
 
   .connections {
@@ -884,6 +951,10 @@ export default {
     gap: 1rem;
   }
 
+  .model-stat .value {
+    font-size: 1.4rem;
+  }
+
   .threat-item {
     flex-direction: column;
     text-align: center;
@@ -892,6 +963,59 @@ export default {
   .threat-meta {
     justify-content: center;
     flex-wrap: wrap;
+  }
+
+  .section-header h2 {
+    font-size: 1rem;
+  }
+
+  .neural-section h2 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 1.5rem 0.25rem;
+  }
+
+  .hero-title {
+    font-size: 1.3rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-description {
+    font-size: 0.9rem;
+  }
+
+  .hero-icon {
+    width: 65px;
+    height: 65px;
+  }
+
+  .hero-icon i {
+    font-size: 2rem;
+  }
+
+  .stat-value {
+    font-size: 1.1rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+  }
+
+  .feature-icon {
+    width: 55px;
+    height: 55px;
+  }
+
+  .threat-icon {
+    width: 38px;
+    height: 38px;
   }
 }
 </style>

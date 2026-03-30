@@ -797,7 +797,15 @@ export default {
   }
 
   .glitch-title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+  }
+
+  .page-header {
+    padding: 1.25rem 1rem;
+  }
+
+  .card-content {
+    padding: 1rem;
   }
 
   .techniques-grid {
@@ -806,6 +814,78 @@ export default {
 
   .checklist {
     grid-template-columns: 1fr;
+  }
+
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .code-block {
+    font-size: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .csp-item code {
+    font-size: 0.7rem;
+    word-break: break-all;
+  }
+
+  .output-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .test-btn {
+    font-size: 0.85rem;
+    padding: 0.85rem;
+  }
+
+  .technique-example code {
+    font-size: 0.75rem;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .glitch-title {
+    font-size: 1.1rem;
+  }
+
+  .card-content {
+    padding: 0.75rem;
+  }
+
+  .code-block {
+    font-size: 0.7rem;
+    padding: 0.5rem;
+  }
+
+  .checklist-item {
+    padding: 0.5rem;
+  }
+
+  .check-text {
+    font-size: 0.78rem;
+  }
+
+  .code-section h4 {
+    font-size: 0.85rem;
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+  }
+
+  .defense-option {
+    padding: 0.5rem;
+  }
+
+  .option-name {
+    font-size: 0.75rem;
   }
 }
 </style>

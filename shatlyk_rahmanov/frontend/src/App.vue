@@ -683,19 +683,96 @@ body {
 
 @media (max-width: 768px) {
   .header-container {
-    padding: 1rem;
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+
+  .logo-icon i {
+    font-size: 1.2rem;
+  }
+
+  .logo-flames {
+    top: -8px;
+  }
+
+  .flame {
+    width: 7px;
+    height: 12px;
+  }
+
+  .flame.f2 {
+    height: 15px;
+  }
+
+  .logo-ai {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+  }
+
+  .logo-firewall {
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+  }
+
+  .main-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.25rem;
+  }
+
+  .main-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link {
+    padding: 0.6rem;
+    flex-shrink: 0;
   }
 
   .nav-link span {
     display: none;
   }
 
-  .nav-link {
-    padding: 0.75rem;
+  .nav-link i {
+    font-size: 1.1rem;
+  }
+
+  .header-actions {
+    gap: 0.5rem;
+  }
+
+  .status-indicator .status-text {
+    display: none;
+  }
+
+  .status-indicator {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .action-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.8rem;
+  }
+
+  .lang-btn {
+    padding: 0 0.75rem;
   }
 
   .app-main {
-    padding: 1rem;
+    padding: 0.75rem;
   }
 
   .footer-content {
@@ -708,8 +785,69 @@ body {
     text-align: center;
   }
 
-  .status-indicator .status-text {
-    display: none;
+  .footer-tagline {
+    font-size: 0.8rem;
+  }
+
+  .fire-bg {
+    height: 150px;
+  }
+
+  /* Global table scroll on mobile */
+  :deep(.p-datatable-wrapper) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  :deep(.p-card-content) {
+    padding: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .logo {
+    gap: 0.5rem;
+  }
+
+  .logo-icon {
+    width: 35px;
+    height: 35px;
+  }
+
+  .logo-ai {
+    font-size: 0.7rem;
+  }
+
+  .logo-firewall {
+    font-size: 0.9rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem;
+  }
+
+  .app-main {
+    padding: 0.5rem;
+  }
+
+  .app-footer {
+    padding: 1rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.7rem;
+  }
+
+  .footer-info p {
+    font-size: 0.8rem;
+  }
+
+  :deep(.p-card-content) {
+    padding: 0.75rem !important;
   }
 }
 </style>

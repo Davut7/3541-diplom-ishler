@@ -311,8 +311,25 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .about-logo h1 {
+    font-size: 2rem;
+  }
+
+  .about-logo i {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
   .features-list {
     grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .features-list li {
+    font-size: 0.9rem;
   }
 
   .tech-grid {
@@ -323,6 +340,69 @@ export default {
     flex-direction: column;
     align-items: center;
     text-align: center;
+  }
+
+  .author-avatar {
+    width: 64px;
+    height: 64px;
+  }
+
+  .author-avatar i {
+    font-size: 2rem;
+  }
+
+  .section-card h2 {
+    font-size: 1.1rem;
+  }
+
+  .section-card p,
+  .description-card p {
+    font-size: 0.9rem;
+  }
+
+  .warning-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .warning-content > i {
+    font-size: 1.5rem;
+  }
+
+  .warning-content p {
+    font-size: 0.85rem;
+  }
+
+  .topic {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-logo h1 {
+    font-size: 1.6rem;
+  }
+
+  .about-logo i {
+    font-size: 2rem;
+  }
+
+  .about-logo {
+    gap: 0.5rem;
+  }
+
+  .section-card h2 {
+    font-size: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .author-details h3 {
+    font-size: 1rem;
+  }
+
+  .author-project {
+    font-size: 0.85rem;
   }
 }
 </style>

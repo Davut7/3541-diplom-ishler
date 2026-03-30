@@ -445,7 +445,78 @@ body {
   }
 
   .app-main {
-    padding: 1rem;
+    padding: 1rem 0.75rem;
+  }
+
+  .footer-content {
+    padding: 2rem 1rem 1rem;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .footer-logo {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    padding: 0.5rem;
+  }
+
+  .logo {
+    font-size: 0.8rem;
+  }
+
+  .logo i {
+    font-size: 1.1rem;
+  }
+
+  .nav-links {
+    gap: 0.15rem;
+  }
+
+  .nav-link {
+    padding: 0.35rem 0.45rem;
+    font-size: 0.7rem;
+  }
+
+  .nav-link i {
+    font-size: 0.8rem;
+  }
+
+  .lang-btn {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.7rem;
+  }
+
+  .theme-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .header-actions {
+    gap: 0.5rem;
+  }
+
+  .app-main {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .footer-content {
+    padding: 1.5rem 0.75rem 1rem;
+  }
+
+  .footer-info p {
+    font-size: 0.85rem;
+  }
+
+  .footer-bottom {
+    font-size: 0.75rem;
   }
 }
 </style>

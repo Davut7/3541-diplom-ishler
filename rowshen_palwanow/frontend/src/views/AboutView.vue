@@ -349,5 +349,77 @@ export default {
   .tech-grid { grid-template-columns: repeat(2, 1fr); }
   .author-info { flex-direction: column; align-items: center; text-align: center; }
   .about-hero h1 { font-size: 1.75rem; }
+
+  .about-hero {
+    padding: 2rem 0.75rem;
+  }
+
+  .hero-emblem {
+    width: 60px;
+    height: 60px;
+  }
+
+  .hero-emblem i {
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .desc-card p {
+    font-size: 0.95rem;
+  }
+
+  .author-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .avatar-initials {
+    font-size: 1.5rem;
+  }
+
+  .author-details h3 {
+    font-size: 1.25rem;
+  }
+
+  .topic-item {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+    font-size: 0.85rem;
+  }
+
+  .topic-lang {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .tech-grid { grid-template-columns: 1fr; }
+  .about-hero h1 { font-size: 1.5rem; }
+
+  .tech-item {
+    padding: 1rem;
+  }
+
+  .tech-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .tech-icon i {
+    font-size: 1.25rem;
+  }
+
+  .feature-item {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .about-footer {
+    padding: 1.5rem 0.5rem;
+  }
 }
 </style>

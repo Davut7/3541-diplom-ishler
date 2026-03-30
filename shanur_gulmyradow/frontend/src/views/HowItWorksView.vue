@@ -282,5 +282,63 @@ export default {
   .cases-grid {
     grid-template-columns: 1fr;
   }
+
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .diagram-card h2,
+  .faq-card h2,
+  .use-cases h2 {
+    font-size: 1.25rem;
+  }
+
+  .step-item {
+    text-align: left;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .step-number {
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .case-item {
+    padding: 1.25rem;
+  }
+
+  .case-item i {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .flow-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .flow-icon i {
+    font-size: 1.25rem;
+  }
+
+  .flow-item span {
+    font-size: 0.75rem;
+  }
+
+  .step-item h3 {
+    font-size: 0.85rem;
+  }
+
+  .step-item p {
+    font-size: 0.75rem;
+  }
 }
 </style>

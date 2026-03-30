@@ -305,5 +305,22 @@ export default {
   .history-toolbar { flex-direction: column; align-items: stretch; }
   .search-box { max-width: none; }
   .detail-grid { grid-template-columns: 1fr; }
+  .history-card :deep(.p-datatable) { overflow-x: auto; }
+  .history-card :deep(.p-datatable-table) { min-width: 600px; }
+  .page-header h1 { font-size: 1.3rem; }
+  .hash-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .hash-item code { width: 100%; font-size: 0.65rem; }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 { font-size: 1.1rem; }
+  .page-header p { font-size: 0.85rem; }
+  .empty-icon { font-size: 3rem; }
+  .empty-state { padding: 2rem 1rem; }
+  .empty-state p { font-size: 0.95rem; }
+}
+
+:deep(.p-dialog) {
+  max-width: 95vw !important;
 }
 </style>

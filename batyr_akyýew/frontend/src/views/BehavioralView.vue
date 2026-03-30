@@ -305,8 +305,56 @@ code:hover {
 }
 
 @media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
   .summary-row {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .summary-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .summary-icon i {
+    font-size: 1.1rem;
+  }
+
+  .summary-value {
+    font-size: 1.4rem;
+  }
+
+  .summary-label {
+    font-size: 0.8rem;
+  }
+
+  :deep(.p-datatable-table-container) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .summary-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .summary-value {
+    font-size: 1.2rem;
+  }
+
+  .summary-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
   }
 }
 </style>

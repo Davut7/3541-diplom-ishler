@@ -440,5 +440,29 @@ export default {
   .option-arrow { display: none; }
   .results-summary { flex-direction: column; text-align: center; }
   .system-info-grid { flex-direction: column; gap: 0.75rem; }
+  .page-header h1 { font-size: 1.3rem; }
+  .option-icon { width: 55px; height: 55px; }
+  .option-icon i { font-size: 1.5rem; }
+  .summary-icon { width: 60px; height: 60px; }
+  .summary-icon i { font-size: 1.75rem; }
+  .summary-info h2 { font-size: 1.2rem; }
+  .threats-card :deep(.p-datatable) { overflow-x: auto; }
+  .threats-card :deep(.p-datatable-table) { min-width: 550px; }
+  .warning-content { flex-direction: column; text-align: center; gap: 1rem; }
+  .warning-content > i { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 { font-size: 1.1rem; }
+  .page-header p { font-size: 0.85rem; }
+  .option-info h3 { font-size: 0.95rem; }
+  .option-info p { font-size: 0.8rem; }
+  .option-meta { justify-content: center; flex-wrap: wrap; }
+  .summary-icon { width: 50px; height: 50px; }
+  .summary-icon i { font-size: 1.5rem; }
+  .summary-info h2 { font-size: 1rem; }
+  .scan-type-badge { font-size: 0.85rem; padding: 0.4rem 0.75rem; }
+  .current-file { font-size: 0.75rem; }
+  .threat-item { font-size: 0.85rem; }
 }
 </style>

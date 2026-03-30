@@ -782,4 +782,88 @@ export default {
     justify-content: center;
   }
 }
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .header-content h1 {
+    font-size: 1.4rem;
+  }
+
+  .flow-diagram {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .flow-arrow i {
+    transform: rotate(90deg);
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    flex: 1;
+    text-align: center;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .code-block pre {
+    padding: 1rem;
+    font-size: 0.75rem;
+  }
+
+  .proxy-status {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .status-indicator {
+    width: 55px;
+    height: 55px;
+  }
+
+  .status-indicator i {
+    font-size: 1.5rem;
+  }
+
+  .input-with-button {
+    flex-direction: column;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content h1 {
+    font-size: 1.2rem;
+  }
+
+  .flow-item {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .code-block code {
+    font-size: 0.7rem;
+  }
+
+  .url-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .url-box code {
+    font-size: 0.85rem;
+  }
+}
 </style>

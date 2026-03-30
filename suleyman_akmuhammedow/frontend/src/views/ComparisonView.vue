@@ -295,14 +295,68 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
   .advantages-grid {
     grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .advantage-card i {
+    font-size: 2rem;
+  }
+
+  .advantage-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .advantage-card p {
+    font-size: 0.8rem;
   }
 
   .legend {
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+  }
+
+  .comparison-table {
+    font-size: 0.8rem;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 0.6rem 0.5rem;
+  }
+
+  .advantages-section h2 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .page-header p {
+    font-size: 0.85rem;
+  }
+
+  .comparison-table {
+    font-size: 0.7rem;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 0.5rem 0.35rem;
+  }
+
+  .partial {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.35rem;
   }
 }
 </style>

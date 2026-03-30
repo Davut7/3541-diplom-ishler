@@ -616,6 +616,11 @@ export default {
     flex-wrap: wrap;
   }
 
+  .control-actions .p-button {
+    flex: 1;
+    min-width: 0;
+  }
+
   .capture-status {
     flex-direction: column;
     gap: 1rem;
@@ -624,6 +629,75 @@ export default {
 
   .detail-grid {
     grid-template-columns: 1fr;
+  }
+
+  .interface-select {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .filter-group {
+    min-width: 0;
+  }
+
+  .packets-table :deep(.p-datatable-wrapper) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .packets-table :deep(.p-datatable-table) {
+    min-width: 700px;
+  }
+
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .header-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .header-icon i {
+    font-size: 1.5rem;
+  }
+
+  .hex-dump {
+    font-size: 0.7rem;
+    padding: 1rem;
+  }
+
+  .status-stats {
+    gap: 1rem;
+  }
+
+  .status-stat span {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .control-actions {
+    flex-direction: column;
+  }
+
+  .control-actions .p-button {
+    width: 100%;
+  }
+
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .status-stats {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 </style>

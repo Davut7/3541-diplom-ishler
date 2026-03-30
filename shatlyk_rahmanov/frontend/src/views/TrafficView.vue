@@ -742,8 +742,22 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .header-content h1 {
+    font-size: 1.2rem;
+  }
+
   .stats-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.4rem;
   }
 
   .protocol-item {
@@ -755,6 +769,79 @@ export default {
     flex-direction: row;
     gap: 1rem;
     align-items: center;
+  }
+
+  .protocol-card h3,
+  .sources-card h3,
+  .timeline-card h3,
+  .connections-header h3 {
+    font-size: 0.95rem;
+  }
+
+  .chart-bars {
+    height: 150px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .bar-group .bar {
+    width: 5px;
+  }
+
+  .bar.incoming { left: 0; }
+  .bar.outgoing { left: 7px; }
+  .bar.blocked { left: 14px; }
+
+  .chart-legend {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .source-item {
+    flex-wrap: wrap;
+  }
+
+  .source-stats {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .connections-card :deep(.p-datatable-wrapper) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .connections-card :deep(.p-datatable-table) {
+    min-width: 700px;
+  }
+
+  .ai-decision {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    gap: 0.75rem;
+  }
+
+  .stat-value {
+    font-size: 1.2rem;
+  }
+
+  .stat-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .chart-bars {
+    height: 120px;
+  }
+
+  .hour-label {
+    font-size: 0.6rem;
   }
 }
 </style>

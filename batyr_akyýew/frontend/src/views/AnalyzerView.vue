@@ -861,6 +861,10 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
   .auto-test-header {
     flex-direction: column;
     align-items: stretch;
@@ -874,8 +878,68 @@ export default {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .auto-stat {
+    padding: 0.75rem;
+  }
+
+  .auto-stat-value {
+    font-size: 1.25rem;
+  }
+
   .log-entry {
     flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .log-type {
+    min-width: auto;
+  }
+
+  .log-ip {
+    min-width: auto;
+  }
+
+  .risk-circle {
+    width: 85px;
+    height: 85px;
+    font-size: 1.25rem;
+  }
+
+  .threat-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .auto-test-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .auto-stat-value {
+    font-size: 1.1rem;
+  }
+
+  .auto-stat-label {
+    font-size: 0.75rem;
+  }
+
+  .test-card h3, .results-card h3 {
+    font-size: 1rem;
+  }
+
+  .risk-circle {
+    width: 75px;
+    height: 75px;
+    font-size: 1.1rem;
   }
 }
 </style>

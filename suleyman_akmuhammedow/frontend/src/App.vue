@@ -408,11 +408,75 @@ body {
 
 @media (max-width: 768px) {
   .app-header {
-    padding: 1rem;
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .logo-text {
+    font-size: 1.2rem;
+  }
+
+  .detective-badge {
+    width: 36px;
+    height: 36px;
+  }
+
+  .detective-badge i {
+    font-size: 1rem;
   }
 
   .app-main {
-    padding: 1rem;
+    padding: 1rem 0.75rem;
+  }
+
+  .app-footer {
+    padding: 1rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .footer-badge {
+    font-size: 0.7rem;
+    gap: 0.5rem;
+  }
+
+  .lang-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+  }
+
+  .theme-toggle {
+    padding: 0.4rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .header-right {
+    gap: 0.5rem;
+  }
+
+  .logo-text {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  .detective-badge {
+    width: 32px;
+    height: 32px;
+  }
+
+  .app-main {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .app-footer p {
+    font-size: 0.75rem;
+    word-break: break-word;
   }
 }
 </style>

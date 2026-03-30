@@ -331,4 +331,71 @@ export default {
   color: var(--accent);
   transform: translateY(-3px);
 }
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .step-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+
+  .step-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .step-number {
+    width: 45px;
+    height: 45px;
+    font-size: 1.25rem;
+  }
+
+  .step-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .step-icon i {
+    font-size: 1.25rem;
+  }
+
+  .arch-sublayers {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .sublayer {
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+  }
+
+  .arch-layer {
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .step-content h3 {
+    font-size: 1rem;
+  }
+
+  .step-content p {
+    font-size: 0.85rem;
+  }
+}
 </style>

@@ -831,7 +831,15 @@ function safeRedirect(url) {
   }
 
   .glitch-title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+  }
+
+  .page-header {
+    padding: 1.25rem 1rem;
+  }
+
+  .card-content {
+    padding: 1rem;
   }
 
   .options-row {
@@ -859,6 +867,84 @@ function safeRedirect(url) {
   .vuln-line {
     flex-direction: row;
     gap: 0.5rem;
+  }
+
+  .example-buttons {
+    gap: 0.4rem;
+  }
+
+  .example-btn {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .patterns-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+  }
+
+  .no-vulnerabilities {
+    padding: 2rem 1rem;
+  }
+
+  .safe-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .safe-icon i {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .glitch-title {
+    font-size: 1.1rem;
+  }
+
+  .card-content {
+    padding: 0.75rem;
+  }
+
+  .example-btn {
+    font-size: 0.65rem;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .vuln-summary {
+    gap: 0.5rem;
+  }
+
+  .summary-item {
+    min-width: calc(50% - 0.25rem);
+    padding: 0.75rem 0.5rem;
+  }
+
+  .summary-item .count {
+    font-size: 1.2rem;
+  }
+
+  .vuln-desc {
+    font-size: 0.8rem;
+  }
+
+  .vuln-rec {
+    font-size: 0.7rem;
+  }
+
+  .pattern-item code {
+    font-size: 0.75rem;
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+  }
+
+  .editor-textarea {
+    font-size: 0.75rem !important;
   }
 }
 </style>

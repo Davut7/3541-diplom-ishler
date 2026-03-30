@@ -402,8 +402,78 @@ code {
 }
 
 @media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .stat-content {
+    gap: 0.75rem;
+  }
+
+  .stat-icon {
+    font-size: 1.5rem;
+  }
+
+  .stat-value {
+    font-size: 1.2rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+
+  .chart-container {
+    height: 250px;
+    max-width: 300px;
+  }
+
+  .table-header {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .table-header .p-button {
+    width: 100%;
+  }
+
+  /* Make DataTable horizontally scrollable on mobile */
+  .history-table :deep(.p-datatable-wrapper) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .history-table :deep(.p-datatable-table) {
+    min-width: 600px;
+  }
+
+  .empty-state {
+    padding: 2rem 1rem;
+  }
+
+  .empty-state i {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.25rem;
+  }
+
   .stats-grid {
     grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .chart-container {
+    height: 200px;
+    max-width: 250px;
   }
 }
 </style>

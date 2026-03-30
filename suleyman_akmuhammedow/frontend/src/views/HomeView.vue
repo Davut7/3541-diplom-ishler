@@ -431,16 +431,118 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .hero {
+    padding: 1.5rem 0;
+    gap: 2rem;
+  }
+
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-actions .p-button {
+    width: 100%;
+  }
+
+  .hero-badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.75rem;
   }
 
   .stats-section {
     grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    padding: 1rem 0;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .stat-icon {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
   }
 
   .features-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .features-section {
+    padding: 2rem 0;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-section {
+    padding: 2rem 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .cta-content h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.4rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .hero-description {
+    font-size: 0.85rem;
+  }
+
+  .stats-section {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .stat-card {
+    padding: 0.75rem;
+  }
+
+  .cta-section {
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+  }
+
+  .cta-content h2 {
+    font-size: 1.25rem;
+  }
+
+  .cta-content p {
+    font-size: 0.85rem;
   }
 }
 </style>
