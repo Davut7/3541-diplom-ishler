@@ -1,6 +1,5 @@
 <template>
   <div :class="['app', { 'dark-mode': darkMode }]">
-    <DevNavbar />
     <Toast />
 
     <!-- Scanline effect -->
@@ -47,6 +46,10 @@
           </router-link>
         </nav>
 
+        <button class="mobile-menu-btn" @click="mobileMenuOpen = !mobileMenuOpen">
+          <i :class="mobileMenuOpen ? 'pi pi-times' : 'pi pi-bars'"></i>
+        </button>
+
         <div class="header-right">
           <div class="status-indicator">
             <span class="status-dot"></span>
@@ -68,6 +71,50 @@
       <router-view :t="t" :language="language" />
     </main>
 
+    <div class="mobile-overlay" v-if="mobileMenuOpen" @click="mobileMenuOpen = false"></div>
+
+    <aside class="mobile-sidebar" :class="{ 'mobile-open': mobileMenuOpen }">
+      <div class="mobile-sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">
+            <span class="bracket">[</span>
+            <i class="pi pi-shield"></i>
+            <span class="bracket">]</span>
+          </div>
+          <div class="logo-text">
+            <span class="xss">XSS</span>
+            <span class="shield">_SHIELD</span>
+          </div>
+        </div>
+        <button class="mobile-close-btn" @click="mobileMenuOpen = false">
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
+      <nav class="mobile-sidebar-nav">
+        <router-link to="/" class="mobile-nav-item" @click="mobileMenuOpen = false">
+          <span class="nav-prefix">~/</span>home
+        </router-link>
+        <router-link to="/attack-lab" class="mobile-nav-item" @click="mobileMenuOpen = false">
+          <span class="nav-prefix">./</span>attack
+        </router-link>
+        <router-link to="/defense" class="mobile-nav-item" @click="mobileMenuOpen = false">
+          <span class="nav-prefix">./</span>defense
+        </router-link>
+        <router-link to="/scanner" class="mobile-nav-item" @click="mobileMenuOpen = false">
+          <span class="nav-prefix">./</span>scanner
+        </router-link>
+        <router-link to="/how-it-works" class="mobile-nav-item" @click="mobileMenuOpen = false">
+          <span class="nav-prefix">./</span>docs
+        </router-link>
+        <router-link to="/live-lab" class="mobile-nav-item" @click="mobileMenuOpen = false">
+          <span class="nav-prefix">./</span>lab
+        </router-link>
+        <router-link to="/about" class="mobile-nav-item" @click="mobileMenuOpen = false">
+          <span class="nav-prefix">./</span>about
+        </router-link>
+      </nav>
+    </aside>
+
     <footer class="app-footer">
       <div class="footer-content">
         <div class="footer-left">
@@ -86,14 +133,13 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import en from './locales/en.js'
 import tk from './locales/tk.js'
-import DevNavbar from './components/DevNavbar.vue'
 
 export default {
   name: 'App',
-  components: { DevNavbar },
   setup() {
     const darkMode = ref(true)
     const language = ref('en')
@@ -117,7 +163,14 @@ export default {
       if (savedLanguage) language.value = savedLanguage
     })
 
-    return { darkMode, language, t, toggleTheme, toggleLanguage }
+    const mobileMenuOpen = ref(false)
+    const route = useRoute()
+
+    watch(() => route.path, () => {
+      mobileMenuOpen.value = false
+    })
+
+    return { darkMode, language, t, toggleTheme, toggleLanguage, mobileMenuOpen }
   }
 }
 </script>
@@ -634,6 +687,125 @@ body {
   background: var(--cyber-surface) !important;
 }
 
+/* Mobile menu button - hidden by default */
+.mobile-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--cyber-surface);
+  border: 1px solid var(--cyber-border);
+  border-radius: 4px;
+  padding: 0.5rem 0.6rem;
+  cursor: pointer;
+  color: var(--cyber-primary);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  transition: all 0.2s;
+}
+
+.mobile-menu-btn:hover {
+  border-color: var(--cyber-primary);
+  box-shadow: var(--cyber-glow);
+}
+
+/* Mobile overlay */
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Mobile sidebar */
+.mobile-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 280px;
+  background: var(--cyber-surface);
+  border-right: 1px solid var(--cyber-border);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.dark-mode .mobile-sidebar {
+  background: linear-gradient(180deg, var(--cyber-surface) 0%, var(--cyber-bg) 100%);
+  box-shadow: 4px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-sidebar.mobile-open {
+  transform: translateX(0);
+}
+
+.mobile-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--cyber-border);
+}
+
+.mobile-close-btn {
+  background: none;
+  border: 1px solid var(--cyber-border);
+  border-radius: 4px;
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+  color: var(--cyber-text-dim);
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.mobile-close-btn:hover {
+  color: var(--cyber-danger);
+  border-color: var(--cyber-danger);
+}
+
+.mobile-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 0;
+}
+
+.mobile-nav-item {
+  text-decoration: none;
+  color: var(--cyber-text-dim);
+  padding: 14px 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+
+.mobile-nav-item .nav-prefix {
+  color: var(--cyber-secondary);
+  opacity: 0.7;
+}
+
+.mobile-nav-item:hover {
+  color: var(--cyber-primary);
+  background: rgba(0, 255, 136, 0.05);
+  border-left-color: var(--cyber-primary);
+}
+
+.mobile-nav-item.router-link-active {
+  color: var(--cyber-primary);
+  background: rgba(0, 255, 136, 0.1);
+  border-left-color: var(--cyber-primary);
+}
+
+.dark-mode .mobile-nav-item.router-link-active {
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .header-container {
@@ -667,22 +839,11 @@ body {
   }
 
   .main-nav {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    padding-bottom: 0.25rem;
-  }
-
-  .nav-item {
-    padding: 0.4rem 0.5rem;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .nav-item .nav-prefix {
     display: none;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
   }
 
   .logo {

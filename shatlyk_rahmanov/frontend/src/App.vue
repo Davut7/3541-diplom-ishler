@@ -1,6 +1,5 @@
 <template>
   <div :class="['app', { 'dark-mode': darkMode }]">
-    <DevNavbar />
     <Toast position="top-right" />
 
     <!-- Animated Fire Background -->
@@ -41,6 +40,10 @@
           </router-link>
         </nav>
 
+        <button class="mobile-menu-btn" @click="mobileMenuOpen = !mobileMenuOpen">
+          <i :class="mobileMenuOpen ? 'pi pi-times' : 'pi pi-bars'"></i>
+        </button>
+
         <div class="header-actions">
           <div class="status-indicator" :class="{ active: systemActive }">
             <span class="status-dot"></span>
@@ -55,6 +58,39 @@
         </div>
       </div>
     </header>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" v-if="mobileMenuOpen" @click="mobileMenuOpen = false"></div>
+
+    <!-- Mobile Sidebar -->
+    <aside class="mobile-sidebar" :class="{ 'mobile-open': mobileMenuOpen }">
+      <div class="mobile-sidebar-header">
+        <div class="mobile-logo-icon">
+          <i class="pi pi-shield"></i>
+          <div class="logo-flames">
+            <span class="flame f1"></span>
+            <span class="flame f2"></span>
+            <span class="flame f3"></span>
+          </div>
+        </div>
+        <div class="logo-text">
+          <span class="logo-ai">AI</span>
+          <span class="logo-firewall">FIREWALL</span>
+        </div>
+      </div>
+      <nav class="mobile-sidebar-nav">
+        <router-link
+          v-for="item in navItems"
+          :key="'mobile-' + item.path"
+          :to="item.path"
+          class="mobile-nav-link"
+          @click="mobileMenuOpen = false"
+        >
+          <i :class="item.icon"></i>
+          <span>{{ t.nav[item.key] }}</span>
+        </router-link>
+      </nav>
+    </aside>
 
     <!-- Main Content -->
     <main class="app-main">
@@ -82,18 +118,23 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
 import en from './locales/en.js'
 import tk from './locales/tk.js'
-import DevNavbar from './components/DevNavbar.vue'
 
 export default {
   name: 'App',
-  components: { DevNavbar },
   setup() {
     const darkMode = ref(false)
     const language = ref('en')
     const systemActive = ref(true)
+    const mobileMenuOpen = ref(false)
+    const route = useRoute()
+
+    watch(() => route.path, () => {
+      mobileMenuOpen.value = false
+    })
 
     const navItems = [
       { path: '/', key: 'home', icon: 'pi pi-home' },
@@ -141,7 +182,8 @@ export default {
       navItems,
       systemActive,
       toggleTheme,
-      toggleLanguage
+      toggleLanguage,
+      mobileMenuOpen
     }
   }
 }
@@ -663,6 +705,129 @@ body {
   border-radius: 12px !important;
 }
 
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+  border-color: var(--fire-orange);
+  color: var(--fire-orange);
+  box-shadow: 0 0 20px rgba(234, 88, 12, 0.3);
+}
+
+/* Mobile Overlay */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Mobile Sidebar */
+.mobile-sidebar {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 280px;
+  background: var(--bg-secondary);
+  border-right: 3px solid;
+  border-image: var(--fire-gradient) 1;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.mobile-sidebar.mobile-open {
+  transform: translateX(0);
+}
+
+.mobile-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.mobile-logo-icon {
+  width: 45px;
+  height: 45px;
+  background: var(--fire-gradient);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: var(--fire-glow);
+  flex-shrink: 0;
+}
+
+.mobile-logo-icon i {
+  font-size: 1.4rem;
+  color: white;
+  z-index: 2;
+}
+
+.mobile-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 0;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 14px 20px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.mobile-nav-link:hover {
+  color: var(--fire-orange);
+  background: rgba(234, 88, 12, 0.1);
+  border-left-color: var(--fire-orange);
+}
+
+.mobile-nav-link.router-link-active {
+  background: var(--fire-gradient);
+  color: white;
+  border-left-color: transparent;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-nav-link i {
+  font-size: 1.15rem;
+  width: 24px;
+  text-align: center;
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
   .header-container {
@@ -685,9 +850,25 @@ body {
 }
 
 @media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .mobile-overlay {
+    display: block;
+  }
+
+  .mobile-sidebar {
+    display: flex;
+  }
+
+  .main-nav {
+    display: none;
+  }
+
   .header-container {
     padding: 0.75rem 1rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 0.5rem;
   }
 
@@ -722,34 +903,6 @@ body {
   .logo-firewall {
     font-size: 1.1rem;
     letter-spacing: 1px;
-  }
-
-  .main-nav {
-    order: 3;
-    width: 100%;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 0.25rem;
-  }
-
-  .main-nav::-webkit-scrollbar {
-    display: none;
-  }
-
-  .nav-link {
-    padding: 0.6rem;
-    flex-shrink: 0;
-  }
-
-  .nav-link span {
-    display: none;
-  }
-
-  .nav-link i {
-    font-size: 1.1rem;
   }
 
   .header-actions {

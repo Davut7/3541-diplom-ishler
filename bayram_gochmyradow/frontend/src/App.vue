@@ -1,6 +1,5 @@
 <template>
   <div class="app-container" :class="{ 'dark-mode': isDarkMode }">
-    <DevNavbar />
     <header class="app-header">
       <div class="header-content">
         <div class="logo" @click="$router.push('/')">
@@ -35,6 +34,10 @@
           </router-link>
         </nav>
 
+        <button class="mobile-menu-btn" @click="mobileMenuOpen = !mobileMenuOpen">
+          <i :class="mobileMenuOpen ? 'pi pi-times' : 'pi pi-bars'"></i>
+        </button>
+
         <div class="header-actions">
           <div class="language-selector">
             <button
@@ -54,6 +57,43 @@
         </div>
       </div>
     </header>
+
+    <div class="mobile-overlay" v-if="mobileMenuOpen" @click="mobileMenuOpen = false"></div>
+
+    <div class="mobile-sidebar" :class="{ 'mobile-open': mobileMenuOpen }">
+      <div class="mobile-sidebar-header">
+        <div class="logo">
+          <i class="pi pi-shield"></i>
+          <span>{{ t('app.title') }}</span>
+        </div>
+      </div>
+      <nav class="mobile-nav-links">
+        <router-link to="/" class="mobile-nav-link">
+          <i class="pi pi-home"></i>
+          {{ t('nav.home') }}
+        </router-link>
+        <router-link to="/analyze" class="mobile-nav-link">
+          <i class="pi pi-search"></i>
+          {{ t('nav.analyze') }}
+        </router-link>
+        <router-link to="/history" class="mobile-nav-link">
+          <i class="pi pi-history"></i>
+          {{ t('nav.history') }}
+        </router-link>
+        <router-link to="/test" class="mobile-nav-link">
+          <i class="pi pi-play"></i>
+          {{ t('nav.test') }}
+        </router-link>
+        <router-link to="/comparison" class="mobile-nav-link">
+          <i class="pi pi-chart-bar"></i>
+          {{ t('nav.comparison') }}
+        </router-link>
+        <router-link to="/about" class="mobile-nav-link">
+          <i class="pi pi-info-circle"></i>
+          {{ t('nav.about') }}
+        </router-link>
+      </nav>
+    </div>
 
     <main class="app-main">
       <router-view :language="currentLocale" />
@@ -84,11 +124,17 @@
 </template>
 
 <script setup>
-import DevNavbar from './components/DevNavbar.vue'
-import { ref, inject, computed } from 'vue'
+import { ref, inject, computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { availableLocales } from './locales/index.js'
 
+const route = useRoute()
 const i18n = inject('i18n')
+const mobileMenuOpen = ref(false)
+
+watch(() => route.path, () => {
+  mobileMenuOpen.value = false
+})
 
 const isDarkMode = ref(localStorage.getItem('darkMode') === 'true')
 
@@ -519,6 +565,117 @@ body {
 
   .footer-bottom {
     font-size: 0.75rem;
+  }
+}
+
+/* Mobile menu */
+.mobile-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.mobile-menu-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.mobile-sidebar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background: var(--bg-color);
+  border-right: 1px solid var(--border-color);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.mobile-sidebar.mobile-open {
+  transform: translateX(0);
+}
+
+.mobile-sidebar-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 14px 20px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+
+.mobile-nav-link:hover {
+  background: var(--bg-secondary);
+  color: var(--text-color);
+}
+
+.mobile-nav-link.router-link-active {
+  background: var(--bg-secondary);
+  color: var(--primary-color);
+  border-left-color: var(--primary-color);
+}
+
+.mobile-nav-link i {
+  font-size: 1.15rem;
+  width: 24px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .mobile-overlay {
+    display: block;
+  }
+
+  .mobile-sidebar {
+    display: block;
+  }
+
+  .nav-links {
+    display: none !important;
   }
 }
 </style>

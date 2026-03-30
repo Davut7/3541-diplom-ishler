@@ -1,6 +1,5 @@
 <template>
   <div :class="{ 'dark-mode': isDarkMode }" class="app-container">
-    <DevNavbar />
     <!-- Neural Network Background Animation -->
     <div class="neural-bg">
       <div class="neural-line" v-for="n in 5" :key="n" :style="{ animationDelay: `${n * 0.5}s` }"></div>
@@ -57,8 +56,56 @@
         <button @click="toggleDarkMode" class="theme-toggle">
           <i :class="isDarkMode ? 'pi pi-sun' : 'pi pi-moon'"></i>
         </button>
+        <button class="mobile-menu-btn" @click="mobileMenuOpen = !mobileMenuOpen">
+          <i :class="mobileMenuOpen ? 'pi pi-times' : 'pi pi-bars'"></i>
+        </button>
       </div>
     </header>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" v-if="mobileMenuOpen" @click="mobileMenuOpen = false"></div>
+
+    <!-- Mobile Sidebar -->
+    <aside class="mobile-sidebar" :class="{ 'mobile-open': mobileMenuOpen }">
+      <div class="mobile-sidebar-header">
+        <div class="neural-logo">
+          <div class="neuron-core"></div>
+          <div class="neuron-ring"></div>
+          <div class="neuron-ring ring-2"></div>
+        </div>
+        <span class="logo-text">GAN<span class="logo-accent">Security</span></span>
+      </div>
+      <nav class="mobile-sidebar-nav">
+        <router-link to="/" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-home"></i>
+          {{ t.nav.home }}
+        </router-link>
+        <router-link to="/attacks" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-bolt"></i>
+          {{ t.nav.attacks }}
+        </router-link>
+        <router-link to="/defense" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-shield"></i>
+          {{ t.nav.defense }}
+        </router-link>
+        <router-link to="/simulator" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-play"></i>
+          {{ t.nav.simulator }}
+        </router-link>
+        <router-link to="/statistics" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-chart-bar"></i>
+          {{ t.nav.statistics }}
+        </router-link>
+        <router-link to="/how-it-works" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-question-circle"></i>
+          {{ t.nav.howItWorks }}
+        </router-link>
+        <router-link to="/about" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-info-circle"></i>
+          {{ t.nav.about }}
+        </router-link>
+      </nav>
+    </aside>
 
     <main class="app-main">
       <router-view :t="t" :language="language" />
@@ -77,16 +124,17 @@
 </template>
 
 <script>
-import { ref, computed, provide } from 'vue'
+import { ref, computed, provide, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { translations } from './locales'
-import DevNavbar from './components/DevNavbar.vue'
 
 export default {
   name: 'App',
-  components: { DevNavbar },
   setup() {
     const language = ref(localStorage.getItem('gan-language') || 'en')
     const isDarkMode = ref(localStorage.getItem('gan-darkmode') === 'true')
+    const mobileMenuOpen = ref(false)
+    const route = useRoute()
 
     const t = computed(() => translations[language.value])
 
@@ -100,10 +148,14 @@ export default {
       localStorage.setItem('gan-darkmode', isDarkMode.value)
     }
 
+    watch(() => route.path, () => {
+      mobileMenuOpen.value = false
+    })
+
     provide('language', language)
     provide('t', t)
 
-    return { language, isDarkMode, t, setLanguage, toggleDarkMode }
+    return { language, isDarkMode, t, setLanguage, toggleDarkMode, mobileMenuOpen }
   }
 }
 </script>
@@ -426,26 +478,115 @@ body {
   .nav-link { white-space: nowrap; font-size: 0.8rem; padding: 0.5rem 0.75rem; }
 }
 
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  display: none;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  transition: all 0.3s;
+}
+
+.mobile-menu-btn:hover {
+  border-color: var(--gradient-mid);
+  color: var(--gradient-mid);
+}
+
+/* Mobile Overlay */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+/* Mobile Sidebar */
+.mobile-sidebar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: var(--bg-secondary);
+  border-right: 2px solid transparent;
+  border-image: var(--neural-gradient) 1;
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  flex-direction: column;
+}
+
+.mobile-sidebar.mobile-open {
+  transform: translateX(0);
+}
+
+.mobile-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.08) 0%, rgba(139, 92, 246, 0.08) 50%, rgba(6, 182, 212, 0.08) 100%);
+}
+
+.mobile-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 0;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 14px 20px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  transition: all 0.3s;
+  border-left: 3px solid transparent;
+}
+
+.mobile-nav-link:hover {
+  color: var(--text-primary);
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.06) 0%, rgba(139, 92, 246, 0.06) 50%, rgba(6, 182, 212, 0.06) 100%);
+  border-left-color: var(--gradient-mid);
+}
+
+.mobile-nav-link.router-link-active {
+  background: var(--neural-gradient);
+  color: white;
+  border-left-color: transparent;
+  box-shadow: 0 2px 10px var(--glow-color);
+}
+
+.mobile-nav-link i {
+  font-size: 1.1rem;
+  width: 24px;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .app-header {
-    flex-wrap: wrap;
     padding: 0.75rem 1rem;
-    gap: 0.5rem;
   }
   .header-left { flex-shrink: 0; }
-  .header-nav {
-    order: 3;
-    max-width: 100%;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    flex-shrink: 1;
-  }
-  .header-nav::-webkit-scrollbar { display: none; }
-  .nav-link { white-space: nowrap; font-size: 0.8rem; padding: 0.5rem 0.6rem; gap: 0.3rem; }
+  .header-nav { display: none; }
   .header-right { flex-shrink: 0; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .mobile-sidebar { display: flex; }
+  .mobile-overlay { display: block; }
   .logo-text { font-size: 1.2rem; }
   .neural-logo { width: 35px; height: 35px; }
   .neuron-core { width: 16px; height: 16px; }

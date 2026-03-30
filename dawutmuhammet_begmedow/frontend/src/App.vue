@@ -1,6 +1,5 @@
 <template>
   <div :class="{ 'dark-mode': isDarkMode }" class="app-container">
-    <DevNavbar />
     <!-- Biohazard Warning Strip -->
     <div class="biohazard-strip">
       <span v-for="n in 20" :key="n" class="hazard-icon">☣</span>
@@ -14,14 +13,47 @@
         <span class="logo-text">Virus<span class="accent">Detect</span> Pro</span>
       </router-link>
 
-      <nav class="header-nav" :class="{ 'mobile-open': mobileMenuOpen }">
-        <router-link to="/" class="nav-link" @click="mobileMenuOpen = false"><i class="pi pi-home"></i> {{ t.nav.home }}</router-link>
-        <router-link to="/scan" class="nav-link" @click="mobileMenuOpen = false"><i class="pi pi-search"></i> {{ t.nav.scan }}</router-link>
-        <router-link to="/system-scan" class="nav-link" @click="mobileMenuOpen = false"><i class="pi pi-desktop"></i> {{ t.nav.systemScan || 'System Scan' }}</router-link>
-        <router-link to="/statistics" class="nav-link" @click="mobileMenuOpen = false"><i class="pi pi-chart-bar"></i> {{ t.nav.statistics }}</router-link>
-        <router-link to="/history" class="nav-link" @click="mobileMenuOpen = false"><i class="pi pi-history"></i> {{ t.nav.history }}</router-link>
-        <router-link to="/about" class="nav-link" @click="mobileMenuOpen = false"><i class="pi pi-info-circle"></i> {{ t.nav.about }}</router-link>
+      <nav class="header-nav">
+        <router-link to="/" class="nav-link"><i class="pi pi-home"></i> {{ t.nav.home }}</router-link>
+        <router-link to="/scan" class="nav-link"><i class="pi pi-search"></i> {{ t.nav.scan }}</router-link>
+        <router-link to="/system-scan" class="nav-link"><i class="pi pi-desktop"></i> {{ t.nav.systemScan || 'System Scan' }}</router-link>
+        <router-link to="/statistics" class="nav-link"><i class="pi pi-chart-bar"></i> {{ t.nav.statistics }}</router-link>
+        <router-link to="/history" class="nav-link"><i class="pi pi-history"></i> {{ t.nav.history }}</router-link>
+        <router-link to="/about" class="nav-link"><i class="pi pi-info-circle"></i> {{ t.nav.about }}</router-link>
       </nav>
+
+      <!-- Mobile Sidebar Overlay -->
+      <div class="mobile-overlay" v-if="mobileMenuOpen" @click="mobileMenuOpen = false"></div>
+
+      <!-- Mobile Sidebar -->
+      <aside class="mobile-sidebar" :class="{ 'mobile-open': mobileMenuOpen }">
+        <div class="mobile-sidebar-header">
+          <div class="mobile-sidebar-logo">
+            <span class="bio-symbol">☣</span>
+          </div>
+          <span class="mobile-sidebar-title">Virus<span class="accent">Detect</span></span>
+          <button @click="mobileMenuOpen = false" class="mobile-sidebar-close">
+            <i class="pi pi-times"></i>
+          </button>
+        </div>
+        <div class="mobile-sidebar-strip"></div>
+        <nav class="mobile-sidebar-nav">
+          <router-link to="/" class="mobile-nav-link" @click="mobileMenuOpen = false"><i class="pi pi-home"></i> {{ t.nav.home }}</router-link>
+          <router-link to="/scan" class="mobile-nav-link" @click="mobileMenuOpen = false"><i class="pi pi-search"></i> {{ t.nav.scan }}</router-link>
+          <router-link to="/system-scan" class="mobile-nav-link" @click="mobileMenuOpen = false"><i class="pi pi-desktop"></i> {{ t.nav.systemScan || 'System Scan' }}</router-link>
+          <router-link to="/statistics" class="mobile-nav-link" @click="mobileMenuOpen = false"><i class="pi pi-chart-bar"></i> {{ t.nav.statistics }}</router-link>
+          <router-link to="/history" class="mobile-nav-link" @click="mobileMenuOpen = false"><i class="pi pi-history"></i> {{ t.nav.history }}</router-link>
+          <router-link to="/about" class="mobile-nav-link" @click="mobileMenuOpen = false"><i class="pi pi-info-circle"></i> {{ t.nav.about }}</router-link>
+        </nav>
+        <div class="mobile-sidebar-footer">
+          <div class="mobile-sidebar-lang">
+            <button @click="setLanguage('en')" :class="{ active: language === 'en' }" class="lang-btn">EN</button>
+            <button @click="setLanguage('tk')" :class="{ active: language === 'tk' }" class="lang-btn">TM</button>
+          </div>
+          <div class="mobile-sidebar-strip"></div>
+          <p class="mobile-sidebar-copy">☣ VirusDetect Pro</p>
+        </div>
+      </aside>
 
       <div class="header-right">
         <div class="lang-switch">
@@ -57,10 +89,8 @@
 <script>
 import { ref, computed, provide } from 'vue'
 import { translations } from './locales'
-import DevNavbar from './components/DevNavbar.vue'
 
 export default {
-  components: { DevNavbar },
   setup() {
     const language = ref(localStorage.getItem('virus-lang') || 'en')
     const isDarkMode = ref(localStorage.getItem('virus-dark') === 'true')
@@ -308,32 +338,183 @@ body {
   color: var(--primary-color);
 }
 
+/* Mobile Overlay */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+/* Mobile Sidebar */
+.mobile-sidebar {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 280px;
+  background: linear-gradient(180deg, #1a0505 0%, #2a0a0a 50%, #1a0505 100%);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  flex-direction: column;
+  overflow-y: auto;
+  border-right: 2px solid var(--primary-color);
+  box-shadow: 4px 0 25px var(--primary-glow);
+}
+.mobile-sidebar.mobile-open {
+  transform: translateX(0);
+}
+
+.mobile-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.25rem 1rem;
+}
+.mobile-sidebar-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px var(--primary-glow);
+  animation: pulse-hazard 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.mobile-sidebar-logo .bio-symbol {
+  font-size: 1.4rem;
+  color: white;
+}
+.mobile-sidebar-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #fef2f2;
+  flex: 1;
+}
+.mobile-sidebar-title .accent {
+  color: var(--primary-color);
+  text-shadow: 0 0 10px var(--primary-glow);
+}
+.mobile-sidebar-close {
+  padding: 0.5rem;
+  border: 1px solid #7f1d1d;
+  background: rgba(220, 38, 38, 0.1);
+  color: #fca5a5;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+.mobile-sidebar-close:hover {
+  background: rgba(220, 38, 38, 0.3);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.mobile-sidebar-strip {
+  height: 4px;
+  background: var(--hazard-stripe);
+  margin: 0;
+}
+
+.mobile-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 0;
+  flex: 1;
+}
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 14px 20px;
+  text-decoration: none;
+  color: #fca5a5;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+.mobile-nav-link i {
+  font-size: 1.1rem;
+  width: 20px;
+  text-align: center;
+}
+.mobile-nav-link:hover {
+  background: rgba(220, 38, 38, 0.1);
+  color: #fef2f2;
+  border-left-color: var(--accent-color);
+}
+.mobile-nav-link.router-link-active {
+  background: linear-gradient(90deg, rgba(220, 38, 38, 0.25), transparent);
+  color: white;
+  border-left-color: var(--primary-color);
+  box-shadow: inset 0 0 20px rgba(220, 38, 38, 0.1);
+}
+.mobile-nav-link.router-link-active i {
+  color: var(--accent-color);
+  text-shadow: 0 0 8px var(--primary-glow);
+}
+
+.mobile-sidebar-footer {
+  margin-top: auto;
+  padding: 0.75rem 0 0;
+}
+.mobile-sidebar-lang {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  justify-content: center;
+}
+.mobile-sidebar-lang .lang-btn {
+  color: #fca5a5;
+  border: 1px solid #7f1d1d;
+  background: rgba(220, 38, 38, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+.mobile-sidebar-lang .lang-btn:hover {
+  background: rgba(220, 38, 38, 0.25);
+  color: white;
+}
+.mobile-sidebar-lang .lang-btn.active {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: white;
+  border-color: var(--primary-color);
+}
+.mobile-sidebar-copy {
+  text-align: center;
+  color: #7f1d1d;
+  font-size: 0.75rem;
+  padding: 0.75rem;
+  font-family: 'Orbitron', sans-serif;
+}
+
 @media (max-width: 1024px) {
   .header-nav {
     display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--bg-secondary);
-    flex-direction: column;
-    padding: 1rem;
-    border-bottom: 2px solid var(--primary-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    z-index: 100;
-  }
-  .header-nav.mobile-open {
-    display: flex;
-  }
-  .nav-link {
-    width: 100%;
-    padding: 1rem;
-    border-radius: 8px;
   }
   .mobile-menu-btn {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .mobile-overlay {
+    display: block;
+  }
+  .mobile-sidebar {
+    display: flex;
   }
   .logo-text { font-size: 1.1rem; }
   .biohazard-logo { width: 35px; height: 35px; }

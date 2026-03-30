@@ -1,6 +1,5 @@
 <template>
   <div :class="['app', { 'dark-mode': darkMode, 'sidebar-collapsed': sidebarCollapsed }]">
-    <DevNavbar />
     <Toast />
 
     <!-- Login Page -->
@@ -165,11 +164,11 @@ import { useRoute } from 'vue-router'
 import en from './locales/en.js'
 import tk from './locales/tk.js'
 import LoginView from './views/LoginView.vue'
-import DevNavbar from './components/DevNavbar.vue'
+
 
 export default {
   name: 'App',
-  components: { LoginView, DevNavbar },
+  components: { LoginView },
   setup() {
     const route = useRoute()
     const darkMode = ref(false)

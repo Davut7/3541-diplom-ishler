@@ -1,6 +1,5 @@
 <template>
   <div :class="{ 'dark-mode': isDarkMode }" class="app-container">
-    <DevNavbar />
     <!-- Noir Background -->
     <div class="noir-bg">
       <div class="scan-line"></div>
@@ -60,8 +59,50 @@
         <button @click="toggleDarkMode" class="theme-toggle">
           <i :class="isDarkMode ? 'pi pi-sun' : 'pi pi-moon'"></i>
         </button>
+        <button class="mobile-menu-btn" @click="mobileMenuOpen = !mobileMenuOpen">
+          <i :class="mobileMenuOpen ? 'pi pi-times' : 'pi pi-bars'"></i>
+        </button>
       </div>
     </header>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" v-if="mobileMenuOpen" @click="mobileMenuOpen = false"></div>
+
+    <!-- Mobile Sidebar -->
+    <aside class="mobile-sidebar" :class="{ 'mobile-open': mobileMenuOpen }">
+      <div class="mobile-sidebar-header">
+        <div class="detective-badge">
+          <i class="pi pi-eye"></i>
+        </div>
+        <span class="logo-text">OSINT<span class="logo-accent">.AI</span></span>
+      </div>
+      <nav class="mobile-sidebar-nav">
+        <router-link to="/" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-home"></i>
+          {{ t.nav.home }}
+        </router-link>
+        <router-link to="/analyze" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-search"></i>
+          {{ t.nav.analyze }}
+        </router-link>
+        <router-link to="/history" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-history"></i>
+          {{ t.nav.history }}
+        </router-link>
+        <router-link to="/how-it-works" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-question-circle"></i>
+          {{ t.nav.howItWorks }}
+        </router-link>
+        <router-link to="/comparison" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-chart-bar"></i>
+          {{ t.nav.comparison }}
+        </router-link>
+        <router-link to="/about" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-info-circle"></i>
+          {{ t.nav.about }}
+        </router-link>
+      </nav>
+    </aside>
 
     <!-- Main Content -->
     <main class="app-main">
@@ -82,16 +123,17 @@
 </template>
 
 <script>
-import { ref, computed, provide } from 'vue'
+import { ref, computed, provide, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { translations } from './locales'
-import DevNavbar from './components/DevNavbar.vue'
 
 export default {
   name: 'App',
-  components: { DevNavbar },
   setup() {
     const language = ref(localStorage.getItem('osint-language') || 'en')
     const isDarkMode = ref(localStorage.getItem('osint-darkmode') === 'true')
+    const mobileMenuOpen = ref(false)
+    const route = useRoute()
 
     const t = computed(() => translations[language.value])
 
@@ -105,6 +147,11 @@ export default {
       localStorage.setItem('osint-darkmode', isDarkMode.value)
     }
 
+    // Close mobile menu on route change
+    watch(() => route.path, () => {
+      mobileMenuOpen.value = false
+    })
+
     // Provide to all components
     provide('language', language)
     provide('t', t)
@@ -114,7 +161,8 @@ export default {
       isDarkMode,
       t,
       setLanguage,
-      toggleDarkMode
+      toggleDarkMode,
+      mobileMenuOpen
     }
   }
 }
@@ -402,10 +450,121 @@ body {
   margin: 0.25rem 0;
 }
 
+/* Mobile Menu Button - hidden by default */
+.mobile-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  transition: all 0.3s;
+}
+
+.mobile-menu-btn:hover {
+  color: var(--emerald);
+  border-color: var(--emerald);
+  box-shadow: 0 0 10px var(--glow);
+}
+
+/* Mobile Overlay */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Mobile Sidebar */
+.mobile-sidebar {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 280px;
+  background: var(--noir-gradient);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  flex-direction: column;
+  border-right: 2px solid var(--emerald);
+  box-shadow: 4px 0 20px var(--glow);
+  overflow-y: auto;
+}
+
+.mobile-sidebar.mobile-open {
+  transform: translateX(0);
+}
+
+.mobile-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.25rem;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.mobile-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 0;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 14px 20px;
+  text-decoration: none;
+  color: #d1fae5;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  border-left: 3px solid transparent;
+}
+
+.mobile-nav-link:hover {
+  color: var(--emerald-light);
+  background: rgba(16, 185, 129, 0.08);
+  border-left-color: var(--emerald);
+}
+
+.mobile-nav-link.router-link-active {
+  color: var(--emerald);
+  background: rgba(16, 185, 129, 0.12);
+  border-left-color: var(--emerald);
+  box-shadow: inset 0 0 15px rgba(16, 185, 129, 0.1);
+  text-shadow: 0 0 8px var(--glow);
+}
+
+.mobile-nav-link i {
+  font-size: 1.1rem;
+  width: 24px;
+  text-align: center;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .header-nav {
     display: none;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .mobile-overlay {
+    display: block;
+  }
+
+  .mobile-sidebar {
+    display: flex;
   }
 }
 
