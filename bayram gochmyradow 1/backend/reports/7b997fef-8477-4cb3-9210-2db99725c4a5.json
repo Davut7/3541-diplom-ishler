@@ -1,0 +1,106 @@
+{
+  "id": "7b997fef-8477-4cb3-9210-2db99725c4a5",
+  "originalFileName": "test.apk",
+  "basicInfo": {
+    "fileName": "1723691b-247d-4118-8f37-3ffd06deb665-test.apk",
+    "fileSize": 49813338,
+    "fileSizeFormatted": "47.51 MB",
+    "totalFiles": 67,
+    "dexCount": 1,
+    "nativeLibraries": [
+      "libapp.so",
+      "libflutter.so"
+    ],
+    "hasAssets": true,
+    "hasResources": true,
+    "createdAt": "2026-02-28T09:57:56.607Z",
+    "modifiedAt": "2026-02-28T09:57:56.728Z"
+  },
+  "manifest": {
+    "packageName": "Unknown",
+    "versionCode": "Unknown",
+    "versionName": "Unknown",
+    "minSdkVersion": null,
+    "targetSdkVersion": null,
+    "permissions": [],
+    "activities": [],
+    "services": [],
+    "receivers": [],
+    "providers": [],
+    "flags": {
+      "debuggable": false,
+      "allowBackup": false,
+      "hasExportedComponents": false
+    },
+    "exportedComponents": []
+  },
+  "permissions": {
+    "total": 0,
+    "analyzed": [],
+    "byRisk": {
+      "critical": [],
+      "high": [],
+      "medium": [],
+      "low": []
+    },
+    "byCategory": {},
+    "riskScore": {
+      "score": 0,
+      "percentage": 0,
+      "level": "low"
+    }
+  },
+  "signature": {
+    "isSigned": false,
+    "signatureVersion": null,
+    "certificates": [],
+    "signingSchemes": [],
+    "warnings": [
+      {
+        "en": "APK is not signed - will not install on Android devices",
+        "tk": "APK gol çekilmedi - Android enjamlara gurulmaz"
+      }
+    ]
+  },
+  "security": {
+    "issues": [
+      {
+        "severity": "critical",
+        "title": {
+          "en": "APK Not Signed",
+          "tk": "APK Gol Çekilmedik"
+        },
+        "description": {
+          "en": "This APK is not digitally signed and will not install on Android devices.",
+          "tk": "Bu APK sanly gol çekilmedik we Android enjamlara gurulmaz."
+        }
+      }
+    ],
+    "warnings": [
+      {
+        "severity": "low",
+        "title": {
+          "en": "Signature Warning",
+          "tk": "Gol Duýduryşy"
+        },
+        "description": {
+          "en": "APK is not signed - will not install on Android devices",
+          "tk": "APK gol çekilmedi - Android enjamlara gurulmaz"
+        }
+      }
+    ],
+    "recommendations": [
+      {
+        "en": "Always download apps from official stores like Google Play.",
+        "tk": "Hemişe programmalary Google Play ýaly resmi dükanlardan ýükläň."
+      },
+      {
+        "en": "Keep your device and apps updated to receive security patches.",
+        "tk": "Howpsuzlyk düzedişlerini almak üçin enjamyňyzy we programmalaryňyzy täzeläň."
+      }
+    ],
+    "overallRisk": "low",
+    "riskScore": 0
+  },
+  "analyzedAt": "2026-02-28T09:57:56.746Z"
+}
