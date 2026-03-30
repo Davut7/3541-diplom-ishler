@@ -41,15 +41,15 @@ PIDS=()
 
 # Project definitions: "dir|name|front_port|back_port"
 PROJECTS=(
-    "batyr akyýew 1|Batyr - WAF Analysis|7010|7011"
-    "bayram gochmyradow 1|Bayram - Android Security|7020|7021"
-    "daniyar nurmedow 1|Daniyar - XSS Shield|7030|7031"
-    "dawutmuhammet begmedow 1|Dawutmuhammet - VirusDetect|7040|7041"
-    "rowshen palwanow 0|Rowshen - KeyGuard|7050|7051"
-    "selbi weliyyewa 1|Selbi - GAN Security|7060|7061"
-    "shanur gulmyradow 1|Shanur - Wireshark Monitor|7070|7071"
-    "shatlyk rahmanov 0|Shatlyk - AI Firewall|7080|7081"
-    "suleyman akmuhammedow 0|Suleyman - OSINT.AI|7090|7091"
+    "batyr_akyýew|Batyr - WAF Analysis|7010|7011"
+    "bayram_gochmyradow|Bayram - Android Security|7020|7021"
+    "daniyar_nurmedow|Daniyar - XSS Shield|7030|7031"
+    "dawutmuhammet_begmedow|Dawutmuhammet - VirusDetect|7040|7041"
+    "rowshen_palwanow|Rowshen - KeyGuard|7050|7051"
+    "selbi_weliyyewa|Selbi - GAN Security|7060|7061"
+    "shanur_gulmyradow|Shanur - Wireshark Monitor|7070|7071"
+    "shatlyk_rahmanov|Shatlyk - AI Firewall|7080|7081"
+    "suleyman_akmuhammedow|Suleyman - OSINT.AI|7090|7091"
 )
 
 # ============================================

@@ -13,7 +13,8 @@
       "Bash(for dir:*)",
       "Bash(do echo:*)",
       "Bash(chmod:*)",
-      "Bash(bash start-all.sh 2>&1)"
+      "Bash(bash start-all.sh 2>&1)",
+      "Bash(ls:*)"
     ]
   }
 }
