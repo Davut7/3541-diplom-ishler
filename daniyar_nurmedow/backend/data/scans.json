@@ -1,6 +1,26 @@
 {
   "scans": [
     {
+      "scanId": "7762ee77-151b-410b-85a6-8bf68001fd5c",
+      "vulnerabilityCount": 0,
+      "riskLevel": "safe",
+      "scannedAt": "2026-04-18T06:15:28.024Z"
+    },
+    {
+      "scanId": "69ee17c1-e8c6-457b-9d32-d455d6f6565f",
+      "language": "js",
+      "vulnerabilityCount": 0,
+      "riskLevel": "safe",
+      "scannedAt": "2026-04-18T06:14:28.390Z"
+    },
+    {
+      "scanId": "454fa93d-5fa7-4a07-b410-87f0786a1f6c",
+      "language": "html",
+      "vulnerabilityCount": 2,
+      "riskLevel": "critical",
+      "scannedAt": "2026-04-18T06:14:28.361Z"
+    },
+    {
       "scanId": "2dcbbbab-f5cd-402e-9104-bc2c8333c240",
       "language": "javascript",
       "vulnerabilityCount": 0,

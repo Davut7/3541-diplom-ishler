@@ -1,6 +1,163 @@
 {
   "scans": [
     {
+      "id": "98d4decd-416f-4eb5-885b-788f24144c22",
+      "fileName": "test_ok.txt",
+      "filePath": "",
+      "fileSize": 12,
+      "fileSizeFormatted": "12 Bytes",
+      "fileType": {
+        "type": "Text File",
+        "risk": "low"
+      },
+      "status": "clean",
+      "threatScore": 0,
+      "entropy": {
+        "entropy": 3.0221,
+        "interpretation": "Normal"
+      },
+      "hashes": {
+        "md5": "f0ef7081e1539ac00ef5b761b4fb01b3",
+        "sha1": "33ab5639bfd8e7b95eb1d8d0b87781d4ffea4d5d",
+        "sha256": "1894a19c85ba153acbf743ac4e43fc004c891604b26f8c69e1e83ea2afc7c48f"
+      },
+      "patterns": [],
+      "virusTotal": {
+        "available": true,
+        "found": false,
+        "stats": {
+          "malicious": 0,
+          "suspicious": 0,
+          "harmless": 42,
+          "undetected": 8
+        },
+        "message": "File not found in VirusTotal database"
+      },
+      "scannedAt": "2026-04-18T06:14:23.556Z"
+    },
+    {
+      "id": "0bab4467-9cf5-4dcf-820c-d965bfca14d7",
+      "fileName": "test_mal.ps1",
+      "filePath": "",
+      "fileSize": 67,
+      "fileSizeFormatted": "67 Bytes",
+      "fileType": {
+        "type": "PowerShell",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 80,
+      "entropy": {
+        "entropy": 4.4012,
+        "interpretation": "Normal"
+      },
+      "hashes": {
+        "md5": "b5558634bfb2ce77b5544b390a6a655b",
+        "sha1": "390d6e03acbfa4d03f7e5d7137df0fb2543cf884",
+        "sha256": "c9726636cededa3cdcbef924ac232c495f66cf4862c2504d862b4641abd4a100"
+      },
+      "patterns": [
+        {
+          "name": "Command Prompt Reference",
+          "severity": "high",
+          "count": 1
+        },
+        {
+          "name": "PowerShell Reference",
+          "severity": "high",
+          "count": 1
+        },
+        {
+          "name": "Remote Thread Creation",
+          "severity": "critical",
+          "count": 1
+        },
+        {
+          "name": "Dynamic Code Execution",
+          "severity": "high",
+          "count": 1
+        },
+        {
+          "name": "Command Execution",
+          "severity": "high",
+          "count": 1
+        }
+      ],
+      "virusTotal": {
+        "available": true,
+        "found": true,
+        "stats": {
+          "malicious": 26,
+          "suspicious": 1,
+          "harmless": 49,
+          "undetected": 8
+        },
+        "message": "File found in VirusTotal database"
+      },
+      "scannedAt": "2026-04-18T06:14:23.475Z"
+    },
+    {
+      "id": "2197f5e0-2f47-4684-9e13-f6e16d676030",
+      "fileName": "test_malware.ps1",
+      "filePath": "",
+      "fileSize": 72,
+      "fileSizeFormatted": "72 Bytes",
+      "fileType": {
+        "type": "PowerShell",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 80,
+      "entropy": {
+        "entropy": 4.4599,
+        "interpretation": "Normal"
+      },
+      "hashes": {
+        "md5": "9863ecc7bd3b605fe783eb4b1b440e4c",
+        "sha1": "fc13cc31ea4634173b403ff9184b22f0dde85f96",
+        "sha256": "6fc6ff9867940bc4ba20e96efd8fce7ed69f9c4000ad82cb05fdf97753d21159"
+      },
+      "patterns": [
+        {
+          "name": "Command Prompt Reference",
+          "severity": "high",
+          "count": 1
+        },
+        {
+          "name": "PowerShell Reference",
+          "severity": "high",
+          "count": 1
+        },
+        {
+          "name": "Remote Thread Creation",
+          "severity": "critical",
+          "count": 1
+        },
+        {
+          "name": "Dynamic Code Execution",
+          "severity": "high",
+          "count": 1
+        },
+        {
+          "name": "Command Execution",
+          "severity": "high",
+          "count": 1
+        }
+      ],
+      "virusTotal": {
+        "available": true,
+        "found": true,
+        "stats": {
+          "malicious": 26,
+          "suspicious": 2,
+          "harmless": 66,
+          "undetected": 18
+        },
+        "message": "File found in VirusTotal database"
+      },
+      "scannedAt": "2026-04-18T06:12:55.776Z"
+    },
+    {
       "id": "aaa11986-1710-41e4-8b9f-0273122f340f",
       "fileName": "test_clean.txt",
       "filePath": "",

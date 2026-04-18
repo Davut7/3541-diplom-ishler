@@ -1,6 +1,13 @@
 {
   "captures": [
     {
+      "timestamp": "2026-04-18T06:14:28.332Z",
+      "packetCount": 10,
+      "protocols": [
+        "DNS"
+      ]
+    },
+    {
       "timestamp": "2026-04-18T05:02:26.108Z",
       "packetCount": 20,
       "protocols": [
@@ -8,5 +15,5 @@
       ]
     }
   ],
-  "totalPackets": 20
+  "totalPackets": 30
 }

@@ -1,0 +1,14 @@
+{
+  "investigations": [
+    {
+      "id": 1776492868257,
+      "target": "8.8.8.8",
+      "ip": "198.18.224.201",
+      "riskScore": 100,
+      "riskLevel": "CRITICAL",
+      "openPorts": 16,
+      "country": "Unknown",
+      "analyzedAt": "2026-04-18T06:14:28.257Z"
+    }
+  ]
+}
