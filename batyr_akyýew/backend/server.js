@@ -438,11 +438,26 @@ async function getGeoLocation(ip) {
 // Log attack to database
 function logAttack(attackData) {
   const id = uuidv4()
-  db.run(`
-    INSERT INTO attack_logs (id, attack_type, source_ip, target_path, action, risk_score, user_agent, country, city, details)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `, [id, attackData.type, attackData.ip, attackData.path, attackData.action, attackData.riskScore,
-      attackData.userAgent, attackData.country || 'Unknown', attackData.city || 'Unknown', JSON.stringify(attackData.details || {})])
+  try {
+    const params = [
+      id,
+      String(attackData.type || 'Unknown'),
+      String(attackData.ip || '0.0.0.0'),
+      String(attackData.path || '/'),
+      String(attackData.action || 'allowed'),
+      Number(attackData.riskScore) || 0,
+      String(attackData.userAgent || 'Unknown'),
+      String(attackData.country || 'Unknown'),
+      String(attackData.city || 'Unknown'),
+      JSON.stringify(attackData.details || {})
+    ]
+    db.run(`
+      INSERT INTO attack_logs (id, attack_type, source_ip, target_path, action, risk_score, user_agent, country, city, details)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, params)
+  } catch (e) {
+    console.error('logAttack error:', e.message)
+  }
 
   // Update rule hits
   if (attackData.ruleId) {
