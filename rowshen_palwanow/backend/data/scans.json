@@ -1,0 +1,253 @@
+{
+  "scans": [
+    {
+      "success": true,
+      "scanId": "238b0002-c18a-4004-8251-131c4ce5f35f",
+      "type": "full",
+      "processesScanned": 417,
+      "threatsFound": 0,
+      "threats": [],
+      "scannedAreas": [
+        "processes",
+        "startup_items",
+        "launch_agents",
+        "network_connections"
+      ],
+      "duration": "57ms",
+      "platform": "darwin",
+      "scannedAt": "2026-04-18T04:59:16.331Z"
+    },
+    {
+      "success": true,
+      "scanId": "924262cd-8e52-41fa-8ec2-bc1c1187d086",
+      "type": "quick",
+      "processesScanned": 419,
+      "threatsFound": 18,
+      "threats": [
+        {
+          "id": "25b33c2a-ddd8-4a00-bb81-d2032716edea",
+          "name": "screencaptureui",
+          "type": "Screen Capture Spyware",
+          "location": "/System/Library/CoreServices/screencaptureui.app/Contents/MacOS/screencaptureui",
+          "risk": "High",
+          "pid": 41987,
+          "cpu": 2.2,
+          "memory": "23.0 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "ee92223a-5a7a-4b5c-bc87-a0a7323cd484",
+          "name": "Visual",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Visual",
+          "risk": "High",
+          "pid": 1778,
+          "cpu": 1.7,
+          "memory": "52.1 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "ee56804a-d3cd-4b24-9147-91d30d748b47",
+          "name": "Visual",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Visual",
+          "risk": "High",
+          "pid": 684,
+          "cpu": 0.8,
+          "memory": "362.8 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "6a196446-d441-45dd-9bd3-b294baf8775d",
+          "name": "Visual",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Visual",
+          "risk": "High",
+          "pid": 26483,
+          "cpu": 0.6,
+          "memory": "86.2 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "c19a8c3c-5f83-4be6-b4bd-46af7eca267b",
+          "name": "Visual",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Visual",
+          "risk": "High",
+          "pid": 26481,
+          "cpu": 0.5,
+          "memory": "116.5 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "c8e63e33-62f1-4f4a-9779-724980815952",
+          "name": "Visual",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Visual",
+          "risk": "High",
+          "pid": 1727,
+          "cpu": 0.3,
+          "memory": "132.9 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "5052e817-19ca-492f-91ee-1d5f64870f80",
+          "name": "Visual",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Visual",
+          "risk": "High",
+          "pid": 721,
+          "cpu": 0.2,
+          "memory": "104.0 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "aa79aacd-90b7-463d-ae9e-9d5a52be6a7a",
+          "name": "Postman",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Postman.app/Contents/Frameworks/Postman",
+          "risk": "High",
+          "pid": 778,
+          "cpu": 0.1,
+          "memory": "82.2 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "19c95959-eef4-45cd-9a11-fae7280eddca",
+          "name": "Visual",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Visual",
+          "risk": "High",
+          "pid": 26482,
+          "cpu": 0,
+          "memory": "40.2 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "af1d9edc-753e-4460-876a-1a11781c58ba",
+          "name": "Visual",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Visual",
+          "risk": "High",
+          "pid": 70365,
+          "cpu": 0,
+          "memory": "55.8 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "16bde260-9f49-4f55-8809-135cce7818c9",
+          "name": "Postman",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Postman.app/Contents/Frameworks/Postman",
+          "risk": "High",
+          "pid": 749,
+          "cpu": 0,
+          "memory": "19.5 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "abc5a89a-514a-4d81-b6a5-a2508678f205",
+          "name": "Postman",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Postman.app/Contents/Frameworks/Postman",
+          "risk": "High",
+          "pid": 748,
+          "cpu": 0,
+          "memory": "9.7 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "1a3c58b7-525a-41d1-9d47-cececfd5cf52",
+          "name": "Obsidian",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Obsidian.app/Contents/Frameworks/Obsidian",
+          "risk": "High",
+          "pid": 725,
+          "cpu": 0,
+          "memory": "39.9 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "44f749fd-422c-4348-bb0d-f090ea140a35",
+          "name": "Visual",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Visual",
+          "risk": "High",
+          "pid": 723,
+          "cpu": 0,
+          "memory": "40.0 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "25394d0a-1f7d-4eaf-bcf7-4bbf74950a6d",
+          "name": "Obsidian",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Obsidian.app/Contents/Frameworks/Obsidian",
+          "risk": "High",
+          "pid": 718,
+          "cpu": 0,
+          "memory": "9.3 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "2a0a1e95-eb9f-4357-8c5c-ac8142cbaa86",
+          "name": "Obsidian",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Obsidian.app/Contents/Frameworks/Obsidian",
+          "risk": "High",
+          "pid": 717,
+          "cpu": 0,
+          "memory": "10.6 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "77513e6f-28f4-479a-a1c9-e528cfd25a2e",
+          "name": "Visual",
+          "type": "Screen Capture Spyware",
+          "location": "/Applications/Visual",
+          "risk": "High",
+          "pid": 650,
+          "cpu": 0,
+          "memory": "28.6 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        },
+        {
+          "id": "c29aec98-2f75-443e-8527-5121a243e691",
+          "name": "com.macpaw.CleanMyMac4.HealthMonitor",
+          "type": "Suspicious Process",
+          "location": "com.macpaw.CleanMyMac4.HealthMonitor",
+          "risk": "Low",
+          "pid": 801,
+          "cpu": 98.2,
+          "memory": "44.1 MB",
+          "user": "macbookpro",
+          "detectedAt": "2026-04-18T04:53:52.225Z"
+        }
+      ],
+      "scannedAreas": [
+        "processes",
+        "startup_items"
+      ],
+      "duration": "60ms",
+      "platform": "darwin",
+      "scannedAt": "2026-04-18T04:53:52.227Z"
+    }
+  ]
+}
