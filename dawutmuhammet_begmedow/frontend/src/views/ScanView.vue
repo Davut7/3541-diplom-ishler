@@ -22,6 +22,27 @@
             <small>{{ t.scan.selectFolder }}</small>
           </div>
         </div>
+
+        <!-- Hidden file input for web mode -->
+        <input ref="fileInput" type="file" style="display: none" @change="onFileSelected" />
+      </template>
+    </Card>
+
+    <!-- Sample Files Section (always visible for demo) -->
+    <Card class="samples-card">
+      <template #content>
+        <h3><i class="pi pi-flask"></i> {{ language === 'en' ? 'Test Samples' : 'Synag faýllary' }}</h3>
+        <p class="samples-desc">{{ language === 'en' ? 'Click any sample to see how the scanner analyzes different file types' : 'Skaneriň dürli faýl görnüşlerini nähili seljerýändigini görmek üçin basyň' }}</p>
+        <div class="samples-grid">
+          <div v-for="sample in samples" :key="sample.id" class="sample-item" :class="sample.riskLevel" @click="scanSample(sample.id)">
+            <i :class="'pi ' + sample.icon"></i>
+            <div class="sample-info">
+              <span class="sample-name">{{ sample.name }}</span>
+              <small>{{ language === 'en' ? sample.description.en : sample.description.tk }}</small>
+            </div>
+            <Tag :severity="getRiskSeverity(sample.riskLevel)" :value="sample.riskLevel" size="small" />
+          </div>
+        </div>
       </template>
     </Card>
 
@@ -95,7 +116,7 @@
           </div>
         </div>
 
-        <div v-if="result.virusTotal.available" class="virustotal-section">
+        <div v-if="result.virusTotal && result.virusTotal.available" class="virustotal-section">
           <h4><i class="pi pi-shield"></i> VirusTotal Results</h4>
           <div v-if="result.virusTotal.found" class="vt-stats">
             <div class="vt-stat malicious">
@@ -120,15 +141,8 @@
             {{ result.virusTotal.message || 'File not found in VirusTotal database' }}
           </div>
         </div>
-        <div v-else-if="result.virusTotal.error" class="virustotal-section error">
-          <h4><i class="pi pi-shield"></i> VirusTotal</h4>
-          <p class="vt-error"><i class="pi pi-exclamation-circle"></i> {{ result.virusTotal.error }}</p>
-          <Button v-if="!hasApiKey" label="Configure API Key" icon="pi pi-cog" size="small" @click="showSettings = true" />
-        </div>
 
         <div class="result-actions">
-          <Button :label="t.scan.openLocation" icon="pi pi-folder" @click="openFileLocation" outlined />
-          <Button :label="t.scan.saveReport" icon="pi pi-save" @click="saveToHistory" />
           <Button :label="language === 'en' ? 'Export Report' : 'Hasabaty eksportla'" icon="pi pi-download" @click="exportReport" severity="secondary" />
         </div>
       </template>
@@ -139,15 +153,10 @@
       <template #content>
         <h3><i class="pi pi-folder"></i> {{ t.scan.folderResults }}</h3>
         <p class="folder-summary">{{ t.scan.scannedFiles }}: {{ folderResults.totalFiles }}</p>
-
         <DataTable :value="folderResults.results" :paginator="true" :rows="10" sortField="threatScore" :sortOrder="-1" class="folder-table">
-          <Column field="fileName" :header="t.scan.results.fileName" sortable>
-            <template #body="{ data }">
-              <span class="file-cell" @click="scanSingleFile(data.filePath)">{{ data.fileName }}</span>
-            </template>
-          </Column>
-          <Column field="fileType" :header="t.scan.results.fileType" sortable></Column>
-          <Column field="entropy" :header="t.scan.results.entropy" sortable></Column>
+          <Column field="fileName" :header="t.scan.results.fileName" sortable />
+          <Column field="fileType" :header="t.scan.results.fileType" sortable />
+          <Column field="entropy" :header="t.scan.results.entropy" sortable />
           <Column field="threatScore" header="Threat" sortable>
             <template #body="{ data }">
               <Tag :severity="getScoreSeverity(data.threatScore)" :value="data.threatScore + '%'" />
@@ -156,33 +165,21 @@
         </DataTable>
       </template>
     </Card>
-
-    <!-- Settings Dialog -->
-    <Card v-if="showSettings" class="settings-card">
-      <template #content>
-        <h3><i class="pi pi-cog"></i> {{ t.scan.settings }}</h3>
-        <div class="setting-item">
-          <label>VirusTotal API Key</label>
-          <div class="api-key-input">
-            <input type="password" v-model="apiKey" placeholder="Enter your API key" />
-            <Button label="Save" icon="pi pi-check" @click="saveApiKey" size="small" />
-          </div>
-          <small>Get your free API key at <a href="https://www.virustotal.com/gui/join-us" target="_blank">virustotal.com</a></small>
-        </div>
-        <Button label="Close" icon="pi pi-times" @click="showSettings = false" outlined class="close-btn" />
-      </template>
-    </Card>
   </div>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue'
 import { useToast } from 'primevue/usetoast'
+import axios from 'axios'
+
+const API_URL = '/api'
 
 export default {
   props: { t: Object, language: String },
   setup(props) {
     const toast = useToast()
+    const fileInput = ref(null)
     const isScanning = ref(false)
     const progress = ref(0)
     const currentStep = ref('')
@@ -190,76 +187,176 @@ export default {
     const result = ref(null)
     const folderResults = ref(null)
     const isFolderScan = ref(false)
-    const showSettings = ref(false)
-    const apiKey = ref('')
-    const hasApiKey = ref(false)
+    const samples = ref([])
 
-    const isElectron = window.electronAPI !== undefined
+    const isElectron = typeof window !== 'undefined' && window.electronAPI !== undefined
 
     onMounted(async () => {
+      // Load sample files
+      try {
+        const res = await axios.get(`${API_URL}/samples`)
+        samples.value = res.data
+      } catch (e) { /* ignore */ }
+
       if (isElectron) {
-        const settings = await window.electronAPI.getSettings()
-        hasApiKey.value = settings.hasApiKey
-
-        window.electronAPI.onScanProgress((data) => {
-          progress.value = data.progress
-          const stepNames = {
-            hashes: props.language === 'en' ? 'Calculating file hashes...' : 'Faýl hashlary hasaplanýar...',
-            entropy: props.language === 'en' ? 'Analyzing entropy...' : 'Entropiýa derňelýär...',
-            filetype: props.language === 'en' ? 'Detecting file type...' : 'Faýl görnüşi anyklanýar...',
-            patterns: props.language === 'en' ? 'Scanning for patterns...' : 'Nagyşlar skanirlenýär...',
-            virustotal: props.language === 'en' ? 'Checking VirusTotal...' : 'VirusTotal barlanýar...',
-            complete: props.language === 'en' ? 'Complete!' : 'Tamamlandy!'
-          }
-          currentStep.value = stepNames[data.step] || data.step
-          logs.value.push({
-            message: stepNames[data.step],
-            type: data.step === 'complete' ? 'success' : 'info',
-            icon: data.step === 'complete' ? 'pi pi-check-circle' : 'pi pi-spin pi-spinner'
+        try {
+          window.electronAPI.onScanProgress((data) => {
+            progress.value = data.progress
+            const stepNames = {
+              hashes: props.language === 'en' ? 'Calculating file hashes...' : 'Faýl hashlary hasaplanýar...',
+              entropy: props.language === 'en' ? 'Analyzing entropy...' : 'Entropiýa derňelýär...',
+              filetype: props.language === 'en' ? 'Detecting file type...' : 'Faýl görnüşi anyklanýar...',
+              patterns: props.language === 'en' ? 'Scanning for patterns...' : 'Nagyşlar skanirlenýär...',
+              virustotal: props.language === 'en' ? 'Checking VirusTotal...' : 'VirusTotal barlanýar...',
+              complete: props.language === 'en' ? 'Complete!' : 'Tamamlandy!'
+            }
+            currentStep.value = stepNames[data.step] || data.step
+            logs.value.push({
+              message: stepNames[data.step],
+              type: data.step === 'complete' ? 'success' : 'info',
+              icon: data.step === 'complete' ? 'pi pi-check-circle' : 'pi pi-spin pi-spinner'
+            })
           })
-        })
 
-        window.electronAPI.onFolderScanProgress((data) => {
-          progress.value = (data.current / data.total) * 100
-          currentStep.value = `${props.language === 'en' ? 'Scanning' : 'Skanirlenýär'}: ${data.file} (${data.current}/${data.total})`
-        })
+          window.electronAPI.onFolderScanProgress((data) => {
+            progress.value = (data.current / data.total) * 100
+            currentStep.value = `${props.language === 'en' ? 'Scanning' : 'Skanirlenýär'}: ${data.file} (${data.current}/${data.total})`
+          })
+        } catch (e) { /* ignore */ }
       }
     })
 
-    const selectFile = async () => {
-      if (!isElectron) {
-        toast.add({ severity: 'warn', summary: 'Desktop Only', detail: 'This feature requires the desktop app', life: 3000 })
-        return
+    // Simulate scanning steps for web mode
+    const simulateProgress = async () => {
+      const steps = [
+        { step: 'hashes', label: props.language === 'en' ? 'Calculating file hashes...' : 'Faýl hashlary hasaplanýar...', pct: 20 },
+        { step: 'entropy', label: props.language === 'en' ? 'Analyzing entropy...' : 'Entropiýa derňelýär...', pct: 40 },
+        { step: 'filetype', label: props.language === 'en' ? 'Detecting file type...' : 'Faýl görnüşi anyklanýar...', pct: 60 },
+        { step: 'patterns', label: props.language === 'en' ? 'Scanning for patterns...' : 'Nagyşlar skanirlenýär...', pct: 80 },
+        { step: 'virustotal', label: props.language === 'en' ? 'Checking VirusTotal...' : 'VirusTotal barlanýar...', pct: 90 }
+      ]
+      for (const s of steps) {
+        progress.value = s.pct
+        currentStep.value = s.label
+        logs.value.push({ message: s.label, type: 'info', icon: 'pi pi-spin pi-spinner' })
+        await new Promise(r => setTimeout(r, 400))
       }
+    }
 
-      const filePath = await window.electronAPI.selectFile()
-      if (filePath) {
-        await scanFile(filePath)
+    const selectFile = async () => {
+      if (isElectron) {
+        const filePath = await window.electronAPI.selectFile()
+        if (filePath) await scanFileElectron(filePath)
+      } else {
+        // Web mode: use file input
+        fileInput.value.click()
+      }
+    }
+
+    const onFileSelected = async (event) => {
+      const file = event.target.files[0]
+      if (!file) return
+      await scanFileWeb(file)
+      event.target.value = '' // Reset input
+    }
+
+    const handleDrop = async (e) => {
+      const files = e.dataTransfer.files
+      if (files.length > 0) {
+        if (isElectron) {
+          toast.add({ severity: 'info', summary: 'Info', detail: 'Please use the file picker for security reasons', life: 3000 })
+        } else {
+          await scanFileWeb(files[0])
+        }
       }
     }
 
     const selectFolder = async () => {
-      if (!isElectron) {
-        toast.add({ severity: 'warn', summary: 'Desktop Only', detail: 'This feature requires the desktop app', life: 3000 })
-        return
-      }
-
-      const folderPath = await window.electronAPI.selectFolder()
-      if (folderPath) {
-        await scanFolder(folderPath)
+      if (isElectron) {
+        const folderPath = await window.electronAPI.selectFolder()
+        if (folderPath) await scanFolderElectron(folderPath)
+      } else {
+        toast.add({ severity: 'info', summary: props.language === 'en' ? 'Web Mode' : 'Web Režimi', detail: props.language === 'en' ? 'Folder scanning requires the desktop app. Use file upload or test samples.' : 'Bukja skani üçin desktop programma gerek. Faýl ýükleme ýa-da synag faýllaryny ulanyň.', life: 4000 })
       }
     }
 
-    const handleDrop = async (e) => {
-      if (!isElectron) return
-      const files = e.dataTransfer.files
-      if (files.length > 0) {
-        // Note: In Electron, we need to handle this differently
-        toast.add({ severity: 'info', summary: 'Info', detail: 'Please use the file picker for security reasons', life: 3000 })
+    // Web mode: upload file to backend for real analysis
+    const scanFileWeb = async (file) => {
+      isScanning.value = true
+      isFolderScan.value = false
+      progress.value = 0
+      logs.value = []
+      result.value = null
+      folderResults.value = null
+
+      try {
+        // Simulate progress while uploading
+        const progressPromise = simulateProgress()
+
+        const formData = new FormData()
+        formData.append('file', file)
+
+        const response = await axios.post(`${API_URL}/scan/upload`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
+
+        await progressPromise
+
+        progress.value = 100
+        currentStep.value = props.language === 'en' ? 'Complete!' : 'Tamamlandy!'
+        logs.value.push({ message: currentStep.value, type: 'success', icon: 'pi pi-check-circle' })
+
+        if (response.data.success) {
+          result.value = response.data.result
+          toast.add({
+            severity: response.data.result.status === 'clean' ? 'success' : 'warn',
+            summary: props.language === 'en' ? 'Scan Complete' : 'Skan Tamamlandy',
+            detail: props.t.scan.status[response.data.result.status] || response.data.result.status,
+            life: 5000
+          })
+        }
+      } catch (error) {
+        toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 5000 })
       }
+
+      isScanning.value = false
     }
 
-    const scanFile = async (filePath) => {
+    // Scan a sample file via API
+    const scanSample = async (sampleId) => {
+      isScanning.value = true
+      isFolderScan.value = false
+      progress.value = 0
+      logs.value = []
+      result.value = null
+
+      try {
+        const progressPromise = simulateProgress()
+        const response = await axios.get(`${API_URL}/samples/${sampleId}`)
+        await progressPromise
+
+        progress.value = 100
+        currentStep.value = props.language === 'en' ? 'Complete!' : 'Tamamlandy!'
+        logs.value.push({ message: currentStep.value, type: 'success', icon: 'pi pi-check-circle' })
+
+        if (response.data.success) {
+          result.value = response.data.result
+          toast.add({
+            severity: response.data.result.status === 'clean' ? 'success' : 'warn',
+            summary: props.language === 'en' ? 'Scan Complete' : 'Skan Tamamlandy',
+            detail: props.t.scan.status[response.data.result.status] || response.data.result.status,
+            life: 5000
+          })
+        }
+      } catch (error) {
+        toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 5000 })
+      }
+
+      isScanning.value = false
+    }
+
+    // Electron mode scan functions
+    const scanFileElectron = async (filePath) => {
       isScanning.value = true
       isFolderScan.value = false
       progress.value = 0
@@ -283,15 +380,10 @@ export default {
       } catch (error) {
         toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 5000 })
       }
-
       isScanning.value = false
     }
 
-    const scanSingleFile = (filePath) => {
-      scanFile(filePath)
-    }
-
-    const scanFolder = async (folderPath) => {
+    const scanFolderElectron = async (folderPath) => {
       isScanning.value = true
       isFolderScan.value = true
       progress.value = 0
@@ -313,7 +405,6 @@ export default {
       } catch (error) {
         toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 5000 })
       }
-
       isScanning.value = false
     }
 
@@ -322,54 +413,17 @@ export default {
       toast.add({ severity: 'success', summary: 'Copied!', life: 2000 })
     }
 
-    const openFileLocation = () => {
-      if (result.value && isElectron) {
-        window.electronAPI.openFileLocation(result.value.filePath)
-      }
-    }
-
-    const saveToHistory = async () => {
-      if (result.value && isElectron) {
-        await window.electronAPI.saveToHistory({
-          ...result.value,
-          savedAt: new Date().toISOString()
-        })
-        toast.add({ severity: 'success', summary: props.language === 'en' ? 'Saved' : 'Ýatda saklandy', detail: props.language === 'en' ? 'Added to scan history' : 'Skan taryhyna goşuldy', life: 3000 })
-      }
-    }
-
-    const saveApiKey = async () => {
-      if (apiKey.value && isElectron) {
-        await window.electronAPI.setVirusTotalKey(apiKey.value)
-        hasApiKey.value = true
-        apiKey.value = ''
-        showSettings.value = false
-        toast.add({ severity: 'success', summary: 'Saved', detail: 'VirusTotal API key configured', life: 3000 })
-      }
-    }
-
     const exportReport = () => {
       if (!result.value) return
-
       const report = {
         title: 'VirusDetect Pro - Scan Report',
         generatedAt: new Date().toISOString(),
-        file: {
-          name: result.value.fileName,
-          path: result.value.filePath,
-          size: result.value.fileSizeFormatted,
-          type: result.value.fileType?.type || 'Unknown'
-        },
-        analysis: {
-          status: result.value.status,
-          threatScore: result.value.threatScore,
-          entropy: result.value.entropy
-        },
+        file: { name: result.value.fileName, size: result.value.fileSizeFormatted, type: result.value.fileType?.type || 'Unknown' },
+        analysis: { status: result.value.status, threatScore: result.value.threatScore, entropy: result.value.entropy },
         hashes: result.value.hashes,
         suspiciousPatterns: result.value.patterns,
         virusTotal: result.value.virusTotal
       }
-
       const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' })
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
@@ -379,33 +433,24 @@ export default {
       a.click()
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
-
-      toast.add({
-        severity: 'success',
-        summary: props.language === 'en' ? 'Exported' : 'Eksportlandy',
-        detail: props.language === 'en' ? 'Report downloaded' : 'Hasabat yuklendi',
-        life: 3000
-      })
+      toast.add({ severity: 'success', summary: props.language === 'en' ? 'Exported' : 'Eksportlandy', life: 3000 })
     }
 
     const getStatusIcon = (status) => ({
-      clean: 'pi pi-check-circle',
-      suspicious: 'pi pi-exclamation-triangle',
-      malware: 'pi pi-times-circle',
-      potentially_unwanted: 'pi pi-question-circle'
+      clean: 'pi pi-check-circle', suspicious: 'pi pi-exclamation-triangle',
+      malware: 'pi pi-times-circle', potentially_unwanted: 'pi pi-question-circle'
     }[status] || 'pi pi-info-circle')
 
     const getScoreClass = (score) => score >= 70 ? 'danger' : score >= 40 ? 'warning' : score >= 20 ? 'info' : 'success'
     const getScoreSeverity = (score) => score >= 70 ? 'danger' : score >= 40 ? 'warn' : score >= 20 ? 'info' : 'success'
     const getFileTypeSeverity = (risk) => ({ critical: 'danger', high: 'warn', medium: 'info', low: 'success' }[risk] || 'secondary')
     const getSeverityClass = (severity) => ({ critical: 'danger', high: 'warn', medium: 'info', low: 'secondary' }[severity] || 'info')
+    const getRiskSeverity = (risk) => ({ critical: 'danger', high: 'danger', medium: 'warn', low: 'success' }[risk] || 'info')
 
     return {
-      isScanning, progress, currentStep, logs, result, folderResults, isFolderScan,
-      showSettings, apiKey, hasApiKey,
-      selectFile, selectFolder, handleDrop, scanSingleFile, copyToClipboard,
-      openFileLocation, saveToHistory, saveApiKey, exportReport,
-      getStatusIcon, getScoreClass, getScoreSeverity, getFileTypeSeverity, getSeverityClass
+      fileInput, isScanning, progress, currentStep, logs, result, folderResults, isFolderScan, samples,
+      selectFile, selectFolder, onFileSelected, handleDrop, scanSample, copyToClipboard, exportReport,
+      getStatusIcon, getScoreClass, getScoreSeverity, getFileTypeSeverity, getSeverityClass, getRiskSeverity
     }
   }
 }
@@ -417,19 +462,14 @@ export default {
 .page-header h1 { margin-bottom: 0.5rem; }
 .page-header p { color: var(--text-secondary); }
 
-.upload-card, .progress-card, .result-card, .folder-results-card, .settings-card { margin-bottom: 1.5rem; }
+.upload-card, .progress-card, .result-card, .folder-results-card, .samples-card { margin-bottom: 1.5rem; }
 
 .scan-options { display: flex; gap: 1.5rem; align-items: center; }
 .or-divider { color: var(--text-secondary); font-weight: 600; }
 
 .dropzone {
-  flex: 1;
-  border: 2px dashed var(--border-color);
-  border-radius: 16px;
-  padding: 2.5rem 1.5rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s;
+  flex: 1; border: 2px dashed var(--border-color); border-radius: 16px;
+  padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s;
 }
 .dropzone:hover { border-color: #ef4444; background: rgba(239, 68, 68, 0.05); }
 .dropzone i { font-size: 3rem; color: #ef4444; margin-bottom: 1rem; }
@@ -438,12 +478,33 @@ export default {
 .folder-zone i { color: #f59e0b; }
 .folder-zone:hover { border-color: #f59e0b; background: rgba(245, 158, 11, 0.05); }
 
+/* Samples */
+.samples-card h3 { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+.samples-card h3 i { color: var(--primary-color); }
+.samples-desc { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.25rem; }
+.samples-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+.sample-item {
+  display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem;
+  background: var(--bg-secondary); border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--border-color); transition: all 0.3s;
+}
+.sample-item:hover { border-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.sample-item i { font-size: 1.5rem; color: var(--text-secondary); }
+.sample-item.critical i, .sample-item.high i { color: #ef4444; }
+.sample-item.medium i { color: #f59e0b; }
+.sample-item.low i { color: #22c55e; }
+.sample-info { flex: 1; }
+.sample-name { display: block; font-weight: 600; font-size: 0.9rem; }
+.sample-info small { color: var(--text-secondary); font-size: 0.8rem; }
+
+/* Scanning */
 .scanning-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; font-weight: 600; color: #ef4444; }
 .scan-logs { margin-top: 1rem; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; max-height: 150px; overflow-y: auto; font-family: monospace; font-size: 0.85rem; }
 .log-line { display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0; }
 .log-line.info { color: var(--text-secondary); }
 .log-line.success { color: #10b981; }
 
+/* Result */
 .result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
 .status-badge { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 700; font-size: 1.1rem; }
 .status-badge.clean { background: rgba(16, 185, 129, 0.1); color: #10b981; }
@@ -489,22 +550,9 @@ export default {
 .vt-stat.harmless .num { color: #10b981; }
 .vt-stat.undetected .num { color: #6366f1; }
 .vt-not-found { padding: 1rem; background: var(--bg-secondary); border-radius: 8px; color: var(--text-secondary); }
-.vt-error { color: #ef4444; display: flex; align-items: center; gap: 0.5rem; }
 
 .result-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
-
 .folder-summary { color: var(--text-secondary); margin-bottom: 1rem; }
-.file-cell { cursor: pointer; color: #3b82f6; }
-.file-cell:hover { text-decoration: underline; }
-
-.settings-card { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; z-index: 1000; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
-.setting-item { margin-bottom: 1.5rem; }
-.setting-item label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
-.api-key-input { display: flex; gap: 0.5rem; }
-.api-key-input input { flex: 1; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); color: var(--text-primary); }
-.setting-item small { display: block; margin-top: 0.5rem; color: var(--text-secondary); }
-.setting-item a { color: #3b82f6; }
-.close-btn { margin-top: 1rem; }
 
 @media (max-width: 768px) {
   .scan-options { flex-direction: column; }
@@ -515,15 +563,13 @@ export default {
   .result-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
   .threat-score { text-align: left; }
   .result-actions { flex-direction: column; }
-  .result-actions :deep(.p-button) { width: 100%; }
   .hash-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   .hash-item label { min-width: unset; }
   .hash-item code { width: 100%; font-size: 0.65rem; }
-  .settings-card { width: calc(100% - 2rem); left: 50%; }
+  .samples-grid { grid-template-columns: 1fr; }
   .dropzone { padding: 1.5rem 1rem; }
   .dropzone i { font-size: 2rem; }
   .page-header h1 { font-size: 1.4rem; }
-  .folder-results-card :deep(.p-datatable) { overflow-x: auto; }
 }
 
 @media (max-width: 480px) {
@@ -536,7 +582,6 @@ export default {
   .dropzone { padding: 1.25rem 0.75rem; }
   .dropzone i { font-size: 1.75rem; margin-bottom: 0.5rem; }
   .dropzone p { font-size: 0.9rem; }
-  .settings-card { width: calc(100% - 1rem); }
   .pattern-item { font-size: 0.8rem; padding: 0.4rem 0.75rem; }
 }
 </style>

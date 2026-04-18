@@ -20,6 +20,7 @@ import Accordion from 'primevue/accordion'
 import AccordionPanel from 'primevue/accordionpanel'
 import AccordionHeader from 'primevue/accordionheader'
 import AccordionContent from 'primevue/accordioncontent'
+import Dialog from 'primevue/dialog'
 
 import HomeView from './views/HomeView.vue'
 import ScanView from './views/ScanView.vue'
@@ -65,5 +66,6 @@ app.component('AccordionPanel', AccordionPanel)
 app.component('AccordionHeader', AccordionHeader)
 app.component('AccordionContent', AccordionContent)
 
+app.component('Dialog', Dialog)
 app.directive('tooltip', Tooltip)
 app.mount('#app')

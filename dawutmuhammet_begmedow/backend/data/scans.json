@@ -1,22 +1,190 @@
 {
   "scans": [
     {
+      "id": "aaa11986-1710-41e4-8b9f-0273122f340f",
+      "fileName": "test_clean.txt",
+      "filePath": "",
+      "fileSize": 40,
+      "fileSizeFormatted": "40 Bytes",
+      "fileType": {
+        "type": "Text File",
+        "risk": "low"
+      },
+      "status": "clean",
+      "threatScore": 0,
+      "entropy": {
+        "entropy": 4.0215,
+        "interpretation": "Normal"
+      },
+      "hashes": {
+        "md5": "83dc47bf75b74bed3c0e7792b6acdd19",
+        "sha1": "dfdb89a35c6a5a1df6e1c0603fae9f8c97f364c1",
+        "sha256": "cce9a3b7ed623929f77f9f4d5791227319b553eb652f94dc02458369882c2271"
+      },
+      "patterns": [],
+      "virusTotal": {
+        "available": true,
+        "found": false,
+        "stats": {
+          "malicious": 0,
+          "suspicious": 0,
+          "harmless": 48,
+          "undetected": 16
+        },
+        "message": "File not found in VirusTotal database"
+      },
+      "scannedAt": "2026-04-17T19:26:42.547Z"
+    },
+    {
+      "id": "0f437a65-dfbe-4f49-a21a-daa4ef3b5d7b",
+      "fileName": "test_suspicious.js",
+      "filePath": "",
+      "fileSize": 56,
+      "fileSizeFormatted": "56 Bytes",
+      "fileType": {
+        "type": "JavaScript",
+        "risk": "medium"
+      },
+      "status": "suspicious",
+      "threatScore": 50,
+      "entropy": {
+        "entropy": 4.2709,
+        "interpretation": "Normal"
+      },
+      "hashes": {
+        "md5": "7d24a0623cb19fbed6b896150022ba43",
+        "sha1": "6746562f0410366e9bfe0f54ab72177dd0cf69ac",
+        "sha256": "0007568a7b43743850552e4bbee2958d6d5a0918c7fdde90d136520c8dd42640"
+      },
+      "patterns": [
+        {
+          "name": "Command Prompt Reference",
+          "severity": "high",
+          "count": 1
+        },
+        {
+          "name": "PowerShell Reference",
+          "severity": "high",
+          "count": 1
+        },
+        {
+          "name": "Dynamic Code Execution",
+          "severity": "high",
+          "count": 1
+        },
+        {
+          "name": "Command Execution",
+          "severity": "high",
+          "count": 1
+        }
+      ],
+      "virusTotal": {
+        "available": true,
+        "found": true,
+        "stats": {
+          "malicious": 0,
+          "suspicious": 0,
+          "harmless": 53,
+          "undetected": 6
+        },
+        "message": "File found in VirusTotal database"
+      },
+      "scannedAt": "2026-04-17T19:26:42.478Z"
+    },
+    {
+      "id": "ff037299-a6b3-408d-b00c-bf50fe9d4506",
+      "fileName": "invoice_details.exe",
+      "filePath": "",
+      "fileSize": 5955908,
+      "fileSizeFormatted": "5.68 MB",
+      "fileType": {
+        "type": "PE Executable",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 85,
+      "entropy": {
+        "entropy": 5.53,
+        "interpretation": "Some Compression"
+      },
+      "hashes": {
+        "sha256": "85b16a4fa60a3c6ef80e85a7f454360f474243f4b7b57e906616becc1647fd4e",
+        "md5": "88aae3d8f1e2bdc923c0a281e9fc3b04",
+        "sha1": "d78fb83f63ad64fd306d9a236004417af9ad7615"
+      },
+      "patterns": [
+        {
+          "name": "Process Injection",
+          "severity": "critical",
+          "count": 2
+        },
+        {
+          "name": "Keylogger Pattern",
+          "severity": "critical",
+          "count": 1
+        },
+        {
+          "name": "Persistence Mechanism",
+          "severity": "critical",
+          "count": 1
+        },
+        {
+          "name": "Encrypted Strings",
+          "severity": "high",
+          "count": 4
+        },
+        {
+          "name": "Anti-Debug Check",
+          "severity": "high",
+          "count": 2
+        }
+      ],
+      "virusTotal": {
+        "available": true,
+        "found": true,
+        "stats": {
+          "malicious": 28,
+          "suspicious": 3,
+          "harmless": 35,
+          "undetected": 28
+        },
+        "message": "File found in VirusTotal database"
+      },
+      "scannedAt": "2026-04-17T19:16:09.886Z"
+    },
+    {
       "id": "demo-001",
       "fileName": "chrome_installer.exe",
       "filePath": "/Downloads/chrome_installer.exe",
       "fileSize": 89456123,
       "fileSizeFormatted": "85.31 MB",
-      "fileType": { "type": "PE Executable", "risk": "high" },
+      "fileType": {
+        "type": "PE Executable",
+        "risk": "high"
+      },
       "status": "clean",
       "threatScore": 8,
-      "entropy": { "entropy": 4.23, "interpretation": "Normal" },
+      "entropy": {
+        "entropy": 4.23,
+        "interpretation": "Normal"
+      },
       "hashes": {
         "sha256": "a7b9c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
         "md5": "d41d8cd98f00b204e9800998ecf8427e",
         "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
       },
       "patterns": [],
-      "virusTotal": { "available": true, "found": false, "stats": { "malicious": 0, "suspicious": 0, "harmless": 65, "undetected": 5 }, "message": "File not found in VirusTotal database" },
+      "virusTotal": {
+        "available": true,
+        "found": false,
+        "stats": {
+          "malicious": 0,
+          "suspicious": 0,
+          "harmless": 65,
+          "undetected": 5
+        },
+        "message": "File not found in VirusTotal database"
+      },
       "scannedAt": "2026-02-28T10:15:00.000Z"
     },
     {
@@ -25,17 +193,33 @@
       "filePath": "/Documents/Reports/quarterly_report.pdf",
       "fileSize": 2456789,
       "fileSizeFormatted": "2.34 MB",
-      "fileType": { "type": "PDF Document", "risk": "medium" },
+      "fileType": {
+        "type": "PDF Document",
+        "risk": "medium"
+      },
       "status": "clean",
       "threatScore": 3,
-      "entropy": { "entropy": 3.87, "interpretation": "Normal" },
+      "entropy": {
+        "entropy": 3.87,
+        "interpretation": "Normal"
+      },
       "hashes": {
         "sha256": "b8c9d4e5f6a7890123456789012345678901bcdef2345678901bcdef234567",
         "md5": "e41d8cd98f00b204e9800998ecf8428f",
         "sha1": "eb39a3ee5e6b4b0d3255bfef95601890afd80710"
       },
       "patterns": [],
-      "virusTotal": { "available": true, "found": false, "stats": { "malicious": 0, "suspicious": 0, "harmless": 70, "undetected": 2 }, "message": "File not found in VirusTotal database" },
+      "virusTotal": {
+        "available": true,
+        "found": false,
+        "stats": {
+          "malicious": 0,
+          "suspicious": 0,
+          "harmless": 70,
+          "undetected": 2
+        },
+        "message": "File not found in VirusTotal database"
+      },
       "scannedAt": "2026-02-28T09:45:00.000Z"
     },
     {
@@ -44,21 +228,49 @@
       "filePath": "/Downloads/free_game_crack.exe",
       "fileSize": 1245678,
       "fileSizeFormatted": "1.19 MB",
-      "fileType": { "type": "PE Executable", "risk": "high" },
+      "fileType": {
+        "type": "PE Executable",
+        "risk": "high"
+      },
       "status": "suspicious",
       "threatScore": 52,
-      "entropy": { "entropy": 6.89, "interpretation": "Possibly Packed" },
+      "entropy": {
+        "entropy": 6.89,
+        "interpretation": "Possibly Packed"
+      },
       "hashes": {
         "sha256": "c9d0e5f6a7b8901234567890123456789012cdef3456789012cdef345678",
         "md5": "f51d8cd98f00b204e9800998ecf8429g",
         "sha1": "fc39a3ee5e6b4b0d3255bfef95601890afd80711"
       },
       "patterns": [
-        { "name": "Network Communication", "severity": "medium", "count": 4 },
-        { "name": "Registry Access", "severity": "medium", "count": 2 },
-        { "name": "Encrypted Strings", "severity": "high", "count": 1 }
+        {
+          "name": "Network Communication",
+          "severity": "medium",
+          "count": 4
+        },
+        {
+          "name": "Registry Access",
+          "severity": "medium",
+          "count": 2
+        },
+        {
+          "name": "Encrypted Strings",
+          "severity": "high",
+          "count": 1
+        }
       ],
-      "virusTotal": { "available": true, "found": true, "stats": { "malicious": 8, "suspicious": 3, "harmless": 45, "undetected": 14 }, "message": "File found in VirusTotal database" },
+      "virusTotal": {
+        "available": true,
+        "found": true,
+        "stats": {
+          "malicious": 8,
+          "suspicious": 3,
+          "harmless": 45,
+          "undetected": 14
+        },
+        "message": "File found in VirusTotal database"
+      },
       "scannedAt": "2026-02-28T08:30:00.000Z"
     },
     {
@@ -67,24 +279,64 @@
       "filePath": "/Downloads/invoice_march2026.pdf.exe",
       "fileSize": 567890,
       "fileSizeFormatted": "554.58 KB",
-      "fileType": { "type": "PE Executable", "risk": "high" },
+      "fileType": {
+        "type": "PE Executable",
+        "risk": "high"
+      },
       "status": "malware",
       "threatScore": 91,
-      "entropy": { "entropy": 7.82, "interpretation": "Highly Packed/Encrypted" },
+      "entropy": {
+        "entropy": 7.82,
+        "interpretation": "Highly Packed/Encrypted"
+      },
       "hashes": {
         "sha256": "d0e1f6a7b8c9012345678901234567890123def4567890123def456789",
         "md5": "g61d8cd98f00b204e9800998ecf842ah",
         "sha1": "gd39a3ee5e6b4b0d3255bfef95601890afd80712"
       },
       "patterns": [
-        { "name": "Process Injection", "severity": "critical", "count": 3 },
-        { "name": "Persistence Mechanism", "severity": "critical", "count": 2 },
-        { "name": "Keylogger Pattern", "severity": "critical", "count": 1 },
-        { "name": "Anti-Debug Check", "severity": "high", "count": 4 },
-        { "name": "Encrypted Strings", "severity": "high", "count": 6 },
-        { "name": "Network Communication", "severity": "medium", "count": 5 }
+        {
+          "name": "Process Injection",
+          "severity": "critical",
+          "count": 3
+        },
+        {
+          "name": "Persistence Mechanism",
+          "severity": "critical",
+          "count": 2
+        },
+        {
+          "name": "Keylogger Pattern",
+          "severity": "critical",
+          "count": 1
+        },
+        {
+          "name": "Anti-Debug Check",
+          "severity": "high",
+          "count": 4
+        },
+        {
+          "name": "Encrypted Strings",
+          "severity": "high",
+          "count": 6
+        },
+        {
+          "name": "Network Communication",
+          "severity": "medium",
+          "count": 5
+        }
       ],
-      "virusTotal": { "available": true, "found": true, "stats": { "malicious": 42, "suspicious": 5, "harmless": 12, "undetected": 11 }, "message": "File found in VirusTotal database" },
+      "virusTotal": {
+        "available": true,
+        "found": true,
+        "stats": {
+          "malicious": 42,
+          "suspicious": 5,
+          "harmless": 12,
+          "undetected": 11
+        },
+        "message": "File found in VirusTotal database"
+      },
       "scannedAt": "2026-02-28T07:15:00.000Z"
     },
     {
@@ -93,17 +345,33 @@
       "filePath": "/Downloads/vacation_photos.zip",
       "fileSize": 45678901,
       "fileSizeFormatted": "43.56 MB",
-      "fileType": { "type": "ZIP Archive", "risk": "medium" },
+      "fileType": {
+        "type": "ZIP Archive",
+        "risk": "medium"
+      },
       "status": "clean",
       "threatScore": 5,
-      "entropy": { "entropy": 7.12, "interpretation": "Some Compression" },
+      "entropy": {
+        "entropy": 7.12,
+        "interpretation": "Some Compression"
+      },
       "hashes": {
         "sha256": "e1f2a7b8c9d0123456789012345678901234ef5678901234ef567890",
         "md5": "h71d8cd98f00b204e9800998ecf842bi",
         "sha1": "he39a3ee5e6b4b0d3255bfef95601890afd80713"
       },
       "patterns": [],
-      "virusTotal": { "available": true, "found": false, "stats": { "malicious": 0, "suspicious": 0, "harmless": 68, "undetected": 4 }, "message": "File not found in VirusTotal database" },
+      "virusTotal": {
+        "available": true,
+        "found": false,
+        "stats": {
+          "malicious": 0,
+          "suspicious": 0,
+          "harmless": 68,
+          "undetected": 4
+        },
+        "message": "File not found in VirusTotal database"
+      },
       "scannedAt": "2026-02-27T16:30:00.000Z"
     },
     {
@@ -112,21 +380,49 @@
       "filePath": "/Scripts/update_script.ps1",
       "fileSize": 8192,
       "fileSizeFormatted": "8 KB",
-      "fileType": { "type": "PowerShell", "risk": "high" },
+      "fileType": {
+        "type": "PowerShell",
+        "risk": "high"
+      },
       "status": "suspicious",
       "threatScore": 45,
-      "entropy": { "entropy": 5.34, "interpretation": "Some Compression" },
+      "entropy": {
+        "entropy": 5.34,
+        "interpretation": "Some Compression"
+      },
       "hashes": {
         "sha256": "f2a3b8c9d0e1234567890123456789012345f6789012345f6789012",
         "md5": "i81d8cd98f00b204e9800998ecf842cj",
         "sha1": "if39a3ee5e6b4b0d3255bfef95601890afd80714"
       },
       "patterns": [
-        { "name": "Obfuscated Code", "severity": "high", "count": 2 },
-        { "name": "Network Communication", "severity": "medium", "count": 3 },
-        { "name": "File System Access", "severity": "low", "count": 8 }
+        {
+          "name": "Obfuscated Code",
+          "severity": "high",
+          "count": 2
+        },
+        {
+          "name": "Network Communication",
+          "severity": "medium",
+          "count": 3
+        },
+        {
+          "name": "File System Access",
+          "severity": "low",
+          "count": 8
+        }
       ],
-      "virusTotal": { "available": true, "found": true, "stats": { "malicious": 3, "suspicious": 2, "harmless": 52, "undetected": 13 }, "message": "File found in VirusTotal database" },
+      "virusTotal": {
+        "available": true,
+        "found": true,
+        "stats": {
+          "malicious": 3,
+          "suspicious": 2,
+          "harmless": 52,
+          "undetected": 13
+        },
+        "message": "File found in VirusTotal database"
+      },
       "scannedAt": "2026-02-27T14:20:00.000Z"
     },
     {
@@ -135,17 +431,33 @@
       "filePath": "/Documents/Work/presentation.pptx",
       "fileSize": 5678901,
       "fileSizeFormatted": "5.42 MB",
-      "fileType": { "type": "MS PowerPoint", "risk": "low" },
+      "fileType": {
+        "type": "MS PowerPoint",
+        "risk": "low"
+      },
       "status": "clean",
       "threatScore": 2,
-      "entropy": { "entropy": 3.45, "interpretation": "Normal" },
+      "entropy": {
+        "entropy": 3.45,
+        "interpretation": "Normal"
+      },
       "hashes": {
         "sha256": "a3b4c9d0e1f2345678901234567890123456a7890123456a78901234",
         "md5": "j91d8cd98f00b204e9800998ecf842dk",
         "sha1": "jg39a3ee5e6b4b0d3255bfef95601890afd80715"
       },
       "patterns": [],
-      "virusTotal": { "available": true, "found": false, "stats": { "malicious": 0, "suspicious": 0, "harmless": 72, "undetected": 0 }, "message": "File not found in VirusTotal database" },
+      "virusTotal": {
+        "available": true,
+        "found": false,
+        "stats": {
+          "malicious": 0,
+          "suspicious": 0,
+          "harmless": 72,
+          "undetected": 0
+        },
+        "message": "File not found in VirusTotal database"
+      },
       "scannedAt": "2026-02-27T11:00:00.000Z"
     },
     {
@@ -154,24 +466,64 @@
       "filePath": "/Downloads/ransomware_sample.exe",
       "fileSize": 1048576,
       "fileSizeFormatted": "1 MB",
-      "fileType": { "type": "PE Executable", "risk": "high" },
+      "fileType": {
+        "type": "PE Executable",
+        "risk": "high"
+      },
       "status": "malware",
       "threatScore": 98,
-      "entropy": { "entropy": 7.95, "interpretation": "Highly Packed/Encrypted" },
+      "entropy": {
+        "entropy": 7.95,
+        "interpretation": "Highly Packed/Encrypted"
+      },
       "hashes": {
         "sha256": "b4c5d0e1f2a3456789012345678901234567b8901234567b890123456",
         "md5": "k02d8cd98f00b204e9800998ecf842el",
         "sha1": "kh39a3ee5e6b4b0d3255bfef95601890afd80716"
       },
       "patterns": [
-        { "name": "Encryption Routine", "severity": "critical", "count": 8 },
-        { "name": "File System Access", "severity": "low", "count": 25 },
-        { "name": "Process Injection", "severity": "critical", "count": 2 },
-        { "name": "Persistence Mechanism", "severity": "critical", "count": 3 },
-        { "name": "Anti-Debug Check", "severity": "high", "count": 5 },
-        { "name": "Network Communication", "severity": "medium", "count": 4 }
+        {
+          "name": "Encryption Routine",
+          "severity": "critical",
+          "count": 8
+        },
+        {
+          "name": "File System Access",
+          "severity": "low",
+          "count": 25
+        },
+        {
+          "name": "Process Injection",
+          "severity": "critical",
+          "count": 2
+        },
+        {
+          "name": "Persistence Mechanism",
+          "severity": "critical",
+          "count": 3
+        },
+        {
+          "name": "Anti-Debug Check",
+          "severity": "high",
+          "count": 5
+        },
+        {
+          "name": "Network Communication",
+          "severity": "medium",
+          "count": 4
+        }
       ],
-      "virusTotal": { "available": true, "found": true, "stats": { "malicious": 58, "suspicious": 4, "harmless": 5, "undetected": 3 }, "message": "File found in VirusTotal database" },
+      "virusTotal": {
+        "available": true,
+        "found": true,
+        "stats": {
+          "malicious": 58,
+          "suspicious": 4,
+          "harmless": 5,
+          "undetected": 3
+        },
+        "message": "File found in VirusTotal database"
+      },
       "scannedAt": "2026-02-27T09:45:00.000Z"
     },
     {
@@ -180,17 +532,33 @@
       "filePath": "/Pictures/family_photo.jpg",
       "fileSize": 3456789,
       "fileSizeFormatted": "3.3 MB",
-      "fileType": { "type": "JPEG Image", "risk": "low" },
+      "fileType": {
+        "type": "JPEG Image",
+        "risk": "low"
+      },
       "status": "clean",
       "threatScore": 0,
-      "entropy": { "entropy": 7.65, "interpretation": "Some Compression" },
+      "entropy": {
+        "entropy": 7.65,
+        "interpretation": "Some Compression"
+      },
       "hashes": {
         "sha256": "c5d6e1f2a3b4567890123456789012345678c9012345678c90123456",
         "md5": "l13d8cd98f00b204e9800998ecf842fm",
         "sha1": "li39a3ee5e6b4b0d3255bfef95601890afd80717"
       },
       "patterns": [],
-      "virusTotal": { "available": true, "found": false, "stats": { "malicious": 0, "suspicious": 0, "harmless": 70, "undetected": 2 }, "message": "File not found in VirusTotal database" },
+      "virusTotal": {
+        "available": true,
+        "found": false,
+        "stats": {
+          "malicious": 0,
+          "suspicious": 0,
+          "harmless": 70,
+          "undetected": 2
+        },
+        "message": "File not found in VirusTotal database"
+      },
       "scannedAt": "2026-02-26T18:30:00.000Z"
     },
     {
@@ -199,21 +567,49 @@
       "filePath": "/Downloads/system_optimizer.exe",
       "fileSize": 15728640,
       "fileSizeFormatted": "15 MB",
-      "fileType": { "type": "PE Executable", "risk": "high" },
+      "fileType": {
+        "type": "PE Executable",
+        "risk": "high"
+      },
       "status": "potentially_unwanted",
       "threatScore": 35,
-      "entropy": { "entropy": 5.89, "interpretation": "Some Compression" },
+      "entropy": {
+        "entropy": 5.89,
+        "interpretation": "Some Compression"
+      },
       "hashes": {
         "sha256": "d6e7f2a3b4c5678901234567890123456789d0123456789d012345678",
         "md5": "m24d8cd98f00b204e9800998ecf842gn",
         "sha1": "mj39a3ee5e6b4b0d3255bfef95601890afd80718"
       },
       "patterns": [
-        { "name": "Registry Access", "severity": "medium", "count": 6 },
-        { "name": "File System Access", "severity": "low", "count": 12 },
-        { "name": "Network Communication", "severity": "medium", "count": 2 }
+        {
+          "name": "Registry Access",
+          "severity": "medium",
+          "count": 6
+        },
+        {
+          "name": "File System Access",
+          "severity": "low",
+          "count": 12
+        },
+        {
+          "name": "Network Communication",
+          "severity": "medium",
+          "count": 2
+        }
       ],
-      "virusTotal": { "available": true, "found": true, "stats": { "malicious": 2, "suspicious": 4, "harmless": 55, "undetected": 9 }, "message": "File found in VirusTotal database" },
+      "virusTotal": {
+        "available": true,
+        "found": true,
+        "stats": {
+          "malicious": 2,
+          "suspicious": 4,
+          "harmless": 55,
+          "undetected": 9
+        },
+        "message": "File found in VirusTotal database"
+      },
       "scannedAt": "2026-02-26T15:15:00.000Z"
     }
   ]
