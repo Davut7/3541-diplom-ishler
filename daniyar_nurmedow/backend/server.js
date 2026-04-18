@@ -4,6 +4,8 @@ const { v4: uuidv4 } = require('uuid')
 const https = require('https')
 const http = require('http')
 const { URL } = require('url')
+const fs = require('fs')
+const path = require('path')
 
 const app = express()
 const PORT = 7031
@@ -11,18 +13,50 @@ const PORT = 7031
 app.use(cors())
 app.use(express.json())
 
-// XSS vulnerability patterns for scanning
+// Persistent scan history
+const dataDir = path.join(__dirname, 'data')
+if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true })
+const historyPath = path.join(dataDir, 'scans.json')
+
+function loadHistory() {
+  try { if (fs.existsSync(historyPath)) return JSON.parse(fs.readFileSync(historyPath, 'utf8')) } catch (e) {}
+  return { scans: [] }
+}
+function saveHistory(data) {
+  if (data.scans.length > 100) data.scans = data.scans.slice(0, 100)
+  fs.writeFileSync(historyPath, JSON.stringify(data, null, 2))
+}
+
+// XSS vulnerability patterns for SOURCE CODE scanning
 const vulnerabilityPatterns = [
-  { pattern: 'innerHTML', severity: 'critical', type: 'DOM XSS', desc: 'Direct innerHTML assignment' },
-  { pattern: 'document.write', severity: 'critical', type: 'DOM XSS', desc: 'document.write usage' },
-  { pattern: 'eval(', severity: 'critical', type: 'Code Injection', desc: 'eval function usage' },
-  { pattern: 'outerHTML', severity: 'high', type: 'DOM XSS', desc: 'outerHTML manipulation' },
-  { pattern: '.html(', severity: 'high', type: 'jQuery XSS', desc: 'jQuery .html() method' },
-  { pattern: 'v-html', severity: 'medium', type: 'Vue XSS', desc: 'Vue v-html directive' },
-  { pattern: 'dangerouslySetInnerHTML', severity: 'medium', type: 'React XSS', desc: 'React dangerous HTML' }
+  { pattern: 'innerHTML', severity: 'critical', type: 'DOM XSS', desc: 'Direct innerHTML assignment — allows arbitrary HTML/script injection' },
+  { pattern: 'document.write', severity: 'critical', type: 'DOM XSS', desc: 'document.write usage — can inject scripts into page' },
+  { pattern: 'eval(', severity: 'critical', type: 'Code Injection', desc: 'eval function usage — executes arbitrary code' },
+  { pattern: 'outerHTML', severity: 'high', type: 'DOM XSS', desc: 'outerHTML manipulation — replaces element with unsanitized HTML' },
+  { pattern: '.html(', severity: 'high', type: 'jQuery XSS', desc: 'jQuery .html() method — inserts raw HTML without encoding' },
+  { pattern: 'v-html', severity: 'medium', type: 'Vue XSS', desc: 'Vue v-html directive — renders raw HTML' },
+  { pattern: 'dangerouslySetInnerHTML', severity: 'medium', type: 'React XSS', desc: 'React dangerous HTML — bypasses React\'s escaping' }
 ]
 
-// Scan code for XSS vulnerabilities
+// XSS PAYLOAD detection patterns (for user input scanning)
+const xssPayloadPatterns = [
+  { pattern: /<script[\s>]/i, severity: 'critical', type: 'Reflected XSS', desc: 'Script tag injection — executes JavaScript' },
+  { pattern: /javascript\s*:/i, severity: 'critical', type: 'JavaScript URI', desc: 'JavaScript protocol in URL — code execution via link' },
+  { pattern: /on\w+\s*=/i, severity: 'high', type: 'Event Handler XSS', desc: 'Event handler injection (onerror, onload, onclick, etc.)' },
+  { pattern: /<iframe/i, severity: 'high', type: 'Frame Injection', desc: 'Iframe injection — can load malicious pages' },
+  { pattern: /<img[^>]+onerror/i, severity: 'high', type: 'IMG XSS', desc: 'Image tag with error handler — executes on load failure' },
+  { pattern: /<svg[^>]+onload/i, severity: 'high', type: 'SVG XSS', desc: 'SVG with onload — executes when SVG renders' },
+  { pattern: /document\.cookie/i, severity: 'critical', type: 'Cookie Theft', desc: 'Attempts to access cookies — session hijacking' },
+  { pattern: /document\.location/i, severity: 'high', type: 'Redirect XSS', desc: 'Attempts to redirect page — phishing attack' },
+  { pattern: /<embed/i, severity: 'medium', type: 'Embed Injection', desc: 'Embed tag injection' },
+  { pattern: /<object/i, severity: 'medium', type: 'Object Injection', desc: 'Object tag injection' },
+  { pattern: /expression\s*\(/i, severity: 'medium', type: 'CSS XSS', desc: 'CSS expression — executes code via style' },
+  { pattern: /data\s*:\s*text\/html/i, severity: 'high', type: 'Data URI XSS', desc: 'Data URI with HTML — embeds executable content' },
+  { pattern: /\\u00[0-9a-f]{2}/i, severity: 'medium', type: 'Unicode Escape', desc: 'Unicode escape sequences — bypasses basic filters' },
+  { pattern: /&#\d+;|&#x[0-9a-f]+;/i, severity: 'medium', type: 'HTML Entity Encoding', desc: 'HTML entity encoding — bypasses simple string filters' }
+]
+
+// Scan code for XSS vulnerabilities — detects both source code issues AND XSS payloads
 app.post('/api/scan', (req, res) => {
   const { code, language } = req.body
   const vulnerabilities = []
@@ -30,6 +64,7 @@ app.post('/api/scan', (req, res) => {
   if (code) {
     const lines = code.split('\n')
     lines.forEach((line, index) => {
+      // Check source code vulnerability patterns
       vulnerabilityPatterns.forEach(vuln => {
         if (line.toLowerCase().includes(vuln.pattern.toLowerCase())) {
           vulnerabilities.push({
@@ -43,17 +78,48 @@ app.post('/api/scan', (req, res) => {
           })
         }
       })
+
+      // Check for XSS payload patterns in the input
+      xssPayloadPatterns.forEach(vuln => {
+        if (vuln.pattern.test(line)) {
+          vulnerabilities.push({
+            id: uuidv4(),
+            line: index + 1,
+            severity: vuln.severity,
+            type: vuln.type,
+            description: vuln.desc,
+            code: line.trim(),
+            recommendation: 'Sanitize this input — it contains an XSS attack payload'
+          })
+        }
+      })
     })
   }
 
-  res.json({
+  const scanResult = {
     success: true,
     scanId: uuidv4(),
     language,
     totalLines: code ? code.split('\n').length : 0,
     vulnerabilities,
+    riskLevel: vulnerabilities.some(v => v.severity === 'critical') ? 'critical' :
+               vulnerabilities.some(v => v.severity === 'high') ? 'high' :
+               vulnerabilities.length > 0 ? 'medium' : 'safe',
     scannedAt: new Date().toISOString()
+  }
+
+  // Save to history
+  const history = loadHistory()
+  history.scans.unshift({
+    scanId: scanResult.scanId,
+    language,
+    vulnerabilityCount: vulnerabilities.length,
+    riskLevel: scanResult.riskLevel,
+    scannedAt: scanResult.scannedAt
   })
+  saveHistory(history)
+
+  res.json(scanResult)
 })
 
 function getRecommendation(pattern) {
@@ -487,12 +553,43 @@ app.get('/api/xss-payloads', (req, res) => {
   })
 })
 
+// Scan history
+app.get('/api/history', (req, res) => {
+  const history = loadHistory()
+  res.json({ success: true, scans: history.scans })
+})
+
+app.delete('/api/history', (req, res) => {
+  saveHistory({ scans: [] })
+  res.json({ success: true })
+})
+
+// Built-in vulnerable test page for live XSS demo
+app.get('/api/vulnerable-demo', (req, res) => {
+  const userInput = req.query.q || ''
+  // INTENTIONALLY VULNERABLE — reflects input without sanitization
+  res.send(`<!DOCTYPE html>
+<html><head><title>Vulnerable Demo Page</title>
+<style>body{font-family:sans-serif;background:#1a1a2e;color:#eee;padding:2rem;max-width:600px;margin:0 auto}
+h1{color:#e94560}input{width:100%;padding:.75rem;border:1px solid #555;border-radius:8px;background:#16213e;color:#eee;margin:.5rem 0}
+button{background:#e94560;color:#fff;border:none;padding:.75rem 1.5rem;border-radius:8px;cursor:pointer}
+.result{background:#16213e;border:1px solid #555;padding:1rem;border-radius:8px;margin-top:1rem;}</style></head>
+<body><h1>Vulnerable Search Page</h1><p style="color:#e94560">⚠ This page is intentionally vulnerable for XSS testing</p>
+<form method="GET" action="/api/vulnerable-demo"><input name="q" placeholder="Try: <script>alert('XSS')</script>" value="">
+<button type="submit">Search</button></form>
+${userInput ? `<div class="result"><p>Results for: ${userInput}</p><p style="color:#888">No results found.</p></div>` : ''}
+</body></html>`)
+})
+
 // Health check
 app.get('/api/health', (req, res) => {
+  const history = loadHistory()
   res.json({
     status: 'ok',
     message: 'XSS Shield API running',
-    version: '1.0.0'
+    version: '2.0.0',
+    totalScans: history.scans.length,
+    vulnerableTestPage: '/api/vulnerable-demo'
   })
 })
 

@@ -1,0 +1,25 @@
+{
+  "scans": [
+    {
+      "scanId": "2dcbbbab-f5cd-402e-9104-bc2c8333c240",
+      "language": "javascript",
+      "vulnerabilityCount": 0,
+      "riskLevel": "safe",
+      "scannedAt": "2026-04-18T05:51:34.506Z"
+    },
+    {
+      "scanId": "57a5ab0b-0ee3-4520-bcfd-046a1437ab85",
+      "language": "html",
+      "vulnerabilityCount": 5,
+      "riskLevel": "critical",
+      "scannedAt": "2026-04-18T05:51:34.469Z"
+    },
+    {
+      "scanId": "7607557d-96a3-4bbf-8c9a-7ddb434f38fd",
+      "language": "html",
+      "vulnerabilityCount": 2,
+      "riskLevel": "critical",
+      "scannedAt": "2026-04-18T05:51:34.410Z"
+    }
+  ]
+}

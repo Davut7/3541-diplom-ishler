@@ -314,7 +314,7 @@ router.post('/analyze', async (req, res) => {
 
     addLog(language === 'en' ? 'Analysis complete!' : 'Derňew tamamlandy!', 'success')
 
-    res.json({
+    const result = {
       success: true,
       target,
       ip,
@@ -329,7 +329,15 @@ router.post('/analyze', async (req, res) => {
       recommendations: security.recommendations,
       logs,
       analyzedAt: new Date().toISOString()
-    })
+    }
+
+    // Save to history
+    try {
+      const saveInvestigation = req.app.locals.saveInvestigation
+      if (saveInvestigation) saveInvestigation(result)
+    } catch (e) { /* ignore */ }
+
+    res.json(result)
 
   } catch (error) {
     addLog(`Error: ${error.message}`, 'error')
