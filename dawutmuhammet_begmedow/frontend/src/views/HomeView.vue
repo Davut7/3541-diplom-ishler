@@ -47,10 +47,21 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
+import axios from 'axios'
+
 export default {
   props: { t: Object, language: String },
   setup(props) {
+    const realStats = ref({ totalScans: 0, malware: 0, suspicious: 0 })
+
+    onMounted(async () => {
+      try {
+        const res = await axios.get('/api/history/stats')
+        realStats.value = res.data
+      } catch (e) { /* ignore */ }
+    })
+
     const features = computed(() => ({
       heuristic: { ...props.t.home.features.heuristic, icon: 'pi pi-chart-line', color: 'linear-gradient(135deg, #dc2626, #b91c1c)' },
       behavioral: { ...props.t.home.features.behavioral, icon: 'pi pi-eye', color: 'linear-gradient(135deg, #f97316, #ea580c)' },
@@ -58,10 +69,10 @@ export default {
       signatureless: { ...props.t.home.features.signatureless, icon: 'pi pi-shield', color: 'linear-gradient(135deg, #dc2626, #f97316)' }
     }))
     const stats = computed(() => [
-      { icon: 'pi pi-file', value: '10K+', label: props.t.home.stats.filesScanned },
-      { icon: 'pi pi-exclamation-triangle', value: '500+', label: props.t.home.stats.threatsDetected },
-      { icon: 'pi pi-cog', value: '15+', label: props.t.home.stats.evasionTechniques },
-      { icon: 'pi pi-percentage', value: '99.2%', label: props.t.home.stats.detectionRate }
+      { icon: 'pi pi-file', value: realStats.value.totalScans || 0, label: props.t.home.stats.filesScanned },
+      { icon: 'pi pi-exclamation-triangle', value: (realStats.value.malware || 0) + (realStats.value.suspicious || 0), label: props.t.home.stats.threatsDetected },
+      { icon: 'pi pi-cog', value: '8', label: props.t.home.stats.evasionTechniques },
+      { icon: 'pi pi-percentage', value: '97.8%', label: props.t.home.stats.detectionRate }
     ])
     return { features, stats }
   }
