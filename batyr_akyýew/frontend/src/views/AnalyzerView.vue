@@ -329,9 +329,26 @@ export default {
 
         if (res.ok) {
           const data = await res.json()
+          // Run real test-attacks to get actual WAF results after generating data
+          let blocked = 0, allowed = 0
+          const types = ['sql', 'xss', 'path', 'cmd', 'normal']
+          for (const type of types) {
+            try {
+              const testRes = await fetch('/api/test-attack', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ attackType: type })
+              })
+              if (testRes.ok) {
+                const testData = await testRes.json()
+                if (testData.analysis.isBlocked) blocked++
+                else allowed++
+              }
+            } catch (e) {}
+          }
           autoTestStats.value.totalTests += data.generated.attackLogs
-          autoTestStats.value.blocked += Math.floor(data.generated.attackLogs * 0.7)
-          autoTestStats.value.allowed += Math.floor(data.generated.attackLogs * 0.3)
+          autoTestStats.value.blocked += blocked
+          autoTestStats.value.allowed += allowed
         }
       } catch (e) {
         console.error('Bulk generate error:', e)

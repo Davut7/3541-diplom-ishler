@@ -3,7 +3,7 @@
     <div class="page-header">
       <div class="header-content">
         <h1><i class="pi pi-sitemap"></i> {{ t.proxy?.title || 'Reverse Proxy Mode' }}</h1>
-        <p>{{ t.proxy?.subtitle || 'Protect external websites by routing traffic through WAF' }}</p>
+        <p>{{ t.proxy?.subtitle || 'Deploy WAF as a reverse proxy in front of your web application' }}</p>
       </div>
       <div class="status-badge" :class="{ active: isRunning }">
         <i :class="isRunning ? 'pi pi-check-circle' : 'pi pi-circle'"></i>
@@ -18,7 +18,7 @@
           <div class="info-icon"><i class="pi pi-info-circle"></i></div>
           <div class="info-text">
             <h3>{{ t.proxy?.howItWorks || 'How Reverse Proxy Works' }}</h3>
-            <p>{{ t.proxy?.howItWorksDesc || 'The WAF acts as a protective layer between clients and your target server. All HTTP requests pass through the WAF where they are analyzed for threats before being forwarded to the actual server.' }}</p>
+            <p>{{ t.proxy?.howItWorksDesc || 'The WAF is deployed as a reverse proxy in front of your own web application. All incoming HTTP requests first pass through the WAF for threat analysis. Malicious requests are blocked, while safe requests are forwarded to your application server.' }}</p>
             <div class="flow-diagram">
               <div class="flow-item client"><i class="pi pi-user"></i> Client</div>
               <div class="flow-arrow"><i class="pi pi-arrow-right"></i></div>

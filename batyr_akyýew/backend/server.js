@@ -1120,10 +1120,11 @@ app.post('/api/generate-test-data', async (req, res) => {
 
   for (let i = 0; i < dataCount; i++) {
     const attackType = attackTypes[Math.floor(Math.random() * attackTypes.length)]
-    const action = Math.random() > 0.3 ? 'blocked' : (Math.random() > 0.5 ? 'allowed' : 'challenged')
+    const isRealAttack = ['SQL Injection', 'XSS', 'Path Traversal', 'Command Injection'].includes(attackType)
+    const action = isRealAttack ? 'blocked' : (attackType === 'Rate Limit' ? 'challenged' : (Math.random() > 0.5 ? 'challenged' : 'blocked'))
     const country = countries[Math.floor(Math.random() * countries.length)]
     const city = cities[Math.floor(Math.random() * cities.length)]
-    const riskScore = Math.floor(Math.random() * 100)
+    const riskScore = isRealAttack ? (40 + Math.floor(Math.random() * 60)) : (10 + Math.floor(Math.random() * 40))
     const userAgent = userAgents[Math.floor(Math.random() * userAgents.length)]
 
     // Random IP
@@ -1792,13 +1793,16 @@ async function generateInitialTestData() {
       'python-requests/2.25.1'
     ]
 
-    // Generate 50 attack logs
+    // Generate 50 attack logs with logically consistent data
+    // Attacks are blocked (rules are enabled), normal traffic is allowed
     for (let i = 0; i < 50; i++) {
       const attackType = attackTypes[Math.floor(Math.random() * attackTypes.length)]
-      const action = Math.random() > 0.3 ? 'blocked' : (Math.random() > 0.5 ? 'allowed' : 'challenged')
+      // Logical action: real attacks get blocked, rate limits get challenged, bot detection gets challenged
+      const isRealAttack = ['SQL Injection', 'XSS', 'Path Traversal', 'Command Injection'].includes(attackType)
+      const action = isRealAttack ? 'blocked' : (attackType === 'Rate Limit' ? 'challenged' : (Math.random() > 0.5 ? 'challenged' : 'blocked'))
+      const riskScore = isRealAttack ? (40 + Math.floor(Math.random() * 60)) : (10 + Math.floor(Math.random() * 40))
       const country = countries[Math.floor(Math.random() * countries.length)]
       const city = cities[Math.floor(Math.random() * cities.length)]
-      const riskScore = Math.floor(Math.random() * 100)
       const userAgent = userAgents[Math.floor(Math.random() * userAgents.length)]
       const ip = `${Math.floor(Math.random() * 223) + 1}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`
       const timestamp = new Date(Date.now() - Math.floor(Math.random() * 3 * 24 * 60 * 60 * 1000)).toISOString()
