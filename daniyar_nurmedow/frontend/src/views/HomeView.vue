@@ -190,9 +190,9 @@ export default {
 
     // System stats
     const systemStats = ref([
-      { label: 'CPU LOAD', value: '45%', percent: 45, status: 'normal' },
-      { label: 'MEMORY', value: '2.4GB', percent: 60, status: 'normal' },
-      { label: 'THREATS', value: '3', percent: 15, status: 'warning' },
+      { label: 'CPU LOAD', value: '0%', percent: 0, status: 'normal' },
+      { label: 'MEMORY', value: '0GB', percent: 0, status: 'normal' },
+      { label: 'THREATS', value: '0', percent: 0, status: 'normal' },
       { label: 'FIREWALL', value: 'ACTIVE', percent: 100, status: 'success' }
     ])
 
@@ -217,14 +217,13 @@ export default {
 
     // Global stats
     const globalStats = ref({
-      attacks: '1,247',
-      blocked: '1,198',
-      scanned: '8,432',
-      uptime: '99.9%'
+      attacks: '0',
+      blocked: '0',
+      scanned: '0',
+      uptime: '0%'
     })
 
     let logInterval = null
-    let statsInterval = null
 
     const executePayload = (payload) => {
       router.push({ path: '/attack-lab', query: { payload: encodeURIComponent(payload.code) } })
@@ -254,12 +253,6 @@ export default {
       }
     }
 
-    const updateStats = () => {
-      systemStats.value[0].value = Math.floor(Math.random() * 30 + 30) + '%'
-      systemStats.value[0].percent = parseInt(systemStats.value[0].value)
-      systemStats.value[2].value = Math.floor(Math.random() * 5).toString()
-    }
-
     onMounted(() => {
       // Typing effect
       typeInterval = setInterval(() => {
@@ -273,13 +266,11 @@ export default {
 
       // Live updates
       logInterval = setInterval(addNewLog, 6000)
-      statsInterval = setInterval(updateStats, 4000)
     })
 
     onUnmounted(() => {
       if (typeInterval) clearInterval(typeInterval)
       if (logInterval) clearInterval(logInterval)
-      if (statsInterval) clearInterval(statsInterval)
     })
 
     return {

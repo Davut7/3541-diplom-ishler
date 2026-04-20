@@ -216,7 +216,7 @@ export default {
   --cyber-danger: #ff3366;
   --cyber-warning: #ffcc00;
   --cyber-text: #e0e6ed;
-  --cyber-text-dim: #6b7f99;
+  --cyber-text-dim: #a8b8cc;
   --cyber-code-bg: #0d1117;
   --cyber-glow: 0 0 20px rgba(0, 255, 136, 0.3);
   --cyber-glow-danger: 0 0 20px rgba(255, 51, 102, 0.3);
@@ -685,6 +685,21 @@ body {
 
 .app:not(.dark-mode) .p-accordion .p-accordion-content {
   background: var(--cyber-surface) !important;
+}
+
+/* Dark mode PrimeVue Dialog overrides */
+.dark-mode .p-dialog {
+  background: var(--cyber-surface) !important;
+  color: var(--cyber-text) !important;
+  border-color: var(--cyber-border) !important;
+}
+.dark-mode .p-dialog .p-dialog-header {
+  background: var(--cyber-surface) !important;
+  color: var(--cyber-text) !important;
+}
+.dark-mode .p-dialog .p-dialog-content {
+  background: var(--cyber-surface) !important;
+  color: var(--cyber-text) !important;
 }
 
 /* Mobile menu button - hidden by default */
