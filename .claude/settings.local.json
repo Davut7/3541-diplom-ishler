@@ -69,7 +69,16 @@
       "Bash(python3 -c \" import sys,json; d=json.load\\(sys.stdin\\) print\\(f'Vulnerabilities: {len\\(d[\\\\\"vulnerabilities\\\\\"]\\)} | Risk: {d[\\\\\"riskLevel\\\\\"]}'\\) \" echo \"\" echo \"=== Vulnerable demo page ===\" curl -s -o /dev/null -w \"Status: %{http_code}\" \"http://localhost:7031/api/vulnerable-demo?q=test\" echo \"\" echo \"\" echo \"=== History ===\" curl -s http://localhost:7031/api/history)",
       "Bash(python3 -c \" import sys,json; d=json.load\\(sys.stdin\\) print\\(f'Total scans: {len\\(d[\\\\\"scans\\\\\"]\\)}'\\) \" lsof -ti:7031)",
       "Bash(python3 -c \" import sys,json try: d=json.load\\(sys.stdin\\) a=d.get\\('analysis',{}\\).get\\('request',{}\\) print\\(f'Blocked: {a.get\\(\\\\\"isBlocked\\\\\"\\)} | Risk: {a.get\\(\\\\\"riskScore\\\\\"\\)} | Threats: {len\\(a.get\\(\\\\\"threats\\\\\",[]\\)\\)}'\\) except Exception as e: print\\(f'Parse error: {e}'\\) print\\(f'Raw: {sys.stdin.read\\(\\)[:200]}'\\) \")",
-      "Bash(python3 -c \" import sys,json;d=json.load\\(sys.stdin\\)['dashboard'] print\\(f' Attacks: {d[\\\\\"totalAttacks\\\\\"]} | Blocked: {d[\\\\\"blockedAttacks\\\\\"]} | Rate: {d[\\\\\"blockRate\\\\\"]}%'\\)\" lsof -ti:7011)"
+      "Bash(python3 -c \" import sys,json;d=json.load\\(sys.stdin\\)['dashboard'] print\\(f' Attacks: {d[\\\\\"totalAttacks\\\\\"]} | Blocked: {d[\\\\\"blockedAttacks\\\\\"]} | Rate: {d[\\\\\"blockRate\\\\\"]}%'\\)\" lsof -ti:7011)",
+      "Bash(python3 -m json.tool)",
+      "Bash(curl -s http://localhost:7011/api/behavioral)",
+      "Bash(curl -s http://localhost:7011/api/statistics)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d['statistics']['overview'],indent=2\\)\\); print\\(json.dumps\\(d['statistics']['behavioral'],indent=2\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d['summary'],indent=2\\)\\)\")",
+      "Bash(curl -s http://localhost:7011/api/logs)",
+      "Bash(python3 -c ':*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\)['statistics']; print\\('Overview:', json.dumps\\(d['overview']\\)\\); print\\('Behavioral:', json.dumps\\(d['behavioral']\\)\\)\")",
+      "Bash(pip3 install:*)"
     ]
   }
 }
