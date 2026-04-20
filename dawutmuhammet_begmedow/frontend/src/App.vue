@@ -553,4 +553,71 @@ body {
   .app-footer { padding: 0.75rem; font-size: 0.8rem; }
   .footer-hazard { font-size: 1.2rem; }
 }
+
+/* Dark mode PrimeVue overrides */
+.dark-mode .p-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+.dark-mode .p-card .p-card-content {
+  color: var(--text-primary) !important;
+}
+.dark-mode .p-datatable {
+  color: var(--text-primary) !important;
+}
+.dark-mode .p-datatable .p-datatable-thead > tr > th {
+  background: var(--bg-primary) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+.dark-mode .p-datatable .p-datatable-tbody > tr {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+}
+.dark-mode .p-datatable .p-datatable-tbody > tr > td {
+  border-color: var(--border-color) !important;
+}
+.dark-mode .p-datatable .p-datatable-tbody > tr:hover {
+  background: rgba(220, 38, 38, 0.1) !important;
+}
+.dark-mode .p-paginator {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+.dark-mode .p-inputtext {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+.dark-mode .p-dialog {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+}
+.dark-mode .p-dialog .p-dialog-header {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+}
+.dark-mode .p-dialog .p-dialog-content {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+}
+.dark-mode .p-progressbar {
+  background: var(--border-color) !important;
+}
+.dark-mode .p-select {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4 {
+  color: var(--text-primary);
+}
+.dark-mode p {
+  color: var(--text-secondary);
+}
+.dark-mode label {
+  color: var(--text-secondary) !important;
+}
 </style>

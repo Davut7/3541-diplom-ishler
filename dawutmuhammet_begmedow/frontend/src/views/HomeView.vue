@@ -68,11 +68,19 @@ export default {
       aiPowered: { ...props.t.home.features.aiPowered, icon: 'pi pi-microchip-ai', color: 'linear-gradient(135deg, #fbbf24, #f59e0b)' },
       signatureless: { ...props.t.home.features.signatureless, icon: 'pi pi-shield', color: 'linear-gradient(135deg, #dc2626, #f97316)' }
     }))
+    const evasionTechniqueCount = ['polymorphic', 'metamorphic', 'packing', 'fileless', 'rootkit', 'sandboxEvasion'].length
+    const detectionRate = computed(() => {
+      const total = realStats.value.totalScans || 0
+      if (total > 0) {
+        return ((realStats.value.malware + realStats.value.suspicious) / total * 100).toFixed(1) + '%'
+      }
+      return '0%'
+    })
     const stats = computed(() => [
       { icon: 'pi pi-file', value: realStats.value.totalScans || 0, label: props.t.home.stats.filesScanned },
       { icon: 'pi pi-exclamation-triangle', value: (realStats.value.malware || 0) + (realStats.value.suspicious || 0), label: props.t.home.stats.threatsDetected },
-      { icon: 'pi pi-cog', value: '8', label: props.t.home.stats.evasionTechniques },
-      { icon: 'pi pi-percentage', value: '97.8%', label: props.t.home.stats.detectionRate }
+      { icon: 'pi pi-cog', value: evasionTechniqueCount, label: props.t.home.stats.evasionTechniques },
+      { icon: 'pi pi-percentage', value: detectionRate.value, label: props.t.home.stats.detectionRate }
     ])
     return { features, stats }
   }
