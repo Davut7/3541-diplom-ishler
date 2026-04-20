@@ -678,4 +678,75 @@ body {
     display: none !important;
   }
 }
+
+/* Dark mode PrimeVue overrides */
+.dark-mode .p-card {
+  background: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-color) !important;
+}
+.dark-mode .p-card .p-card-content {
+  color: var(--text-color) !important;
+}
+.dark-mode .p-datatable {
+  color: var(--text-color) !important;
+}
+.dark-mode .p-datatable .p-datatable-thead > tr > th {
+  background: var(--bg-color) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+.dark-mode .p-datatable .p-datatable-tbody > tr {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+.dark-mode .p-datatable .p-datatable-tbody > tr > td {
+  border-color: var(--border-color) !important;
+}
+.dark-mode .p-datatable .p-datatable-tbody > tr:hover {
+  background: rgba(52, 211, 153, 0.1) !important;
+}
+.dark-mode .p-paginator {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+.dark-mode .p-inputtext {
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+.dark-mode .p-dialog {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+.dark-mode .p-dialog .p-dialog-header {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+.dark-mode .p-dialog .p-dialog-content {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+.dark-mode .p-progressbar {
+  background: var(--border-color) !important;
+}
+.dark-mode .p-select {
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4 {
+  color: var(--text-color);
+}
+.dark-mode p {
+  color: var(--text-secondary);
+}
+.dark-mode label {
+  color: var(--text-secondary) !important;
+}
+.dark-mode code {
+  background: var(--bg-color) !important;
+  color: var(--primary-color) !important;
+}
 </style>

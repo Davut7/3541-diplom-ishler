@@ -281,10 +281,10 @@ const animatedStats = ref({
 })
 
 const targetStats = {
-  scansToday: 1247,
-  threatsDetected: 89,
-  safeApps: 1158,
-  permissionsAnalyzed: 8934
+  scansToday: 0,
+  threatsDetected: 0,
+  safeApps: 0,
+  permissionsAnalyzed: 0
 }
 
 // Sample APKs from backend
@@ -324,41 +324,9 @@ const sampleApks = ref([
 ])
 
 // Recent activity feed
-const recentActivity = ref([
-  {
-    type: 'scan',
-    message: { en: 'Calculator Pro analyzed - No threats detected', tk: 'Calculator Pro derňeldi - Howp tapylmady' },
-    time: '2 min ago',
-    status: 'safe'
-  },
-  {
-    type: 'warning',
-    message: { en: 'Free VPN Pro - 5 high-risk permissions detected', tk: 'Free VPN Pro - 5 ýokary howply rugsat tapyldy' },
-    time: '5 min ago',
-    status: 'threat'
-  },
-  {
-    type: 'scan',
-    message: { en: 'Social Media App analyzed - Medium risk level', tk: 'Social Media App derňeldi - Orta howp derejesi' },
-    time: '8 min ago',
-    status: 'info'
-  },
-  {
-    type: 'alert',
-    message: { en: 'FlashLight Plus - Critical: SMS Trojan behavior detected', tk: 'FlashLight Plus - Kritiki: SMS Troýan häsiýeti tapyldy' },
-    time: '12 min ago',
-    status: 'threat'
-  },
-  {
-    type: 'scan',
-    message: { en: 'New APK uploaded for analysis', tk: 'Täze APK derňew üçin ýüklendi' },
-    time: '15 min ago',
-    status: 'info'
-  }
-])
+const recentActivity = ref([])
 
 let statsInterval = null
-let activityInterval = null
 
 function t(key) {
   return i18n.t(key)
@@ -407,48 +375,10 @@ function animateStats() {
   requestAnimationFrame(animate)
 }
 
-function updateActivity() {
-  // Simulate new activity
-  const newActivities = [
-    { type: 'scan', message: { en: 'New scan completed', tk: 'Täze skan tamamlandy' }, status: 'safe' },
-    { type: 'warning', message: { en: 'Suspicious permission detected', tk: 'Şübheli rugsat tapyldy' }, status: 'threat' },
-    { type: 'scan', message: { en: 'APK analysis in progress', tk: 'APK derňewi dowam edýär' }, status: 'info' }
-  ]
-
-  const randomActivity = newActivities[Math.floor(Math.random() * newActivities.length)]
-  randomActivity.time = 'Just now'
-
-  recentActivity.value.unshift(randomActivity)
-  if (recentActivity.value.length > 5) {
-    recentActivity.value.pop()
-  }
-
-  // Update times
-  recentActivity.value.forEach((activity, index) => {
-    if (index > 0) {
-      const mins = index * 3 + Math.floor(Math.random() * 2)
-      activity.time = `${mins} min ago`
-    }
-  })
-}
-
-function incrementStats() {
-  animatedStats.value.scansToday += Math.floor(Math.random() * 3) + 1
-  animatedStats.value.permissionsAnalyzed += Math.floor(Math.random() * 10) + 5
-  if (Math.random() > 0.7) {
-    animatedStats.value.threatsDetected += 1
-  } else {
-    animatedStats.value.safeApps += 1
-  }
-}
 
 onMounted(async () => {
   // Animate stats on load
   animateStats()
-
-  // Start live updates
-  statsInterval = setInterval(incrementStats, 5000)
-  activityInterval = setInterval(updateActivity, 8000)
 
   // Try to fetch real sample data
   try {
@@ -470,7 +400,6 @@ onMounted(async () => {
 
 onUnmounted(() => {
   if (statsInterval) clearInterval(statsInterval)
-  if (activityInterval) clearInterval(activityInterval)
 })
 
 function getAppIcon(id) {
