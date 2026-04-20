@@ -317,42 +317,48 @@ export default {
       }
     }
 
-    // Generate bulk tests
+    // Generate bulk tests - runs 100 real WAF tests
     const generateBulkTests = async () => {
       bulkGenerating.value = true
-      try {
-        const res = await fetch('/api/generate-test-data', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ count: 100 })
-        })
+      const types = ['sql', 'xss', 'path', 'cmd', 'normal']
+      let totalRan = 0
 
-        if (res.ok) {
-          const data = await res.json()
-          // Run real test-attacks to get actual WAF results after generating data
-          let blocked = 0, allowed = 0
-          const types = ['sql', 'xss', 'path', 'cmd', 'normal']
-          for (const type of types) {
-            try {
-              const testRes = await fetch('/api/test-attack', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ attackType: type })
+      try {
+        for (let i = 0; i < 100; i++) {
+          const attackType = types[i % types.length]
+
+          try {
+            const res = await fetch('/api/test-attack', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ attackType })
+            })
+
+            if (res.ok) {
+              const data = await res.json()
+              const action = data.analysis.isBlocked ? 'block' : 'allow'
+
+              autoTestStats.value.totalTests++
+              totalRan++
+              if (action === 'block') autoTestStats.value.blocked++
+              else autoTestStats.value.allowed++
+
+              autoTestStats.value.currentAttack = attackType.toUpperCase()
+
+              // Add to log (keep last 20)
+              autoTestLog.value.unshift({
+                attackType: attackType.toUpperCase(),
+                ip: data.sourceIP,
+                riskScore: data.analysis.riskScore,
+                action,
+                timestamp: new Date()
               })
-              if (testRes.ok) {
-                const testData = await testRes.json()
-                if (testData.analysis.isBlocked) blocked++
-                else allowed++
-              }
-            } catch (e) {}
-          }
-          autoTestStats.value.totalTests += data.generated.attackLogs
-          autoTestStats.value.blocked += blocked
-          autoTestStats.value.allowed += allowed
+              if (autoTestLog.value.length > 20) autoTestLog.value.pop()
+            }
+          } catch (e) {}
         }
-      } catch (e) {
-        console.error('Bulk generate error:', e)
       } finally {
+        autoTestStats.value.currentAttack = null
         bulkGenerating.value = false
       }
     }

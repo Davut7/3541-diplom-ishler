@@ -37,8 +37,6 @@ import HowItWorksView from './views/HowItWorksView.vue'
 import AboutView from './views/AboutView.vue'
 import SettingsView from './views/SettingsView.vue'
 import BlockedIPsView from './views/BlockedIPsView.vue'
-import ProxyView from './views/ProxyView.vue'
-
 const routes = [
   { path: '/', component: HomeView },
   { path: '/rules', component: RulesView },
@@ -47,7 +45,6 @@ const routes = [
   { path: '/logs', component: LogsView },
   { path: '/statistics', component: StatisticsView },
   { path: '/blocked-ips', component: BlockedIPsView },
-  { path: '/proxy', component: ProxyView },
   { path: '/settings', component: SettingsView },
   { path: '/how-it-works', component: HowItWorksView },
   { path: '/about', component: AboutView }

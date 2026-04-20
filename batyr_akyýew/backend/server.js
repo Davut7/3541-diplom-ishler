@@ -998,7 +998,7 @@ app.get('/api/statistics', (req, res) => {
         anomalousSessions,
         botSessions,
         averageSessionDuration: 180,
-        detectionAccuracy: '97.8%',
+        detectionAccuracy: totalLogs > 0 ? ((blockedLogs / totalLogs) * 100).toFixed(1) + '%' : '0%',
         avgRiskScore: Math.round(avgRiskScore)
       },
       timeline: fullTimeline,
@@ -1109,110 +1109,24 @@ app.post('/api/test-attack', async (req, res) => {
   res.json({ success: true, attackType, testPayload, analysis, sourceIP: testIP })
 })
 
-// ============================================
-// TEST DATA GENERATOR - Creates realistic demo data
-// ============================================
-app.post('/api/generate-test-data', async (req, res) => {
-  const { count = 50 } = req.body
-  const dataCount = Math.min(validators.isValidInt(count, 1, 500) ? parseInt(count) : 50, 500)
-
-  const attackTypes = ['SQL Injection', 'XSS', 'Path Traversal', 'Command Injection', 'Rate Limit', 'Bot Detection']
-  const actions = ['blocked', 'allowed', 'challenged']
-  const countries = ['United States', 'Russia', 'China', 'Germany', 'Netherlands', 'France', 'Romania', 'Brazil', 'Unknown']
-  const cities = ['Moscow', 'Beijing', 'New York', 'Berlin', 'Amsterdam', 'Paris', 'Bucharest', 'Sao Paulo', 'London']
-  const userAgents = [
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
-    'curl/7.68.0',
-    'python-requests/2.25.1',
-    'Googlebot/2.1',
-    'Mozilla/5.0 (compatible; bingbot/2.0)',
-    'Scrapy/2.5.0',
-    'PostmanRuntime/7.28.4'
-  ]
-
-  let generated = 0
-
-  for (let i = 0; i < dataCount; i++) {
-    const attackType = attackTypes[Math.floor(Math.random() * attackTypes.length)]
-    const isRealAttack = ['SQL Injection', 'XSS', 'Path Traversal', 'Command Injection'].includes(attackType)
-    const action = isRealAttack ? 'blocked' : (attackType === 'Rate Limit' ? 'challenged' : (Math.random() > 0.5 ? 'challenged' : 'blocked'))
-    const country = countries[Math.floor(Math.random() * countries.length)]
-    const city = cities[Math.floor(Math.random() * cities.length)]
-    const riskScore = isRealAttack ? (40 + Math.floor(Math.random() * 60)) : (10 + Math.floor(Math.random() * 40))
-    const userAgent = userAgents[Math.floor(Math.random() * userAgents.length)]
-
-    // Random IP
-    const ip = `${Math.floor(Math.random() * 223) + 1}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`
-
-    // Random timestamp in last 7 days
-    const timestamp = new Date(Date.now() - Math.floor(Math.random() * 7 * 24 * 60 * 60 * 1000)).toISOString()
-
-    const id = uuidv4()
-    const targetPath = ['/api/users', '/api/login', '/api/admin', '/api/data', '/api/files', '/api/exec'][Math.floor(Math.random() * 6)]
-
-    try {
-      db.run(`
-        INSERT INTO attack_logs (id, timestamp, attack_type, source_ip, target_path, action, risk_score, user_agent, country, city, details)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `, [id, timestamp, attackType, ip, targetPath, action, riskScore, userAgent, country, city, JSON.stringify({ generated: true })])
-      generated++
-
-      // Update rule hits
-      const ruleMap = { 'SQL Injection': 1, 'XSS': 2, 'Path Traversal': 3, 'Command Injection': 5, 'Rate Limit': 4, 'Bot Detection': 7 }
-      if (ruleMap[attackType]) {
-        runQuery('UPDATE waf_rules SET hits = hits + 1 WHERE id = ?', [ruleMap[attackType]])
-      }
-    } catch (e) {
-      console.error('Error generating log:', e.message)
-    }
-  }
-
-  // Generate behavioral sessions
-  for (let i = 0; i < Math.floor(dataCount / 5); i++) {
-    const sessionId = uuidv4()
-    const ip = `${Math.floor(Math.random() * 223) + 1}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`
-    const requestCount = Math.floor(Math.random() * 100) + 1
-    const riskScore = Math.floor(Math.random() * 60)
-    const isBot = Math.random() > 0.7 ? 1 : 0
-    const userAgent = userAgents[Math.floor(Math.random() * userAgents.length)]
-
-    try {
-      db.run(`
-        INSERT INTO behavioral_sessions (session_id, request_count, risk_score, is_bot, anomaly_count, user_agent, ip_address, country)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-      `, [sessionId, requestCount, riskScore, isBot, Math.floor(Math.random() * 5), userAgent, ip, countries[Math.floor(Math.random() * countries.length)]])
-    } catch (e) {}
-  }
-
-  // Generate hourly statistics
-  for (let day = 0; day < 7; day++) {
-    for (let hour = 0; hour < 24; hour++) {
-      const date = new Date(Date.now() - day * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-      const totalReq = Math.floor(Math.random() * 5000) + 500
-      const blockedReq = Math.floor(totalReq * (Math.random() * 0.15))
-      const challengedReq = Math.floor(totalReq * (Math.random() * 0.05))
-      const allowedReq = totalReq - blockedReq - challengedReq
-
-      try {
-        db.run(`
-          INSERT OR REPLACE INTO statistics (date, hour, total_requests, blocked_requests, challenged_requests, allowed_requests)
-          VALUES (?, ?, ?, ?, ?, ?)
-        `, [date, hour, totalReq, blockedReq, challengedReq, allowedReq])
-      } catch (e) {}
-    }
-  }
-
+// Run WAF tests on demand (for demo purposes)
+app.post('/api/run-waf-tests', async (req, res) => {
+  // Clear old data first
+  db.run('DELETE FROM attack_logs')
+  db.run('DELETE FROM behavioral_sessions')
+  db.run('UPDATE waf_rules SET hits = 0')
   saveDatabase()
+
+  // Re-run the startup tests
+  await runStartupWAFTests()
+
+  const totalLogs = db.exec('SELECT COUNT(*) FROM attack_logs')[0]?.values[0]?.[0] || 0
+  const blockedLogs = db.exec("SELECT COUNT(*) FROM attack_logs WHERE action = 'blocked'")[0]?.values[0]?.[0] || 0
+  const sessions = db.exec('SELECT COUNT(*) FROM behavioral_sessions')[0]?.values[0]?.[0] || 0
 
   res.json({
     success: true,
-    message: `Generated ${generated} attack logs, ${Math.floor(dataCount / 5)} sessions, and 168 hourly stats`,
-    generated: {
-      attackLogs: generated,
-      sessions: Math.floor(dataCount / 5),
-      hourlyStats: 168
-    }
+    message: `WAF tests executed: ${totalLogs} requests analyzed, ${blockedLogs} blocked, ${sessions} sessions tracked`
   })
 })
 
@@ -1789,92 +1703,71 @@ app.post('/api/proxy/test', async (req, res) => {
   }
 })
 
-// Auto-generate test data on startup
-async function generateInitialTestData() {
+// Run real WAF tests on startup to populate DB with genuine detection results
+async function runStartupWAFTests() {
   const logsCount = db.exec('SELECT COUNT(*) FROM attack_logs')[0]?.values[0]?.[0] || 0
 
-  // Only generate if database is nearly empty
-  if (logsCount < 10) {
-    console.log('Generating initial test data...')
+  if (logsCount < 5) {
+    console.log('[WAF] Running real attack tests to populate database...')
 
-    const attackTypes = ['SQL Injection', 'XSS', 'Path Traversal', 'Command Injection', 'Rate Limit', 'Bot Detection']
-    const actions = ['blocked', 'allowed', 'challenged']
-    const countries = ['United States', 'Russia', 'China', 'Germany', 'Netherlands', 'France', 'Romania', 'Brazil']
-    const cities = ['Moscow', 'Beijing', 'New York', 'Berlin', 'Amsterdam', 'Paris', 'Bucharest', 'Sao Paulo']
-    const userAgents = [
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
-      'curl/7.68.0',
-      'python-requests/2.25.1'
+    // Real attack payloads analyzed by the actual WAF engine
+    const realAttacks = [
+      // SQL Injection attacks
+      { url: "/api/users?id=1' OR '1'='1", body: { query: "SELECT * FROM users WHERE id='1' OR '1'='1'" }, headers: { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }, ip: '185.220.101.42' },
+      { url: "/api/login", body: { username: "admin'; DROP TABLE users;--", password: "test" }, headers: { 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' }, ip: '91.240.118.15' },
+      { url: "/api/data?filter=1 UNION SELECT username,password FROM users", body: {}, headers: { 'user-agent': 'python-requests/2.28.1' }, ip: '45.155.205.88' },
+      { url: "/api/search", body: { q: "' OR 1=1--" }, headers: { 'user-agent': 'curl/7.81.0' }, ip: '185.220.101.73' },
+
+      // XSS attacks
+      { url: "/api/comment", body: { text: '<script>alert("XSS")</script>' }, headers: { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0' }, ip: '45.33.32.156' },
+      { url: "/api/profile", body: { bio: '<img src=x onerror=alert(document.cookie)>' }, headers: { 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Safari/605.1' }, ip: '104.244.72.99' },
+      { url: "/api/feedback", body: { message: '<svg onload=alert(1)>' }, headers: { 'user-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64) Firefox/121.0' }, ip: '62.219.112.34' },
+
+      // Path Traversal attacks
+      { url: "/api/files?path=../../../etc/passwd", body: {}, headers: { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) Chrome/119.0' }, ip: '91.121.87.45' },
+      { url: "/api/download?file=../../etc/shadow", body: {}, headers: { 'user-agent': 'Scrapy/2.11.0' }, ip: '169.101.45.200' },
+      { url: "/api/files?path=....//....//etc/passwd", body: {}, headers: { 'user-agent': 'python-requests/2.31.0' }, ip: '88.203.80.172' },
+
+      // Command Injection attacks
+      { url: "/api/ping", body: { host: '127.0.0.1; ls -la' }, headers: { 'user-agent': 'curl/8.1.0' }, ip: '104.244.72.55' },
+      { url: "/api/tools", body: { input: '$(id)' }, headers: { 'user-agent': 'python-requests/2.28.0' }, ip: '109.212.203.204' },
+
+      // Normal legitimate requests (should be allowed)
+      { url: "/api/products", body: { page: 1, limit: 20 }, headers: { 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Chrome/120.0' }, ip: '10.0.0.1' },
+      { url: "/api/dashboard", body: {}, headers: { 'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0) Safari/604.1' }, ip: '192.168.1.50' },
+      { url: "/api/settings", body: { theme: 'dark' }, headers: { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Edge/120.0' }, ip: '172.16.0.10' },
+
+      // Bot traffic (behavioral detection)
+      { url: "/api/data", body: {}, headers: { 'user-agent': 'Scrapy/2.11.0' }, ip: '109.212.203.204' },
+      { url: "/api/users", body: {}, headers: { 'user-agent': 'python-requests/2.31.0' }, ip: '62.219.112.78' },
+      { url: "/api/pages", body: {}, headers: { 'user-agent': 'curl/8.4.0' }, ip: '88.203.80.172' },
     ]
 
-    // Generate 50 attack logs with logically consistent data
-    // Attacks are blocked (rules are enabled), normal traffic is allowed
-    for (let i = 0; i < 50; i++) {
-      const attackType = attackTypes[Math.floor(Math.random() * attackTypes.length)]
-      // Logical action: real attacks get blocked, rate limits get challenged, bot detection gets challenged
-      const isRealAttack = ['SQL Injection', 'XSS', 'Path Traversal', 'Command Injection'].includes(attackType)
-      const action = isRealAttack ? 'blocked' : (attackType === 'Rate Limit' ? 'challenged' : (Math.random() > 0.5 ? 'challenged' : 'blocked'))
-      const riskScore = isRealAttack ? (40 + Math.floor(Math.random() * 60)) : (10 + Math.floor(Math.random() * 40))
-      const country = countries[Math.floor(Math.random() * countries.length)]
-      const city = cities[Math.floor(Math.random() * cities.length)]
-      const userAgent = userAgents[Math.floor(Math.random() * userAgents.length)]
-      const ip = `${Math.floor(Math.random() * 223) + 1}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`
-      const timestamp = new Date(Date.now() - Math.floor(Math.random() * 3 * 24 * 60 * 60 * 1000)).toISOString()
-      const id = uuidv4()
-      const targetPath = ['/api/users', '/api/login', '/api/admin', '/api/data'][Math.floor(Math.random() * 4)]
+    let blocked = 0
+    let allowed = 0
 
+    for (const attack of realAttacks) {
       try {
-        db.run(`INSERT INTO attack_logs (id, timestamp, attack_type, source_ip, target_path, action, risk_score, user_agent, country, city, details) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [id, timestamp, attackType, ip, targetPath, action, riskScore, userAgent, country, city, '{}'])
+        const analysis = await analyzeRequest(attack)
+        const sessionId = uuidv4()
+        analyzeBehavior(sessionId, attack, attack.ip)
 
-        const ruleMap = { 'SQL Injection': 1, 'XSS': 2, 'Path Traversal': 3, 'Command Injection': 5, 'Rate Limit': 4, 'Bot Detection': 7 }
-        if (ruleMap[attackType]) {
-          runQuery('UPDATE waf_rules SET hits = hits + 1 WHERE id = ?', [ruleMap[attackType]])
-        }
-      } catch (e) {}
-    }
-
-    // Generate 10 behavioral sessions
-    for (let i = 0; i < 10; i++) {
-      const sessionId = uuidv4()
-      const ip = `${Math.floor(Math.random() * 223) + 1}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`
-      const requestCount = Math.floor(Math.random() * 100) + 1
-      const riskScore = Math.floor(Math.random() * 60)
-      const isBot = Math.random() > 0.7 ? 1 : 0
-      const userAgent = userAgents[Math.floor(Math.random() * userAgents.length)]
-
-      try {
-        db.run(`INSERT INTO behavioral_sessions (session_id, request_count, risk_score, is_bot, anomaly_count, user_agent, ip_address, country) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-          [sessionId, requestCount, riskScore, isBot, Math.floor(Math.random() * 5), userAgent, ip, countries[Math.floor(Math.random() * countries.length)]])
-      } catch (e) {}
-    }
-
-    // Generate hourly statistics for last 3 days
-    for (let day = 0; day < 3; day++) {
-      for (let hour = 0; hour < 24; hour++) {
-        const date = new Date(Date.now() - day * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-        const totalReq = Math.floor(Math.random() * 3000) + 500
-        const blockedReq = Math.floor(totalReq * (Math.random() * 0.1))
-        const challengedReq = Math.floor(totalReq * (Math.random() * 0.03))
-        const allowedReq = totalReq - blockedReq - challengedReq
-
-        try {
-          db.run(`INSERT OR REPLACE INTO statistics (date, hour, total_requests, blocked_requests, challenged_requests, allowed_requests) VALUES (?, ?, ?, ?, ?, ?)`,
-            [date, hour, totalReq, blockedReq, challengedReq, allowedReq])
-        } catch (e) {}
+        if (analysis.isBlocked) blocked++
+        else allowed++
+      } catch (e) {
+        console.error('[WAF Test] Error:', e.message)
       }
     }
 
     saveDatabase()
-    console.log('Initial test data generated: 50 logs, 10 sessions, 72 hourly stats')
+    console.log(`[WAF] Startup tests complete: ${blocked} blocked, ${allowed} allowed out of ${realAttacks.length} test requests`)
   }
 }
 
 // Initialize and start server
 initDatabase().then(() => {
-  // Generate test data if needed
-  generateInitialTestData()
+  // Run real WAF tests if DB is empty
+  runStartupWAFTests()
 
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`
@@ -1892,7 +1785,7 @@ initDatabase().then(() => {
 ║    - Email Alerts (configurable)                             ║
 ║    - JWT Authentication                                      ║
 ║    - Enhanced Behavioral Analysis                            ║
-║    - Auto-generated test data on startup                     ║
+║    - Real WAF tests on startup                               ║
 ╚══════════════════════════════════════════════════════════════╝
 
 Server running on http://localhost:${PORT}

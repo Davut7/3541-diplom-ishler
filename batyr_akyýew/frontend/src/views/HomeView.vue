@@ -34,23 +34,23 @@
     <section class="stats-section">
       <Card>
         <template #content>
-          <h2><i class="pi pi-chart-bar"></i> Real-time Statistics</h2>
+          <h2><i class="pi pi-chart-bar"></i> {{ t.home?.stats || 'Real-time Statistics' }}</h2>
           <div class="stats-grid">
             <div class="stat-item">
               <span class="stat-value">{{ stats.totalRequests }}</span>
-              <span class="stat-label">Total Requests</span>
+              <span class="stat-label">{{ t.home?.totalRequests || 'Attacks Detected' }}</span>
             </div>
             <div class="stat-item blocked">
               <span class="stat-value">{{ stats.blocked }}</span>
-              <span class="stat-label">Blocked Attacks</span>
+              <span class="stat-label">{{ t.home?.blockedAttacks || 'Blocked' }}</span>
             </div>
             <div class="stat-item">
-              <span class="stat-value">{{ stats.anomalies }}</span>
-              <span class="stat-label">Anomalies Detected</span>
+              <span class="stat-value">{{ stats.sessions }}</span>
+              <span class="stat-label">{{ t.home?.sessions || 'Sessions Tracked' }}</span>
             </div>
             <div class="stat-item">
               <span class="stat-value">{{ stats.accuracy }}</span>
-              <span class="stat-label">Detection Accuracy</span>
+              <span class="stat-label">{{ t.home?.accuracy || 'Block Rate' }}</span>
             </div>
           </div>
         </template>
@@ -68,7 +68,7 @@ export default {
     const stats = ref({
       totalRequests: '...',
       blocked: '...',
-      anomalies: '...',
+      sessions: '...',
       accuracy: '...'
     })
     const loading = ref(true)
@@ -81,13 +81,13 @@ export default {
           stats.value = {
             totalRequests: data.statistics.overview.totalRequests.toLocaleString(),
             blocked: data.statistics.overview.blockedRequests.toLocaleString(),
-            anomalies: data.statistics.behavioral.anomalousSessions.toLocaleString(),
-            accuracy: data.statistics.behavioral.detectionAccuracy
+            sessions: data.statistics.behavioral.totalSessions.toLocaleString(),
+            accuracy: data.statistics.overview.blockRate
           }
         }
       } catch (e) {
         console.error('Failed to fetch stats:', e)
-        stats.value = { totalRequests: 'N/A', blocked: 'N/A', anomalies: 'N/A', accuracy: 'N/A' }
+        stats.value = { totalRequests: 'N/A', blocked: 'N/A', sessions: 'N/A', accuracy: 'N/A' }
       } finally {
         loading.value = false
       }
@@ -158,7 +158,7 @@ export default {
 
 .subtitle {
   font-size: 1.25rem;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   margin-bottom: 1rem;
   animation: fadeInUp 0.8s ease-out 0.2s both;
 }
@@ -166,6 +166,7 @@ export default {
 .description {
   margin-bottom: 2rem;
   line-height: 1.8;
+  color: var(--text-secondary);
   animation: fadeInUp 0.8s ease-out 0.4s both;
 }
 

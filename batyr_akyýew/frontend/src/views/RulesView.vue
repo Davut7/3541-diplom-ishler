@@ -5,57 +5,6 @@
       <p>{{ t.rules.subtitle }}</p>
     </div>
 
-    <!-- Real Attack Test Panel -->
-    <Card class="attack-test-card">
-      <template #content>
-        <div class="attack-test-header">
-          <h3><i class="pi pi-bolt"></i> Real Attack Test</h3>
-          <p>Test real attacks against a target website through WAF proxy</p>
-        </div>
-
-        <div class="target-config">
-          <div class="input-group">
-            <label>Target URL:</label>
-            <InputText v-model="targetUrl" placeholder="https://your-university-site.edu" style="width: 100%" />
-          </div>
-        </div>
-
-        <div class="attack-test-buttons">
-          <Button
-            v-for="(label, key) in attackLabels"
-            :key="key"
-            :label="'🔥 ' + label"
-            :severity="key === 'normal' ? 'success' : 'danger'"
-            @click="sendRealAttack(key)"
-            :loading="attackLoading === key"
-            :disabled="!targetUrl"
-          />
-        </div>
-
-        <div class="attack-result" v-if="attackResult">
-          <h4><i class="pi pi-shield"></i> WAF Analysis Result</h4>
-          <div class="result-grid">
-            <div class="result-item">
-              <span class="result-label">Status:</span>
-              <Tag :severity="attackResult.blocked ? 'danger' : 'success'" :value="attackResult.blocked ? 'BLOCKED' : 'ALLOWED'" />
-            </div>
-            <div class="result-item">
-              <span class="result-label">Risk Score:</span>
-              <span class="result-value risk" :class="getRiskClass(attackResult.riskScore)">{{ attackResult.riskScore }}%</span>
-            </div>
-            <div class="result-item">
-              <span class="result-label">Attack Type:</span>
-              <span class="result-value">{{ attackResult.attackType }}</span>
-            </div>
-            <div class="result-item" v-if="attackResult.threats && attackResult.threats.length">
-              <span class="result-label">Threats:</span>
-              <span class="result-value">{{ attackResult.threats.map(t => t.type).join(', ') }}</span>
-            </div>
-          </div>
-        </div>
-      </template>
-    </Card>
-
     <Card>
       <template #content>
         <div class="rules-header">
@@ -122,18 +71,6 @@ export default {
     const togglingAll = ref(false)
     const allEnabled = ref(false)
 
-    // Real attack test state
-    const targetUrl = ref('')
-    const attackLoading = ref(null)
-    const attackResult = ref(null)
-    const attackLabels = {
-      sql: 'SQL Injection',
-      xss: 'XSS Attack',
-      path: 'Path Traversal',
-      cmd: 'Command Injection',
-      normal: 'Normal Request'
-    }
-
     const fetchRules = async () => {
       try {
         const res = await fetch('/api/rules')
@@ -195,94 +132,6 @@ export default {
       }
     }
 
-    // Send real attack
-    const sendRealAttack = async (attackType) => {
-      attackLoading.value = attackType
-      attackResult.value = null
-
-      // Build attack payload based on type
-      let attackPayload = {}
-      const targetWithPayload = targetUrl.value
-
-      // Attack payloads - using string concatenation to avoid Vue template issues
-      const scriptTag = '<' + 'script>alert("XSS")</' + 'script>'
-      const imgTag = '<' + 'img src=x onerror=alert(document.cookie)>'
-
-      switch (attackType) {
-        case 'sql':
-          attackPayload = {
-            url: targetWithPayload + "?id=1' OR '1'='1'--",
-            body: { query: "SELECT * FROM users WHERE id='1' OR '1'='1'" },
-            method: 'GET'
-          }
-          break
-        case 'xss':
-          attackPayload = {
-            url: targetWithPayload + '?search=' + scriptTag,
-            body: { comment: imgTag },
-            method: 'GET'
-          }
-          break
-        case 'path':
-          attackPayload = {
-            url: targetWithPayload + '/../../../etc/passwd',
-            body: { file: '../../etc/shadow' },
-            method: 'GET'
-          }
-          break
-        case 'cmd':
-          attackPayload = {
-            url: targetWithPayload + '?cmd=;cat /etc/passwd',
-            body: { exec: '&& rm -rf /' },
-            method: 'GET'
-          }
-          break
-        default:
-          attackPayload = {
-            url: targetWithPayload,
-            body: { action: 'view', page: 'home' },
-            method: 'GET'
-          }
-      }
-
-      try {
-        // Send to WAF analyze endpoint
-        const res = await fetch('/api/analyze', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...attackPayload,
-            ip: '192.168.1.' + Math.floor(Math.random() * 255),
-            sessionId: 'real-attack-test-' + Date.now(),
-            headers: { 'user-agent': 'Real Attack Tester / WAF Demo' }
-          })
-        })
-
-        const data = await res.json()
-
-        if (data.success) {
-          attackResult.value = {
-            attackType: attackLabels[attackType],
-            blocked: data.analysis.request.isBlocked,
-            riskScore: data.analysis.combinedRiskScore,
-            threats: data.analysis.request.threats,
-            action: data.analysis.finalAction,
-            targetUrl: targetWithPayload
-          }
-        }
-      } catch (e) {
-        console.error('Real attack test failed:', e)
-        attackResult.value = {
-          attackType: attackLabels[attackType],
-          blocked: false,
-          riskScore: 0,
-          error: e.message
-        }
-      } finally {
-        attackLoading.value = null
-      }
-    }
-
     const getActionSeverity = (action) => {
       const map = { block: 'danger', allow: 'success', challenge: 'warn', limit: 'info', alert: 'secondary' }
       return map[action] || 'info'
@@ -293,19 +142,11 @@ export default {
       return map[severity] || 'info'
     }
 
-    const getRiskClass = (score) => {
-      if (score >= 70) return 'critical'
-      if (score >= 50) return 'high'
-      if (score >= 30) return 'medium'
-      return 'low'
-    }
-
     onMounted(fetchRules)
 
     return {
       rules, loading, toggleRule, getActionSeverity, getSeverityColor, fetchRules,
-      togglingAll, toggleAllRules, allEnabled,
-      targetUrl, attackLoading, attackResult, attackLabels, sendRealAttack, getRiskClass
+      togglingAll, toggleAllRules, allEnabled
     }
   }
 }
@@ -342,138 +183,6 @@ export default {
 .page-header p {
   color: var(--text-secondary);
 }
-
-/* Real Attack Test Card */
-.attack-test-card {
-  margin-bottom: 2rem;
-  border: 2px solid #ef4444;
-  background: linear-gradient(135deg, #fef2f2, #fee2e2);
-}
-
-.attack-test-header {
-  margin-bottom: 1.5rem;
-}
-
-.attack-test-header h3 {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 0 0 0.5rem 0;
-  color: #dc2626;
-  font-size: 1.25rem;
-}
-
-.attack-test-header h3 i {
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-}
-
-.attack-test-header p {
-  color: var(--text-secondary);
-  margin: 0;
-}
-
-.target-config {
-  margin-bottom: 1.5rem;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.input-group label {
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.attack-test-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.attack-test-buttons :deep(.p-button) {
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.attack-test-buttons :deep(.p-button:hover) {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
-}
-
-.attack-result {
-  background: white;
-  border-radius: 12px;
-  padding: 1.25rem;
-  border: 1px solid var(--border-color);
-  animation: slideIn 0.3s ease-out;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.attack-result h4 {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 0 0 1rem 0;
-  color: var(--text-primary);
-}
-
-.attack-result h4 i {
-  color: #06b6d4;
-}
-
-.result-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-
-.result-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.result-label {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-}
-
-.result-value {
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.result-value.risk {
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  display: inline-block;
-  width: fit-content;
-  color: white;
-}
-
-.result-value.risk.low { background: #22c55e; }
-.result-value.risk.medium { background: #eab308; }
-.result-value.risk.high { background: #f97316; }
-.result-value.risk.critical { background: #ef4444; }
 
 /* Rules Header */
 .rules-header {
@@ -539,14 +248,6 @@ export default {
     font-size: 1.5rem;
   }
 
-  .attack-test-buttons {
-    flex-direction: column;
-  }
-
-  .result-grid {
-    grid-template-columns: 1fr;
-  }
-
   .rules-header {
     flex-direction: column;
     gap: 1rem;
@@ -563,9 +264,6 @@ export default {
     -webkit-overflow-scrolling: touch;
   }
 
-  .attack-test-header h3 {
-    font-size: 1.1rem;
-  }
 }
 
 @media (max-width: 480px) {
@@ -573,9 +271,6 @@ export default {
     font-size: 1.25rem;
   }
 
-  .attack-result {
-    padding: 1rem;
-  }
 
   .result-value {
     font-size: 1rem;

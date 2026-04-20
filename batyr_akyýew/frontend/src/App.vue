@@ -10,9 +10,9 @@
       <!-- Sidebar -->
       <aside class="sidebar">
         <div class="sidebar-header">
-          <router-link to="/" class="logo">
+          <router-link to="/" class="logo" v-if="!sidebarCollapsed">
             <i class="pi pi-shield"></i>
-            <span v-if="!sidebarCollapsed">WAF <strong>Analyzer</strong></span>
+            <span>WAF <strong>Analyzer</strong></span>
           </router-link>
           <button class="collapse-btn" @click="sidebarCollapsed = !sidebarCollapsed">
             <i :class="sidebarCollapsed ? 'pi pi-angle-right' : 'pi pi-angle-left'"></i>
@@ -57,10 +57,6 @@
             <router-link to="/statistics" v-tooltip.right="sidebarCollapsed ? t.nav.statistics : null">
               <i class="pi pi-chart-bar"></i>
               <span v-if="!sidebarCollapsed">{{ t.nav.statistics }}</span>
-            </router-link>
-            <router-link to="/proxy" v-tooltip.right="sidebarCollapsed ? (t.nav.proxy || 'Proxy') : null">
-              <i class="pi pi-server"></i>
-              <span v-if="!sidebarCollapsed">{{ t.nav.proxy || 'Proxy' }}</span>
             </router-link>
             <router-link to="/settings" v-tooltip.right="sidebarCollapsed ? (t.nav.settings || 'Settings') : null">
               <i class="pi pi-cog"></i>
@@ -133,7 +129,6 @@
           <router-link to="/logs" @click="mobileMenuOpen = false"><i class="pi pi-file"></i>{{ t.nav.logs }}</router-link>
           <router-link to="/statistics" @click="mobileMenuOpen = false"><i class="pi pi-chart-bar"></i>{{ t.nav.statistics }}</router-link>
           <router-link to="/blocked-ips" @click="mobileMenuOpen = false"><i class="pi pi-ban"></i>{{ t.nav.blockedIPs || 'Blocked IPs' }}</router-link>
-          <router-link to="/proxy" @click="mobileMenuOpen = false"><i class="pi pi-server"></i>{{ t.nav.proxy || 'Proxy' }}</router-link>
           <router-link to="/settings" @click="mobileMenuOpen = false"><i class="pi pi-cog"></i>{{ t.nav.settings || 'Settings' }}</router-link>
           <router-link to="/how-it-works" @click="mobileMenuOpen = false"><i class="pi pi-question-circle"></i>{{ t.nav.howItWorks }}</router-link>
           <router-link to="/about" @click="mobileMenuOpen = false"><i class="pi pi-info-circle"></i>{{ t.nav.about }}</router-link>
@@ -189,7 +184,6 @@ export default {
         '/logs': t.value.nav.logs,
         '/statistics': t.value.nav.statistics,
         '/blocked-ips': t.value.nav.blockedIPs || 'Blocked IPs',
-        '/proxy': t.value.nav.proxy || 'Proxy',
         '/settings': t.value.nav.settings || 'Settings',
         '/how-it-works': t.value.nav.howItWorks,
         '/about': t.value.nav.about
@@ -294,15 +288,16 @@ export default {
 }
 
 .dark-mode {
-  --bg-primary: #111827;
-  --bg-secondary: #1f2937;
-  --bg-tertiary: #374151;
-  --text-primary: #f9fafb;
-  --text-secondary: #9ca3af;
-  --border-color: #374151;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  --bg-primary: #0f1419;
+  --bg-secondary: #1a2332;
+  --bg-tertiary: #243044;
+  --text-primary: #e8edf4;
+  --text-secondary: #b0bec9;
+  --border-color: #2a3a4e;
+  --accent-light: rgba(8, 145, 178, 0.15);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 body {
@@ -400,6 +395,10 @@ body {
 .collapse-btn:hover {
   background: var(--sidebar-hover);
   color: var(--sidebar-active);
+}
+
+.sidebar-collapsed .sidebar-header {
+  justify-content: center;
 }
 
 .sidebar-collapsed .collapse-btn {
@@ -759,6 +758,7 @@ body {
   border-radius: 12px !important;
   box-shadow: var(--shadow-sm) !important;
   transition: all var(--transition-fast) !important;
+  color: var(--text-primary) !important;
 }
 
 .p-card:hover {
@@ -785,7 +785,8 @@ body {
 .p-inputtext {
   border-radius: 8px !important;
   border: 1px solid var(--border-color) !important;
-  background: var(--bg-secondary) !important;
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
   transition: all var(--transition-fast) !important;
 }
 
@@ -794,9 +795,23 @@ body {
   box-shadow: 0 0 0 3px var(--accent-light) !important;
 }
 
+.p-inputtext::placeholder {
+  color: var(--text-secondary) !important;
+  opacity: 0.6;
+}
+
 .p-tag {
   border-radius: 6px !important;
   font-weight: 600 !important;
+}
+
+.p-datatable {
+  color: var(--text-primary) !important;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
 }
 
 .p-datatable .p-datatable-tbody > tr:hover {
@@ -805,14 +820,283 @@ body {
 
 .p-datatable .p-datatable-thead > tr > th {
   background: var(--bg-tertiary) !important;
+  color: var(--text-secondary) !important;
   font-weight: 600 !important;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  border-color: var(--border-color) !important;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  border-color: var(--border-color) !important;
+}
+
+.p-paginator {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+.p-paginator .p-paginator-page,
+.p-paginator .p-paginator-first,
+.p-paginator .p-paginator-prev,
+.p-paginator .p-paginator-next,
+.p-paginator .p-paginator-last {
+  color: var(--text-primary) !important;
 }
 
 .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
   background: var(--accent-gradient) !important;
+}
+
+.p-dialog {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+.p-dialog .p-dialog-header {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.p-dialog .p-dialog-content {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+.p-dialog .p-dialog-footer {
+  background: var(--bg-secondary) !important;
+  border-top: 1px solid var(--border-color) !important;
+}
+
+.p-select {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+.p-select-overlay {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+.p-select-option {
+  color: var(--text-primary) !important;
+}
+
+.p-select-option:hover {
+  background: var(--accent-light) !important;
+}
+
+.p-progressbar {
+  background: var(--bg-tertiary) !important;
+}
+
+/* ==========================================
+   DARK MODE - Force all components
+   ========================================== */
+.dark-mode .p-card {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+  color: #e8edf4 !important;
+}
+
+.dark-mode .p-card .p-card-title,
+.dark-mode .p-card .p-card-subtitle {
+  color: #e8edf4 !important;
+}
+
+.dark-mode .p-card .p-card-content {
+  color: #e8edf4 !important;
+}
+
+.dark-mode .p-datatable {
+  background: #1a2332 !important;
+  color: #e8edf4 !important;
+}
+
+.dark-mode .p-datatable .p-datatable-thead > tr > th {
+  background: #0f1419 !important;
+  color: #b0bec9 !important;
+  border-color: #2a3a4e !important;
+}
+
+.dark-mode .p-datatable .p-datatable-tbody > tr {
+  background: #1a2332 !important;
+  color: #e8edf4 !important;
+}
+
+.dark-mode .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background: #1e2a3a !important;
+}
+
+.dark-mode .p-datatable .p-datatable-tbody > tr > td {
+  border-color: #2a3a4e !important;
+  color: #e8edf4 !important;
+}
+
+.dark-mode .p-datatable .p-datatable-tbody > tr:hover {
+  background: rgba(8, 145, 178, 0.15) !important;
+}
+
+.dark-mode .p-paginator {
+  background: #1a2332 !important;
+  color: #e8edf4 !important;
+  border-color: #2a3a4e !important;
+}
+
+.dark-mode .p-paginator .p-paginator-page,
+.dark-mode .p-paginator .p-paginator-first,
+.dark-mode .p-paginator .p-paginator-prev,
+.dark-mode .p-paginator .p-paginator-next,
+.dark-mode .p-paginator .p-paginator-last {
+  color: #e8edf4 !important;
+  background: transparent !important;
+}
+
+.dark-mode .p-paginator .p-paginator-page.p-highlight {
+  background: #0891b2 !important;
+  color: white !important;
+}
+
+.dark-mode .p-inputtext {
+  background: #0f1419 !important;
+  color: #e8edf4 !important;
+  border-color: #2a3a4e !important;
+}
+
+.dark-mode .p-inputtext::placeholder {
+  color: #7a8a9a !important;
+}
+
+.dark-mode .p-button.p-button-outlined {
+  color: #e8edf4 !important;
+  border-color: #2a3a4e !important;
+}
+
+.dark-mode .p-button.p-button-outlined:hover {
+  background: rgba(8, 145, 178, 0.15) !important;
+}
+
+.dark-mode .p-button.p-button-secondary,
+.dark-mode .p-button.p-button-text {
+  color: #e8edf4 !important;
+}
+
+.dark-mode .p-dialog {
+  background: #1a2332 !important;
+  color: #e8edf4 !important;
+  border-color: #2a3a4e !important;
+}
+
+.dark-mode .p-dialog .p-dialog-header {
+  background: #1a2332 !important;
+  color: #e8edf4 !important;
+  border-color: #2a3a4e !important;
+}
+
+.dark-mode .p-dialog .p-dialog-content {
+  background: #1a2332 !important;
+  color: #e8edf4 !important;
+}
+
+.dark-mode .p-dialog .p-dialog-footer {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+}
+
+.dark-mode .p-dialog .p-dialog-header-close {
+  color: #b0bec9 !important;
+}
+
+.dark-mode .p-select {
+  background: #0f1419 !important;
+  color: #e8edf4 !important;
+  border-color: #2a3a4e !important;
+}
+
+.dark-mode .p-select-overlay {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+}
+
+.dark-mode .p-select-option {
+  color: #e8edf4 !important;
+}
+
+.dark-mode .p-select-option:hover,
+.dark-mode .p-select-option.p-highlight {
+  background: rgba(8, 145, 178, 0.2) !important;
+}
+
+.dark-mode .p-progressbar {
+  background: #243044 !important;
+}
+
+.dark-mode .p-toggleswitch .p-toggleswitch-slider {
+  background: #374151 !important;
+}
+
+.dark-mode .p-message {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+  color: #e8edf4 !important;
+}
+
+.dark-mode .top-header {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+}
+
+.dark-mode .app-footer {
+  background: #1a2332 !important;
+  border-color: #2a3a4e !important;
+}
+
+.dark-mode code {
+  background: #0f1419 !important;
+  color: #06b6d4 !important;
+}
+
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4 {
+  color: #e8edf4;
+}
+
+.dark-mode label {
+  color: #b0bec9 !important;
+}
+
+.dark-mode strong {
+  color: #e8edf4;
+}
+
+.dark-mode p {
+  color: var(--text-secondary);
+}
+
+.dark-mode .feature-card p,
+.dark-mode .info-text,
+.dark-mode .page-header p {
+  color: #b0bec9 !important;
+}
+
+.dark-mode .feature-card h3 {
+  color: #e8edf4 !important;
+}
+
+.dark-mode .stat-label,
+.dark-mode .summary-label,
+.dark-mode .auto-stat-label {
+  color: #b0bec9 !important;
+}
+
+.dark-mode .btn-secondary {
+  background: #1a2332 !important;
+  color: #e8edf4 !important;
+  border-color: #2a3a4e !important;
 }
 
 /* Responsive */

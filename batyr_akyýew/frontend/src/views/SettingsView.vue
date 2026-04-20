@@ -6,43 +6,6 @@
     </div>
 
     <div class="settings-grid">
-      <!-- Email Alerts Configuration -->
-      <Card class="settings-card">
-        <template #title>
-          <div class="card-title">
-            <i class="pi pi-envelope"></i>
-            <span>{{ t.settings?.emailAlerts || 'Email Alerts' }}</span>
-          </div>
-        </template>
-        <template #content>
-          <div class="form-group">
-            <label>SMTP Host</label>
-            <InputText v-model="emailSettings.smtp_host" placeholder="smtp.gmail.com" />
-          </div>
-          <div class="form-group">
-            <label>SMTP Port</label>
-            <InputText v-model="emailSettings.smtp_port" placeholder="587" type="number" />
-          </div>
-          <div class="form-group">
-            <label>SMTP User</label>
-            <InputText v-model="emailSettings.smtp_user" placeholder="your-email@gmail.com" />
-          </div>
-          <div class="form-group">
-            <label>SMTP Password</label>
-            <InputText v-model="emailSettings.smtp_pass" type="password" placeholder="App password" />
-          </div>
-          <div class="form-group">
-            <label>Alert Email (recipient)</label>
-            <InputText v-model="emailSettings.alert_email" placeholder="admin@company.com" />
-          </div>
-          <div class="form-group toggle-group">
-            <label>Enable Email Alerts</label>
-            <ToggleSwitch v-model="emailSettings.enabled" />
-          </div>
-          <Button label="Save Email Settings" icon="pi pi-save" @click="saveEmailSettings" :loading="saving" />
-        </template>
-      </Card>
-
       <!-- Export Reports -->
       <Card class="settings-card">
         <template #title>
@@ -109,19 +72,32 @@
         </template>
       </Card>
 
-      <!-- Danger Zone -->
-      <Card class="settings-card danger-card">
+      <!-- WAF Test Runner -->
+      <Card class="settings-card">
         <template #title>
-          <div class="card-title danger">
-            <i class="pi pi-exclamation-triangle"></i>
-            <span>{{ t.settings?.dangerZone || 'Danger Zone' }}</span>
+          <div class="card-title">
+            <i class="pi pi-play"></i>
+            <span>WAF Test Runner</span>
           </div>
         </template>
         <template #content>
-          <p class="warning-text">These actions are irreversible. Please be careful.</p>
-          <div class="danger-buttons">
-            <Button label="Clear All Logs" icon="pi pi-trash" severity="danger" @click="clearLogs" />
+          <p class="info-text">Re-run WAF tests to refresh all dashboard data with real detection results.</p>
+          <Button label="Run WAF Tests" icon="pi pi-refresh" @click="runWAFTests" :loading="runningTests" severity="info" />
+          <p v-if="testResult" class="test-result">{{ testResult }}</p>
+        </template>
+      </Card>
+
+      <!-- Data Management -->
+      <Card class="settings-card">
+        <template #title>
+          <div class="card-title">
+            <i class="pi pi-database"></i>
+            <span>{{ t.settings?.dangerZone || 'Data Management' }}</span>
           </div>
+        </template>
+        <template #content>
+          <p class="info-text">Clear all attack logs and start fresh.</p>
+          <Button label="Clear All Logs" icon="pi pi-trash" severity="danger" outlined @click="clearLogs" />
         </template>
       </Card>
     </div>
@@ -135,16 +111,9 @@ export default {
   name: 'SettingsView',
   props: ['t', 'language'],
   setup() {
-    const emailSettings = ref({
-      smtp_host: '',
-      smtp_port: 587,
-      smtp_user: '',
-      smtp_pass: '',
-      alert_email: '',
-      enabled: false
-    })
     const serverHealth = ref({})
-    const saving = ref(false)
+    const runningTests = ref(false)
+    const testResult = ref('')
 
     const fetchHealth = async () => {
       try {
@@ -157,31 +126,22 @@ export default {
       }
     }
 
-    const saveEmailSettings = async () => {
-      saving.value = true
-      try {
-        const token = localStorage.getItem('waf_token')
-        const res = await fetch('/api/settings/email', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify(emailSettings.value)
-        })
-        if (res.ok) {
-          alert('Email settings saved successfully!')
-        } else {
-          throw new Error('Failed')
-        }
-      } catch (error) {
-        alert('Failed to save settings. Make sure you are logged in.')
-      }
-      saving.value = false
-    }
-
     const downloadPDF = () => {
       window.open('/api/reports/pdf', '_blank')
+    }
+
+    const runWAFTests = async () => {
+      runningTests.value = true
+      testResult.value = ''
+      try {
+        const res = await fetch('/api/run-waf-tests', { method: 'POST' })
+        const data = await res.json()
+        testResult.value = data.message
+        fetchHealth()
+      } catch (error) {
+        testResult.value = 'Failed to run tests.'
+      }
+      runningTests.value = false
     }
 
     const clearLogs = async () => {
@@ -214,12 +174,12 @@ export default {
     })
 
     return {
-      emailSettings,
       serverHealth,
-      saving,
+      runningTests,
+      testResult,
       fetchHealth,
-      saveEmailSettings,
       downloadPDF,
+      runWAFTests,
       clearLogs,
       formatUptime
     }
@@ -401,22 +361,13 @@ export default {
   font-weight: 500;
 }
 
-.warning-text {
-  color: #ef4444;
-  margin-bottom: 1rem;
-}
-
-.danger-card {
-  border-color: #fecaca;
-}
-
-.dark-mode .danger-card {
-  border-color: #7f1d1d;
-}
-
-.danger-buttons {
-  display: flex;
-  gap: 1rem;
+.test-result {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
 }
 
 .mt-3 {
