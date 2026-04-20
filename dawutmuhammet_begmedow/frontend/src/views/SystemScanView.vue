@@ -30,7 +30,7 @@
     </Card>
 
     <!-- Scan Type Selection -->
-    <div v-if="!isScanning && !scanComplete" class="scan-options">
+    <div v-show="!isScanning && !scanComplete" class="scan-options">
       <Card class="scan-option-card quick" @click="startScan('quick')">
         <template #content>
           <div class="scan-option">
@@ -198,15 +198,34 @@
       </Card>
     </div>
 
-    <!-- Not Electron Warning -->
-    <Card v-if="!isElectron" class="electron-warning">
+    <!-- Signature Update + Test Virus Controls (web mode) -->
+    <Card v-if="!isElectron" class="web-controls-card">
       <template #content>
-        <div class="warning-content">
-          <i class="pi pi-exclamation-triangle"></i>
-          <div>
-            <h3>{{ t.systemScan?.electronRequired || 'Electron Required' }}</h3>
-            <p>{{ t.systemScan?.electronRequiredDesc || 'System scanning requires the desktop application. Please run the app in Electron mode.' }}</p>
+        <h3><i class="pi pi-shield"></i> Scanner Controls</h3>
+        <div class="controls-grid">
+          <div class="control-item">
+            <Button label="Update Signatures" icon="pi pi-download" @click="updateSignatures" :loading="updatingSignatures" severity="info" />
+            <small v-if="sigStatus">{{ sigStatus.totalSignatures }} hashes + {{ sigStatus.totalPatterns }} patterns</small>
           </div>
+          <div class="control-item">
+            <Button label="Deploy Test Viruses" icon="pi pi-bug" @click="deployTestViruses" :loading="deploying" severity="warn" />
+            <small>Hide 5 malicious test files on your system</small>
+          </div>
+          <div class="control-item">
+            <Button label="Cleanup Test Files" icon="pi pi-trash" @click="cleanupTestViruses" severity="secondary" outlined />
+            <small>Remove all test files</small>
+          </div>
+        </div>
+        <div v-if="deployResult" class="deploy-result">
+          <h4>Deployed Files:</h4>
+          <div v-for="(f, i) in deployResult" :key="i" class="deploy-item" :class="f.risk">
+            <Tag :severity="f.risk === 'critical' ? 'danger' : f.risk === 'none' ? 'success' : 'warn'" :value="f.risk" size="small" />
+            <span>{{ f.name }}</span>
+            <small>{{ f.type }}</small>
+          </div>
+        </div>
+        <div v-if="updateResult" class="update-result">
+          <p><i class="pi pi-check-circle" style="color: #22c55e"></i> {{ updateResult }}</p>
         </div>
       </template>
     </Card>
@@ -214,8 +233,11 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useToast } from 'primevue/usetoast'
+import axios from 'axios'
+
+const API_URL = '/api'
 
 export default {
   props: { t: Object, language: String },
@@ -230,84 +252,114 @@ export default {
     const scanResult = ref(null)
     const liveThreats = ref([])
 
+    // Web mode controls
+    const updatingSignatures = ref(false)
+    const deploying = ref(false)
+    const sigStatus = ref(null)
+    const deployResult = ref(null)
+    const updateResult = ref(null)
+
     onMounted(async () => {
       isElectron.value = !!window.electronAPI?.isElectron
 
       if (isElectron.value) {
         systemInfo.value = await window.electronAPI.getSystemInfo()
-
-        window.electronAPI.onSystemScanProgress((data) => {
-          scanProgress.value = data
-        })
-
-        window.electronAPI.onSystemScanThreat((threat) => {
-          liveThreats.value.push(threat)
-        })
+        window.electronAPI.onSystemScanProgress((data) => { scanProgress.value = data })
+        window.electronAPI.onSystemScanThreat((threat) => { liveThreats.value.push(threat) })
+      } else {
+        // Web mode: fetch signature status
+        try { const r = await axios.get(API_URL + '/signatures/status'); sigStatus.value = r.data } catch (e) {}
+        // Show system info from os
+        try { const r = await axios.get(API_URL + '/health'); systemInfo.value = { hostname: 'Web Mode', platform: 'Server-side scan', arch: '', cpus: '-', freeMemory: 'v' + (r.data.version || '2.0') } } catch (e) {}
       }
     })
 
     const startScan = async (type) => {
-      if (!isElectron.value) return
-
       isScanning.value = true
       scanComplete.value = false
       currentScanType.value = type
       scanProgress.value = { phase: 'starting', message: 'Initializing scan...', progress: 0 }
       liveThreats.value = []
 
-      toast.add({
-        severity: 'info',
-        summary: type === 'quick' ? 'Quick Scan Started' : 'Full Scan Started',
-        detail: 'Scanning system for threats...',
-        life: 3000
-      })
+      toast.add({ severity: 'info', summary: type === 'quick' ? 'Quick Scan Started' : 'Full Scan Started', detail: 'Scanning system...', life: 3000 })
 
-      const result = await window.electronAPI.systemScan(type)
+      if (isElectron.value) {
+        const result = await window.electronAPI.systemScan(type)
+        isScanning.value = false
+        if (result.cancelled) { toast.add({ severity: 'warn', summary: 'Cancelled', life: 2000 }); return }
+        if (result.success) { scanComplete.value = true; scanResult.value = result }
+      } else {
+        // Web mode: call backend API
+        scanProgress.value = { message: 'Collecting files...', progress: 10 }
+        try {
+          scanProgress.value = { message: 'Scanning files...', progress: 30 }
+          const res = await axios.post(API_URL + '/system-scan', { scanType: type })
+          scanProgress.value = { message: 'Complete!', progress: 100 }
+          isScanning.value = false
 
-      isScanning.value = false
-
-      if (result.cancelled) {
-        toast.add({ severity: 'warn', summary: 'Scan Cancelled', life: 2000 })
-        return
+          if (res.data.success) {
+            scanComplete.value = true
+            scanResult.value = {
+              ...res.data,
+              totalScanned: res.data.scannedFiles,
+              duration: Math.round(res.data.scannedFiles * 0.05),
+              scanPaths: type === 'quick' ? ['~/Downloads', '~/Desktop', '/tmp', '~/.virusdetect_test'] : ['~/Downloads', '~/Desktop', '~/Documents', '/tmp', '/var/tmp', '~/Library/LaunchAgents']
+            }
+          }
+        } catch (error) {
+          isScanning.value = false
+          toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 5000 })
+          return
+        }
       }
 
-      if (result.success) {
-        scanComplete.value = true
-        scanResult.value = result
-
-        if (result.threatsFound > 0) {
-          toast.add({
-            severity: 'error',
-            summary: `${result.threatsFound} Threats Found`,
-            detail: 'Review the detected threats below',
-            life: 5000
-          })
-        } else {
-          toast.add({
-            severity: 'success',
-            summary: 'Scan Complete',
-            detail: 'No threats detected',
-            life: 3000
-          })
-        }
+      if (scanResult.value && scanResult.value.threatsFound > 0) {
+        toast.add({ severity: 'error', summary: scanResult.value.threatsFound + ' Threats Found', detail: 'Review detected threats below', life: 5000 })
+      } else if (scanResult.value) {
+        toast.add({ severity: 'success', summary: 'Scan Complete', detail: 'No threats detected', life: 3000 })
       }
     }
 
     const cancelScan = async () => {
-      await window.electronAPI.cancelSystemScan()
+      if (isElectron.value) await window.electronAPI.cancelSystemScan()
       isScanning.value = false
     }
 
-    const resetScan = () => {
-      scanComplete.value = false
-      scanResult.value = null
-      liveThreats.value = []
-    }
+    const resetScan = () => { scanComplete.value = false; scanResult.value = null; liveThreats.value = [] }
 
     const openLocation = (filePath) => {
-      if (isElectron.value) {
-        window.electronAPI.openFileLocation(filePath)
-      }
+      if (isElectron.value) window.electronAPI.openFileLocation(filePath)
+    }
+
+    // Web mode: signature update
+    const updateSignatures = async () => {
+      updatingSignatures.value = true; updateResult.value = null
+      try {
+        const r = await axios.post(API_URL + '/signatures/update')
+        updateResult.value = r.data.message
+        sigStatus.value = { totalSignatures: r.data.totalSignatures, totalPatterns: r.data.totalPatterns }
+        toast.add({ severity: r.data.success ? 'success' : 'info', summary: 'Signatures Updated', detail: r.data.message, life: 4000 })
+      } catch (e) { toast.add({ severity: 'error', summary: 'Error', detail: e.message, life: 3000 }) }
+      updatingSignatures.value = false
+    }
+
+    // Web mode: deploy test viruses
+    const deployTestViruses = async () => {
+      deploying.value = true; deployResult.value = null
+      try {
+        const r = await axios.post(API_URL + '/test-virus/deploy')
+        deployResult.value = r.data.deployed
+        toast.add({ severity: 'warn', summary: 'Test Viruses Deployed', detail: r.data.message, life: 4000 })
+      } catch (e) { toast.add({ severity: 'error', summary: 'Error', detail: e.message, life: 3000 }) }
+      deploying.value = false
+    }
+
+    const cleanupTestViruses = async () => {
+      try {
+        const r = await axios.post(API_URL + '/test-virus/cleanup')
+        deployResult.value = null
+        toast.add({ severity: 'success', summary: 'Cleaned Up', detail: r.data.removed + ' files removed', life: 3000 })
+      } catch (e) { toast.add({ severity: 'error', summary: 'Error', detail: e.message, life: 3000 }) }
     }
 
     const truncatePath = (path) => {
@@ -336,7 +388,9 @@ export default {
       isElectron, systemInfo, isScanning, scanComplete, currentScanType,
       scanProgress, scanResult, liveThreats,
       startScan, cancelScan, resetScan, openLocation,
-      truncatePath, getStatusSeverity, getScoreClass
+      truncatePath, getStatusSeverity, getScoreClass,
+      updatingSignatures, deploying, sigStatus, deployResult, updateResult,
+      updateSignatures, deployTestViruses, cleanupTestViruses
     }
   }
 }
@@ -428,12 +482,18 @@ export default {
 .path-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: var(--bg-secondary); border-radius: 6px; font-size: 0.85rem; }
 .path-item i { color: var(--text-secondary); }
 
-/* Electron Warning */
-.electron-warning { border-left: 4px solid #f59e0b; }
-.warning-content { display: flex; align-items: center; gap: 1.5rem; }
-.warning-content > i { font-size: 3rem; color: #f59e0b; }
-.warning-content h3 { margin-bottom: 0.5rem; }
-.warning-content p { color: var(--text-secondary); }
+/* Web Controls */
+.web-controls-card { margin-bottom: 2rem; }
+.web-controls-card h3 { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+.web-controls-card h3 i { color: var(--primary-color); }
+.controls-grid { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.control-item { display: flex; flex-direction: column; gap: 0.5rem; }
+.control-item small { color: var(--text-secondary); font-size: 0.8rem; }
+.deploy-result { margin-top: 1rem; }
+.deploy-result h4 { margin-bottom: 0.5rem; }
+.deploy-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.75rem; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 0.25rem; font-size: 0.9rem; }
+.deploy-item small { color: var(--text-secondary); margin-left: auto; }
+.update-result { margin-top: 0.75rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 8px; }
 
 @media (max-width: 768px) {
   .scan-option { flex-direction: column; text-align: center; }

@@ -28,20 +28,17 @@
       </template>
     </Card>
 
-    <!-- Sample Files Section (always visible for demo) -->
+    <!-- Info Card -->
     <Card class="samples-card">
       <template #content>
-        <h3><i class="pi pi-flask"></i> {{ language === 'en' ? 'Test Samples' : 'Synag faýllary' }}</h3>
-        <p class="samples-desc">{{ language === 'en' ? 'Click any sample to see how the scanner analyzes different file types' : 'Skaneriň dürli faýl görnüşlerini nähili seljerýändigini görmek üçin basyň' }}</p>
-        <div class="samples-grid">
-          <div v-for="sample in samples" :key="sample.id" class="sample-item" :class="sample.riskLevel" @click="scanSample(sample.id)">
-            <i :class="'pi ' + sample.icon"></i>
-            <div class="sample-info">
-              <span class="sample-name">{{ sample.name }}</span>
-              <small>{{ language === 'en' ? sample.description.en : sample.description.tk }}</small>
-            </div>
-            <Tag :severity="getRiskSeverity(sample.riskLevel)" :value="sample.riskLevel" size="small" />
-          </div>
+        <h3><i class="pi pi-info-circle"></i> {{ language === 'en' ? 'How It Works' : 'Nähili işleýär' }}</h3>
+        <p class="samples-desc">{{ language === 'en' ? 'Upload any file to scan with real heuristic, entropy, and pattern analysis. The scanner checks SHA-256 hashes against known malware databases and identifies suspicious patterns that traditional antivirus may miss.' : 'Islendik faýly ýükläň - hakyky ewristik, entropiýa we nagyş derňewi bilen skanirlenýär. Skaner SHA-256 hashlary belli malware bazalaryndan barlaýar.' }}</p>
+        <div class="detection-methods">
+          <Tag value="SHA-256 Hash" severity="info" />
+          <Tag value="Entropy Analysis" severity="warn" />
+          <Tag value="Pattern Matching" severity="danger" />
+          <Tag value="Heuristic Checks" severity="secondary" />
+          <Tag value="Magic Bytes" severity="success" />
         </div>
       </template>
     </Card>
@@ -187,17 +184,9 @@ export default {
     const result = ref(null)
     const folderResults = ref(null)
     const isFolderScan = ref(false)
-    const samples = ref([])
-
     const isElectron = typeof window !== 'undefined' && window.electronAPI !== undefined
 
     onMounted(async () => {
-      // Load sample files
-      try {
-        const res = await axios.get(`${API_URL}/samples`)
-        samples.value = res.data
-      } catch (e) { /* ignore */ }
-
       if (isElectron) {
         try {
           window.electronAPI.onScanProgress((data) => {
@@ -322,39 +311,6 @@ export default {
       isScanning.value = false
     }
 
-    // Scan a sample file via API
-    const scanSample = async (sampleId) => {
-      isScanning.value = true
-      isFolderScan.value = false
-      progress.value = 0
-      logs.value = []
-      result.value = null
-
-      try {
-        const progressPromise = simulateProgress()
-        const response = await axios.get(`${API_URL}/samples/${sampleId}`)
-        await progressPromise
-
-        progress.value = 100
-        currentStep.value = props.language === 'en' ? 'Complete!' : 'Tamamlandy!'
-        logs.value.push({ message: currentStep.value, type: 'success', icon: 'pi pi-check-circle' })
-
-        if (response.data.success) {
-          result.value = response.data.result
-          toast.add({
-            severity: response.data.result.status === 'clean' ? 'success' : 'warn',
-            summary: props.language === 'en' ? 'Scan Complete' : 'Skan Tamamlandy',
-            detail: props.t.scan.status[response.data.result.status] || response.data.result.status,
-            life: 5000
-          })
-        }
-      } catch (error) {
-        toast.add({ severity: 'error', summary: 'Error', detail: error.message, life: 5000 })
-      }
-
-      isScanning.value = false
-    }
-
     // Electron mode scan functions
     const scanFileElectron = async (filePath) => {
       isScanning.value = true
@@ -448,8 +404,8 @@ export default {
     const getRiskSeverity = (risk) => ({ critical: 'danger', high: 'danger', medium: 'warn', low: 'success' }[risk] || 'info')
 
     return {
-      fileInput, isScanning, progress, currentStep, logs, result, folderResults, isFolderScan, samples,
-      selectFile, selectFolder, onFileSelected, handleDrop, scanSample, copyToClipboard, exportReport,
+      fileInput, isScanning, progress, currentStep, logs, result, folderResults, isFolderScan,
+      selectFile, selectFolder, onFileSelected, handleDrop, copyToClipboard, exportReport,
       getStatusIcon, getScoreClass, getScoreSeverity, getFileTypeSeverity, getSeverityClass, getRiskSeverity
     }
   }
@@ -482,6 +438,7 @@ export default {
 .samples-card h3 { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
 .samples-card h3 i { color: var(--primary-color); }
 .samples-desc { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.25rem; }
+.detection-methods { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .samples-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
 .sample-item {
   display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem;
