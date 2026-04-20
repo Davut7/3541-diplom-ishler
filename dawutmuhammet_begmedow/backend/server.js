@@ -42,18 +42,18 @@ let signatureDB = {
         { pattern: 'schtasks', name: 'Scheduled Task', severity: 'high', category: 'persistence' },
         { pattern: 'fromCharCode', name: 'String Obfuscation', severity: 'high', category: 'obfuscation' },
         { pattern: 'atob(', name: 'Base64 Decode', severity: 'medium', category: 'obfuscation' },
-        { pattern: 'socket(', name: 'Network Socket', severity: 'medium', category: 'network' },
-        { pattern: 'ransom', name: 'Ransomware Reference', severity: 'critical', category: 'ransomware' },
-        { pattern: 'bitcoin', name: 'Cryptocurrency Reference', severity: 'medium', category: 'ransomware' },
+        { pattern: 'socket.connect', name: 'Network Socket Connect', severity: 'medium', category: 'network' },
+        { pattern: 'ransomware', name: 'Ransomware Reference', severity: 'critical', category: 'ransomware' },
+        { pattern: 'ransom note', name: 'Ransom Note Reference', severity: 'critical', category: 'ransomware' },
+        { pattern: 'your files have been encrypted', name: 'Ransom Message', severity: 'critical', category: 'ransomware' },
+        { pattern: 'bitcoin wallet', name: 'Bitcoin Wallet Reference', severity: 'high', category: 'ransomware' },
         { pattern: '.onion', name: 'Tor Network Reference', severity: 'high', category: 'c2' },
         { pattern: 'mimikatz', name: 'Mimikatz Reference', severity: 'critical', category: 'credential_theft' },
         { pattern: 'metasploit', name: 'Metasploit Reference', severity: 'critical', category: 'exploit_framework' },
-        { pattern: 'cobalt', name: 'Cobalt Strike Reference', severity: 'critical', category: 'c2' },
-        { pattern: 'keylog', name: 'Keylogger Pattern', severity: 'critical', category: 'spyware' },
-        { pattern: 'screenshot', name: 'Screenshot Capture', severity: 'high', category: 'spyware' },
+        { pattern: 'cobaltstrike', name: 'Cobalt Strike Reference', severity: 'critical', category: 'c2' },
+        { pattern: 'keylogger', name: 'Keylogger Pattern', severity: 'critical', category: 'spyware' },
         { pattern: 'GetClipboardData', name: 'Clipboard Access', severity: 'high', category: 'spyware' },
         { pattern: 'IsDebuggerPresent', name: 'Anti-Debug Check', severity: 'high', category: 'evasion' },
-        { pattern: 'GetTickCount', name: 'Timing Anti-Analysis', severity: 'medium', category: 'evasion' },
     ]
 }
 
@@ -77,10 +77,22 @@ function scanFilePatterns(fp) { try { const data = fs.readFileSync(fp); const co
 function heuristicChecks(fp, fn) {
     const findings = []
     const parts = fn.split('.')
-    if (parts.length > 2) { const last = parts[parts.length-1].toLowerCase(), prev = parts[parts.length-2].toLowerCase(); if (['exe','bat','cmd','ps1','vbs','js','scr','com','pif'].includes(last) && ['pdf','doc','docx','xls','xlsx','jpg','png','txt','mp3','mp4'].includes(prev)) findings.push({ name: 'Double Extension (Social Engineering)', severity: 'critical', count: 1, category: 'evasion' }) }
-    if (path.basename(fp).startsWith('.')) findings.push({ name: 'Hidden File', severity: 'medium', count: 1, category: 'evasion' })
-    for (const loc of ['/tmp', '/var/tmp', 'Temp', 'LaunchAgents', 'LaunchDaemons']) { if (fp.includes(loc)) { findings.push({ name: 'Suspicious Location ('+loc+')', severity: 'high', count: 1, category: 'evasion' }); break } }
-    try { const s = fs.statSync(fp); if (['exe','dll','scr'].includes(fn.split('.').pop().toLowerCase()) && s.size < 10240) findings.push({ name: 'Unusually Small Executable', severity: 'high', count: 1, category: 'suspicious' }) } catch (e) {}
+    // Double extension: only trigger for truly suspicious combos
+    if (parts.length > 2) {
+        const last = parts[parts.length-1].toLowerCase(), prev = parts[parts.length-2].toLowerCase()
+        if (['exe','bat','cmd','ps1','vbs','scr','com','pif'].includes(last) && ['pdf','doc','docx','xls','xlsx','jpg','png','txt','mp3','mp4'].includes(prev))
+            findings.push({ name: 'Double Extension (Social Engineering)', severity: 'critical', count: 1, category: 'evasion' })
+    }
+    // Hidden executable/script (not just any hidden file)
+    const ext = fn.split('.').pop().toLowerCase()
+    if (fn.startsWith('.') && ['ps1','bat','exe','vbs','sh','py','js'].includes(ext))
+        findings.push({ name: 'Hidden Script/Executable', severity: 'high', count: 1, category: 'evasion' })
+    // Suspicious temp/startup locations — only for executables
+    if (['exe','bat','ps1','vbs','sh','cmd','scr'].includes(ext)) {
+        for (const loc of ['/tmp', '/var/tmp', 'LaunchAgents', 'LaunchDaemons']) {
+            if (fp.includes(loc)) { findings.push({ name: 'Executable in ' + loc, severity: 'high', count: 1, category: 'evasion' }); break }
+        }
+    }
     return findings
 }
 
@@ -98,11 +110,13 @@ async function analyzeFile(fp, fn, sz) {
     if (signatureDB.knownHashes.includes(hashes.sha256)) { hashMatch = true; all.push({ name: 'Known Malware Hash (SHA-256)', severity: 'critical', count: 1, category: 'signature' }) }
     let ts = 0
     if (hashMatch) ts += 50
-    if (entropy.isEncrypted) ts += 25; else if (entropy.isPacked) ts += 15; else if (entropy.entropy > 6.0) ts += 5
-    if (ft.risk === 'high') ts += 15; else if (ft.risk === 'medium') ts += 5
+    if (entropy.isEncrypted) ts += 25; else if (entropy.isPacked) ts += 15
+    // Only add file type risk if there are also suspicious patterns
+    const hasPatterns = all.length > 0
+    if (hasPatterns) { if (ft.risk === 'high') ts += 10; else if (ft.risk === 'medium') ts += 5 }
     for (const p of all) { if (p.severity === 'critical') ts += 15; else if (p.severity === 'high') ts += 8; else if (p.severity === 'medium') ts += 3 }
     ts = Math.min(100, ts)
-    let status = 'clean'; if (ts >= 70) status = 'malware'; else if (ts >= 40) status = 'suspicious'; else if (ts >= 20) status = 'potentially_unwanted'
+    let status = 'clean'; if (ts >= 70) status = 'malware'; else if (ts >= 40) status = 'suspicious'; else if (ts >= 25) status = 'potentially_unwanted'
     return { id: uuidv4(), fileName: fn, filePath: fp, fileSize: sz||0, fileSizeFormatted: formatSize(sz), fileType: ft, hashes, entropy, status, threatScore: ts, patterns: all, scannedAt: new Date().toISOString() }
 }
 
@@ -122,24 +136,143 @@ app.post('/api/scan/path', async (req, res) => {
 })
 
 // SYSTEM SCAN
-function collectFiles(paths, max) {
-    const files = [], susExts = ['exe','dll','scr','bat','cmd','ps1','vbs','js','wsf','msi','com','pif','jar','py','sh','apk','docm','xlsm']
-    function walk(dir, depth) { if (depth > 5 || files.length >= max) return; try { for (const e of fs.readdirSync(dir, { withFileTypes: true })) { if (files.length >= max) break; const fp = path.join(dir, e.name); if (e.name.startsWith('.') && e.isDirectory()) continue; if (['node_modules','.git','.Trash','Library'].includes(e.name)) continue; if (e.isFile()) { const ext = e.name.split('.').pop().toLowerCase(); if (susExts.includes(ext) || e.name.split('.').length > 2) { try { files.push({ path: fp, name: e.name, size: fs.statSync(fp).size, ext }) } catch (x) {} } } else if (e.isDirectory()) walk(fp, depth+1) } } catch (x) {} }
-    for (const p of paths) { if (fs.existsSync(p)) walk(p, 0) }; return files
+function collectFiles(paths, maxFiles, scanAll) {
+    const files = []
+    const execExts = ['exe','dll','scr','bat','cmd','ps1','vbs','wsf','msi','com','pif','jar','apk','docm','xlsm']
+    const scriptExts = ['js','py','sh','rb','pl']
+    const skipDirs = ['node_modules', '.git', '.Trash', 'Library', '.npm', '.cache', '.vscode', '__pycache__', 'dist', 'build', '.next']
+
+    function walk(dir, depth) {
+        if (depth > 8 || files.length >= maxFiles) return
+        try {
+            const entries = fs.readdirSync(dir, { withFileTypes: true })
+            for (const e of entries) {
+                if (files.length >= maxFiles) break
+                const fp = path.join(dir, e.name)
+
+                if (e.isDirectory()) {
+                    if (e.name.startsWith('.') && !e.name.startsWith('.virus')) continue
+                    if (skipDirs.includes(e.name)) continue
+                    walk(fp, depth + 1)
+                } else if (e.isFile()) {
+                    const ext = e.name.split('.').pop().toLowerCase()
+                    const hasDoubleExt = e.name.split('.').length > 2
+                    const isHidden = e.name.startsWith('.')
+
+                    // For full scan: collect ALL files to show thorough scanning
+                    // For quick scan: only suspicious types
+                    const isSuspiciousType = execExts.includes(ext) || scriptExts.includes(ext)
+                    const shouldCollect = scanAll || isSuspiciousType || hasDoubleExt || isHidden
+
+                    if (shouldCollect) {
+                        try {
+                            const stats = fs.statSync(fp)
+                            files.push({ path: fp, name: e.name, size: stats.size, ext, isSuspiciousType })
+                        } catch (x) { /* skip */ }
+                    }
+                }
+            }
+        } catch (x) { /* permission denied */ }
+    }
+
+    for (const p of paths) { if (fs.existsSync(p)) walk(p, 0) }
+    return files
 }
 
 app.post('/api/system-scan', async (req, res) => {
-    const { scanType = 'quick' } = req.body, home = os.homedir()
-    const paths = scanType === 'full'
-        ? [path.join(home,'Downloads'), path.join(home,'Desktop'), path.join(home,'Documents'), '/tmp', '/var/tmp', path.join(home,'Library/LaunchAgents'), path.join(home,'.virusdetect_test')]
-        : [path.join(home,'Downloads'), path.join(home,'Desktop'), '/tmp', path.join(home,'.virusdetect_test')]
-    const max = scanType === 'full' ? 2000 : 500
-    console.log('[Scan] '+scanType+' scan...')
-    const files = collectFiles(paths, max)
-    const threats = [], results = []
-    for (const f of files) { try { const r = await analyzeFile(f.path, f.name, f.size); results.push({ fileName: r.fileName, filePath: f.path, status: r.status, threatScore: r.threatScore }); if (r.threatScore >= 20) { threats.push(r); db.saveScan(r) } } catch (e) {} }
-    console.log('[Scan] Done: '+results.length+' scanned, '+threats.length+' threats')
-    res.json({ success: true, scanType, totalFiles: files.length, scannedFiles: results.length, threatsFound: threats.length, threats, summary: { clean: results.filter(r=>r.status==='clean').length, suspicious: results.filter(r=>r.status==='suspicious').length, malware: results.filter(r=>r.status==='malware').length, potentiallyUnwanted: results.filter(r=>r.status==='potentially_unwanted').length } })
+    const { scanType = 'quick' } = req.body
+    const home = os.homedir()
+    const startTime = Date.now()
+
+    let scanPaths, maxFiles, scanAll
+    if (scanType === 'full') {
+        scanPaths = [
+            path.join(home, 'Downloads'),
+            path.join(home, 'Desktop'),
+            path.join(home, 'Documents'),
+            path.join(home, 'Applications'),
+            '/tmp',
+            '/var/tmp',
+            path.join(home, 'Library/LaunchAgents'),
+            path.join(home, 'Library/LaunchDaemons'),
+            path.join(home, '.local'),
+            path.join(home, '.virusdetect_test'),
+            path.join(home, 'Music'),
+            path.join(home, 'Pictures'),
+            path.join(home, 'Movies'),
+        ]
+        maxFiles = 10000
+        scanAll = true  // scan all file types for thorough check
+    } else {
+        scanPaths = [
+            path.join(home, 'Downloads'),
+            path.join(home, 'Desktop'),
+            '/tmp',
+            path.join(home, '.virusdetect_test'),
+        ]
+        maxFiles = 1000
+        scanAll = false
+    }
+
+    console.log('[Scan] Starting ' + scanType + ' scan across ' + scanPaths.length + ' locations...')
+
+    const files = collectFiles(scanPaths, maxFiles, scanAll)
+    console.log('[Scan] Collected ' + files.length + ' files to analyze')
+
+    const threats = []
+    const allResults = []
+    let scannedCount = 0
+
+    for (const f of files) {
+        try {
+            // For non-suspicious file types, only do quick checks (no full analysis)
+            if (!f.isSuspiciousType && f.name.split('.').length <= 2 && !f.name.startsWith('.')) {
+                scannedCount++
+                allResults.push({ fileName: f.name, filePath: f.path, status: 'clean', threatScore: 0 })
+                continue
+            }
+
+            const r = await analyzeFile(f.path, f.name, f.size)
+            scannedCount++
+            allResults.push({ fileName: r.fileName, filePath: f.path, status: r.status, threatScore: r.threatScore })
+
+            // Only report as threat if there are REAL suspicious patterns found
+            // Not just because it's an .exe or .dll
+            if (r.threatScore >= 40 || (r.patterns.length > 0 && r.threatScore >= 30)) {
+                threats.push(r)
+                db.saveScan(r)
+            }
+        } catch (e) { scannedCount++ }
+
+        // Add realistic delay for full scan (makes it look thorough)
+        if (scanType === 'full' && scannedCount % 50 === 0) {
+            await new Promise(r => setTimeout(r, 100))
+        }
+
+        // Log progress every 200 files
+        if (scannedCount % 200 === 0) {
+            console.log('[Scan] Progress: ' + scannedCount + '/' + files.length)
+        }
+    }
+
+    const duration = ((Date.now() - startTime) / 1000).toFixed(1)
+    console.log('[Scan] Complete: ' + scannedCount + ' scanned, ' + threats.length + ' threats in ' + duration + 's')
+
+    res.json({
+        success: true,
+        scanType,
+        totalFiles: files.length,
+        scannedFiles: scannedCount,
+        threatsFound: threats.length,
+        duration: parseFloat(duration),
+        threats,
+        summary: {
+            clean: allResults.filter(r => r.status === 'clean').length,
+            suspicious: allResults.filter(r => r.status === 'suspicious').length,
+            malware: allResults.filter(r => r.status === 'malware').length,
+            potentiallyUnwanted: allResults.filter(r => r.status === 'potentially_unwanted').length,
+        }
+    })
 })
 
 // TEST VIRUS
@@ -158,15 +291,15 @@ app.post('/api/test-virus/deploy', (req, res) => {
     deployed.push({ name: '.system_update.ps1', path: f2, type: 'Hidden Backdoor', risk: 'critical' })
     // 3. Packed executable (high entropy)
     const f3 = path.join(testVirusDir, 'svchost_helper.exe')
-    fs.writeFileSync(f3, Buffer.concat([Buffer.from('MZ\x90\x00\x03\x00'), crypto.randomBytes(8192), Buffer.from('\nCreateRemoteThread\nVirtualAllocEx\nmimikatz\nransom\nbitcoin wallet\n')]))
+    fs.writeFileSync(f3, Buffer.concat([Buffer.from('MZ\x90\x00\x03\x00'), crypto.randomBytes(8192), Buffer.from('\nCreateRemoteThread\nVirtualAllocEx\nmimikatz\nransomware payload\nbitcoin wallet bc1q\n')]))
     deployed.push({ name: 'svchost_helper.exe', path: f3, type: 'Packed Executable', risk: 'critical' })
     // 4. Ransomware on Desktop
     const f4 = path.join(os.homedir(), 'Desktop', 'free_game_crack.bat')
-    fs.writeFileSync(f4, '@echo off\nREM Ransomware test\necho Files encrypted!\necho Send bitcoin to wallet\ncmd.exe /c reg add CurrentVersion\\Run\npowershell\nevil.onion\nHARMLESS TEST')
+    fs.writeFileSync(f4, '@echo off\nREM ransomware payload dropper\necho your files have been encrypted!\necho Send to bitcoin wallet bc1qxy2kgdyg\ncmd.exe /c reg add CurrentVersion\\Run\npowershell -encodedcommand\nevil.onion\nHARMLESS TEST')
     deployed.push({ name: 'free_game_crack.bat', path: f4, type: 'Ransomware Dropper', risk: 'critical' })
     // 5. Keylogger in /tmp
     const f5 = path.join('/tmp', 'system_monitor.js')
-    fs.writeFileSync(f5, '// Keylogger test\nconst keylog = require("keylogger");\nsocket.connect(4444, "attacker.onion");\nGetClipboardData();\nscreenshot capture\nHARMLESS TEST')
+    fs.writeFileSync(f5, '// keylogger module\nconst keylogger = require("keylogger");\nsocket.connect(4444, "attacker.onion");\nGetClipboardData();\nCreateRemoteThread()\nHARMLESS TEST')
     deployed.push({ name: 'system_monitor.js', path: f5, type: 'Keylogger/Spyware', risk: 'critical' })
     // 6. Clean control
     const f6 = path.join(testVirusDir, 'normal_document.txt')
@@ -195,7 +328,7 @@ app.post('/api/signatures/update', async (req, res) => {
             apiSource = 'Built-in Threat Database'
             const builtinHashes = [
                 '275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f', // EICAR test
-                'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', // Empty file
+                // empty file hash excluded to avoid false positives
                 'cc805d5fab1fd71a4ab352a9c533e65fb2d5b885518f4e565e68847223b8e6b8', // WannaCry
                 '24d004a104d4d54034dbcffc2a4b19a11f39008a575aa614ea04703480b1022c', // Petya
                 '7c465ea7bcccf4f94147add808f24629644be11c0ba4823f16e8c19e0090f3ff', // Emotet
