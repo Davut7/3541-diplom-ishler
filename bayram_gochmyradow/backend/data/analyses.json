@@ -1,6 +1,387 @@
 {
   "analyses": [
     {
+      "id": "02ca4b3a-8ed9-4b43-b1f7-a13420457535",
+      "file_name": "a1e9f60e-6db6-4a57-b2ac-6fd04a9e447c-test.apk",
+      "package_name": "Unknown",
+      "version_name": "Unknown",
+      "version_code": "Unknown",
+      "file_size": 55223706,
+      "risk_level": "low",
+      "risk_score": 0,
+      "permission_count": 0,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 0,
+      "issues_count": 1,
+      "warnings_count": 1,
+      "min_sdk": 0,
+      "target_sdk": 0,
+      "is_debuggable": 0,
+      "allow_backup": 0,
+      "full_report": {
+        "basicInfo": {
+          "fileName": "a1e9f60e-6db6-4a57-b2ac-6fd04a9e447c-test.apk",
+          "fileSize": 55223706,
+          "fileSizeFormatted": "52.67 MB",
+          "totalFiles": 449,
+          "dexCount": 2,
+          "nativeLibraries": [
+            "libapp.so",
+            "libdatastore_shared_counter.so",
+            "libflutter.so"
+          ],
+          "hasAssets": true,
+          "hasResources": true,
+          "createdAt": "2026-04-20T12:32:57.454Z",
+          "modifiedAt": "2026-04-20T12:32:57.524Z"
+        },
+        "manifest": {
+          "packageName": "Unknown",
+          "versionCode": "Unknown",
+          "versionName": "Unknown",
+          "minSdkVersion": null,
+          "targetSdkVersion": null,
+          "permissions": [],
+          "activities": [],
+          "services": [],
+          "receivers": [],
+          "providers": [],
+          "flags": {
+            "debuggable": false,
+            "allowBackup": false,
+            "hasExportedComponents": false
+          },
+          "exportedComponents": []
+        },
+        "permissions": {
+          "total": 0,
+          "analyzed": [],
+          "byRisk": {
+            "critical": [],
+            "high": [],
+            "medium": [],
+            "low": []
+          },
+          "byCategory": {},
+          "riskScore": {
+            "score": 0,
+            "percentage": 0,
+            "level": "low"
+          }
+        },
+        "signature": {
+          "isSigned": false,
+          "signatureVersion": null,
+          "certificates": [],
+          "signingSchemes": [],
+          "warnings": [
+            {
+              "en": "APK is not signed - will not install on Android devices",
+              "tk": "APK gol çekilmedi - Android enjamlara gurulmaz"
+            }
+          ]
+        },
+        "security": {
+          "issues": [
+            {
+              "severity": "critical",
+              "title": {
+                "en": "APK Not Signed",
+                "tk": "APK Gol Çekilmedik"
+              },
+              "description": {
+                "en": "This APK is not digitally signed and will not install on Android devices.",
+                "tk": "Bu APK sanly gol çekilmedik we Android enjamlara gurulmaz."
+              }
+            }
+          ],
+          "warnings": [
+            {
+              "severity": "low",
+              "title": {
+                "en": "Signature Warning",
+                "tk": "Gol Duýduryşy"
+              },
+              "description": {
+                "en": "APK is not signed - will not install on Android devices",
+                "tk": "APK gol çekilmedi - Android enjamlara gurulmaz"
+              }
+            }
+          ],
+          "recommendations": [
+            {
+              "en": "Always download apps from official stores like Google Play.",
+              "tk": "Hemişe programmalary Google Play ýaly resmi dükanlardan ýükläň."
+            },
+            {
+              "en": "Keep your device and apps updated to receive security patches.",
+              "tk": "Howpsuzlyk düzedişlerini almak üçin enjamyňyzy we programmalaryňyzy täzeläň."
+            }
+          ],
+          "overallRisk": "low",
+          "riskScore": 0
+        },
+        "analyzedAt": "2026-04-20T12:32:57.535Z"
+      },
+      "analyzed_at": "2026-04-20T12:32:57.535Z"
+    },
+    {
+      "id": "13a1d0df-9cc4-4b95-bda0-532ba317b001",
+      "file_name": "f394d734-219d-43ec-9d98-c29d469fab6a-test.apk",
+      "package_name": "Unknown",
+      "version_name": "Unknown",
+      "version_code": "Unknown",
+      "file_size": 55223706,
+      "risk_level": "low",
+      "risk_score": 0,
+      "permission_count": 0,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 0,
+      "issues_count": 1,
+      "warnings_count": 1,
+      "min_sdk": 0,
+      "target_sdk": 0,
+      "is_debuggable": 0,
+      "allow_backup": 0,
+      "full_report": {
+        "basicInfo": {
+          "fileName": "f394d734-219d-43ec-9d98-c29d469fab6a-test.apk",
+          "fileSize": 55223706,
+          "fileSizeFormatted": "52.67 MB",
+          "totalFiles": 449,
+          "dexCount": 2,
+          "nativeLibraries": [
+            "libapp.so",
+            "libdatastore_shared_counter.so",
+            "libflutter.so"
+          ],
+          "hasAssets": true,
+          "hasResources": true,
+          "createdAt": "2026-04-20T12:32:29.840Z",
+          "modifiedAt": "2026-04-20T12:32:29.996Z"
+        },
+        "manifest": {
+          "packageName": "Unknown",
+          "versionCode": "Unknown",
+          "versionName": "Unknown",
+          "minSdkVersion": null,
+          "targetSdkVersion": null,
+          "permissions": [],
+          "activities": [],
+          "services": [],
+          "receivers": [],
+          "providers": [],
+          "flags": {
+            "debuggable": false,
+            "allowBackup": false,
+            "hasExportedComponents": false
+          },
+          "exportedComponents": []
+        },
+        "permissions": {
+          "total": 0,
+          "analyzed": [],
+          "byRisk": {
+            "critical": [],
+            "high": [],
+            "medium": [],
+            "low": []
+          },
+          "byCategory": {},
+          "riskScore": {
+            "score": 0,
+            "percentage": 0,
+            "level": "low"
+          }
+        },
+        "signature": {
+          "isSigned": false,
+          "signatureVersion": null,
+          "certificates": [],
+          "signingSchemes": [],
+          "warnings": [
+            {
+              "en": "APK is not signed - will not install on Android devices",
+              "tk": "APK gol çekilmedi - Android enjamlara gurulmaz"
+            }
+          ]
+        },
+        "security": {
+          "issues": [
+            {
+              "severity": "critical",
+              "title": {
+                "en": "APK Not Signed",
+                "tk": "APK Gol Çekilmedik"
+              },
+              "description": {
+                "en": "This APK is not digitally signed and will not install on Android devices.",
+                "tk": "Bu APK sanly gol çekilmedik we Android enjamlara gurulmaz."
+              }
+            }
+          ],
+          "warnings": [
+            {
+              "severity": "low",
+              "title": {
+                "en": "Signature Warning",
+                "tk": "Gol Duýduryşy"
+              },
+              "description": {
+                "en": "APK is not signed - will not install on Android devices",
+                "tk": "APK gol çekilmedi - Android enjamlara gurulmaz"
+              }
+            }
+          ],
+          "recommendations": [
+            {
+              "en": "Always download apps from official stores like Google Play.",
+              "tk": "Hemişe programmalary Google Play ýaly resmi dükanlardan ýükläň."
+            },
+            {
+              "en": "Keep your device and apps updated to receive security patches.",
+              "tk": "Howpsuzlyk düzedişlerini almak üçin enjamyňyzy we programmalaryňyzy täzeläň."
+            }
+          ],
+          "overallRisk": "low",
+          "riskScore": 0
+        },
+        "analyzedAt": "2026-04-20T12:32:30.017Z"
+      },
+      "analyzed_at": "2026-04-20T12:32:30.017Z"
+    },
+    {
+      "id": "48eadb0c-9f78-4696-a52d-fad747487770",
+      "file_name": "318b07f0-7a85-498c-befc-65e75c7b5cbd-test.apk",
+      "package_name": "Unknown",
+      "version_name": "Unknown",
+      "version_code": "Unknown",
+      "file_size": 55223706,
+      "risk_level": "low",
+      "risk_score": 0,
+      "permission_count": 0,
+      "critical_count": 0,
+      "high_count": 0,
+      "medium_count": 0,
+      "low_count": 0,
+      "issues_count": 1,
+      "warnings_count": 1,
+      "min_sdk": 0,
+      "target_sdk": 0,
+      "is_debuggable": 0,
+      "allow_backup": 0,
+      "full_report": {
+        "basicInfo": {
+          "fileName": "318b07f0-7a85-498c-befc-65e75c7b5cbd-test.apk",
+          "fileSize": 55223706,
+          "fileSizeFormatted": "52.67 MB",
+          "totalFiles": 449,
+          "dexCount": 2,
+          "nativeLibraries": [
+            "libapp.so",
+            "libdatastore_shared_counter.so",
+            "libflutter.so"
+          ],
+          "hasAssets": true,
+          "hasResources": true,
+          "createdAt": "2026-04-20T10:17:30.934Z",
+          "modifiedAt": "2026-04-20T10:17:31.044Z"
+        },
+        "manifest": {
+          "packageName": "Unknown",
+          "versionCode": "Unknown",
+          "versionName": "Unknown",
+          "minSdkVersion": null,
+          "targetSdkVersion": null,
+          "permissions": [],
+          "activities": [],
+          "services": [],
+          "receivers": [],
+          "providers": [],
+          "flags": {
+            "debuggable": false,
+            "allowBackup": false,
+            "hasExportedComponents": false
+          },
+          "exportedComponents": []
+        },
+        "permissions": {
+          "total": 0,
+          "analyzed": [],
+          "byRisk": {
+            "critical": [],
+            "high": [],
+            "medium": [],
+            "low": []
+          },
+          "byCategory": {},
+          "riskScore": {
+            "score": 0,
+            "percentage": 0,
+            "level": "low"
+          }
+        },
+        "signature": {
+          "isSigned": false,
+          "signatureVersion": null,
+          "certificates": [],
+          "signingSchemes": [],
+          "warnings": [
+            {
+              "en": "APK is not signed - will not install on Android devices",
+              "tk": "APK gol çekilmedi - Android enjamlara gurulmaz"
+            }
+          ]
+        },
+        "security": {
+          "issues": [
+            {
+              "severity": "critical",
+              "title": {
+                "en": "APK Not Signed",
+                "tk": "APK Gol Çekilmedik"
+              },
+              "description": {
+                "en": "This APK is not digitally signed and will not install on Android devices.",
+                "tk": "Bu APK sanly gol çekilmedik we Android enjamlara gurulmaz."
+              }
+            }
+          ],
+          "warnings": [
+            {
+              "severity": "low",
+              "title": {
+                "en": "Signature Warning",
+                "tk": "Gol Duýduryşy"
+              },
+              "description": {
+                "en": "APK is not signed - will not install on Android devices",
+                "tk": "APK gol çekilmedi - Android enjamlara gurulmaz"
+              }
+            }
+          ],
+          "recommendations": [
+            {
+              "en": "Always download apps from official stores like Google Play.",
+              "tk": "Hemişe programmalary Google Play ýaly resmi dükanlardan ýükläň."
+            },
+            {
+              "en": "Keep your device and apps updated to receive security patches.",
+              "tk": "Howpsuzlyk düzedişlerini almak üçin enjamyňyzy we programmalaryňyzy täzeläň."
+            }
+          ],
+          "overallRisk": "low",
+          "riskScore": 0
+        },
+        "analyzedAt": "2026-04-20T10:17:31.062Z"
+      },
+      "analyzed_at": "2026-04-20T10:17:31.062Z"
+    },
+    {
       "id": "865db669-cb94-42fa-8e81-1e7bb0e824fa",
       "file_name": "640c1e27-6ea9-45df-bcba-1fd654707fb5-test.apk",
       "package_name": "Unknown",

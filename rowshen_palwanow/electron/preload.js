@@ -20,6 +20,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // Run full system scan (comprehensive real scan)
   runFullScan: () => ipcRenderer.invoke('run-full-scan'),
 
+  // Threat management
+  removeThreat: (threatPath) => ipcRenderer.invoke('remove-threat', threatPath),
+  deleteThreat: (threatPath) => ipcRenderer.invoke('delete-threat', threatPath),
+
+  // Test keylogger files
+  createTestKeyloggers: () => ipcRenderer.invoke('create-test-keyloggers'),
+  removeTestKeyloggers: () => ipcRenderer.invoke('remove-test-keyloggers'),
+
   // Open external URL
   openExternal: (url) => ipcRenderer.invoke('open-external', url),
 

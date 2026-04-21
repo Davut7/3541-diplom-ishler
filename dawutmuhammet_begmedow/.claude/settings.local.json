@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/macbookpro/Desktop/projects/diplom_ishler/3541/**)",
+      "Bash(npm install:*)",
+      "Bash(timeout 5 node server.js)",
+      "Bash(node:*)",
+      "Bash(grep -v \"^$\")",
+      "Bash(grep -r \"7060\\\\|port\" /Users/macbookpro/Desktop/projects/diplom_ishler/3541/selbi_weliyyewa/frontend/vite.config.*)",
+      "Bash(npm run:*)"
+    ]
+  }
+}

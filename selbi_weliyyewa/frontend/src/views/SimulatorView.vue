@@ -836,7 +836,7 @@ export default {
       ctx.putImageData(diffData, 0, 0)
     }
 
-    const API_URL = 'http://localhost:4006/api'
+    const API_URL = 'http://localhost:7061/api'
 
     const runSimulation = async () => {
       isRunning.value = true

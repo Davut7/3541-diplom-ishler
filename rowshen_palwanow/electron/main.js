@@ -1027,6 +1027,181 @@ function formatUptime(seconds) {
   return `${minutes}m`
 }
 
+// ========== File System Scanning ==========
+
+const SUSPICIOUS_FILE_PATTERNS = [
+  /keylog/i, /key[_-]?log/i, /klog/i, /keystroke/i, /keysniff/i, /keyspy/i,
+  /spykey/i, /keycapture/i, /inputlogger/i, /typinglog/i,
+  /ardamax/i, /spyrix/i, /refog/i, /realtime[_-]?spy/i, /kidlogger/i,
+  /hoverwatch/i, /mspy/i, /flexispy/i, /cocospy/i, /spyic/i,
+  /actual[_-]?keylogger/i, /elite[_-]?keylogger/i, /perfect[_-]?keylogger/i,
+  /revealer[_-]?keylogger/i, /shadow[_-]?keylogger/i, /wolfeye/i,
+  /getasynckeystate/i, /setwindowshookex/i, /rawinput[_-]?hook/i,
+  /keyboard[_-]?hook/i, /keyboard[_-]?monitor/i, /keyboard[_-]?capture/i,
+  /key[_-]?capture/i, /key[_-]?record/i, /key[_-]?sniff/i,
+  /stealth[_-]?key/i, /hidden[_-]?key/i, /invisible[_-]?key/i
+]
+
+const SUSPICIOUS_EXTENSIONS = ['.pyw', '.ahk', '.vbs', '.wsf', '.hta']
+
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+async function scanFileSystem(event, progressStart, progressEnd) {
+  const platform = os.platform()
+  const suspiciousFiles = []
+  let filesScanned = 0
+  let dirsScanned = 0
+
+  // Directories to scan based on platform
+  let scanDirs = []
+  // Always scan test directory first
+  const testDir = path.join(os.homedir(), 'KeyGuard_Test_Threats')
+  if (fs.existsSync(testDir)) {
+    scanDirs.push(testDir)
+  }
+
+  if (platform === 'darwin') {
+    scanDirs = [
+      ...scanDirs,
+      path.join(os.homedir(), 'Desktop'),
+      path.join(os.homedir(), 'Downloads'),
+      path.join(os.homedir(), 'Documents'),
+      os.homedir(),
+      '/Applications',
+      '/tmp',
+      '/var/tmp',
+      path.join(os.homedir(), 'Library/Application Support'),
+      path.join(os.homedir(), 'Library/LaunchAgents'),
+      '/usr/local/bin',
+      '/opt'
+    ]
+  } else if (platform === 'win32') {
+    scanDirs = [
+      path.join(os.homedir(), 'AppData', 'Local'),
+      path.join(os.homedir(), 'AppData', 'Roaming'),
+      path.join(os.homedir(), 'Downloads'),
+      path.join(os.homedir(), 'Documents'),
+      'C:\\ProgramData',
+      'C:\\Program Files',
+      'C:\\Program Files (x86)',
+      os.tmpdir()
+    ]
+  } else {
+    scanDirs = [
+      os.homedir(),
+      '/tmp',
+      '/var/tmp',
+      '/opt',
+      '/usr/local/bin',
+      '/usr/local/share',
+      '/dev/shm'
+    ]
+  }
+
+  const maxDepth = 4
+  const skipDirs = new Set([
+    'node_modules', '.git', '.npm', '.cache', '__pycache__',
+    'cache', 'Cache', 'CacheStorage', 'Code Cache',
+    '.Trash', 'Trash', '.local/share/Trash',
+    'vendor', 'venv', '.venv', 'env',
+    'dist', 'build', '.next', '.nuxt'
+  ])
+
+  function scanDirectory(dirPath, depth) {
+    if (depth > maxDepth) return
+
+    let entries
+    try {
+      entries = fs.readdirSync(dirPath, { withFileTypes: true })
+    } catch (e) {
+      return
+    }
+
+    dirsScanned++
+
+    for (const entry of entries) {
+      const fullPath = path.join(dirPath, entry.name)
+
+      if (entry.isDirectory()) {
+        if (skipDirs.has(entry.name) || entry.name.startsWith('.Spotlight') || entry.name.startsWith('.fseventsd')) {
+          continue
+        }
+        scanDirectory(fullPath, depth + 1)
+      } else if (entry.isFile()) {
+        filesScanned++
+        const nameLower = entry.name.toLowerCase()
+
+        // Check file name against keylogger patterns
+        let matched = false
+        for (const pattern of SUSPICIOUS_FILE_PATTERNS) {
+          if (pattern.test(entry.name)) {
+            let fileSize = 0
+            try { fileSize = fs.statSync(fullPath).size } catch (e) {}
+
+            suspiciousFiles.push({
+              name: entry.name,
+              path: fullPath,
+              size: fileSize,
+              reason: `File name matches keylogger pattern: ${pattern.source}`,
+              risk: { level: 'high', reason: `Suspicious file: ${entry.name}` }
+            })
+            matched = true
+            break
+          }
+        }
+
+        // Check suspicious extensions with suspicious keywords in name
+        if (!matched) {
+          const ext = path.extname(nameLower)
+          if (SUSPICIOUS_EXTENSIONS.includes(ext)) {
+            const suspKeywords = ['hook', 'capture', 'spy', 'monitor', 'record', 'sniff', 'stealth', 'hidden', 'keyboard', 'keypress']
+            for (const kw of suspKeywords) {
+              if (nameLower.includes(kw)) {
+                let fileSize = 0
+                try { fileSize = fs.statSync(fullPath).size } catch (e) {}
+
+                suspiciousFiles.push({
+                  name: entry.name,
+                  path: fullPath,
+                  size: fileSize,
+                  reason: `Suspicious script (${ext}) with keyword: ${kw}`,
+                  risk: { level: 'medium', reason: `Suspicious script: ${entry.name}` }
+                })
+                break
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  const totalDirs = scanDirs.length
+  for (let i = 0; i < totalDirs; i++) {
+    const dirPath = scanDirs[i]
+    const stageProgress = progressStart + ((progressEnd - progressStart) * (i / totalDirs))
+    event.sender.send('scan-progress', {
+      stage: 'files',
+      progress: Math.round(stageProgress),
+      filesScanned,
+      currentDir: dirPath
+    })
+
+    try {
+      if (fs.existsSync(dirPath)) {
+        scanDirectory(dirPath, 0)
+      }
+    } catch (e) {}
+
+    // Small delay between directories so UI updates and scan feels real
+    await delay(300)
+  }
+
+  return { success: true, files: suspiciousFiles, filesScanned, dirsScanned }
+}
+
 // ========== Full System Scan ==========
 
 ipcMain.handle('run-full-scan', async (event) => {
@@ -1035,13 +1210,15 @@ ipcMain.handle('run-full-scan', async (event) => {
     hooks: [],
     persistence: [],
     network: [],
+    files: [],
     threats: [],
     scannedAt: new Date().toISOString()
   }
 
   try {
-    // Scan processes (20%)
-    event.sender.send('scan-progress', { stage: 'processes', progress: 5 })
+    // Stage 1: Scan processes (0-15%)
+    event.sender.send('scan-progress', { stage: 'processes', progress: 2 })
+    await delay(500)
     const processResult = await scanProcessesInternal()
     if (processResult.success) {
       results.processes = processResult.processes
@@ -1056,10 +1233,12 @@ ipcMain.handle('run-full-scan', async (event) => {
         severity: 'high'
       })))
     }
-    event.sender.send('scan-progress', { stage: 'processes', progress: 25 })
+    event.sender.send('scan-progress', { stage: 'processes', progress: 15 })
+    await delay(800)
 
-    // Scan hooks (40%)
-    event.sender.send('scan-progress', { stage: 'hooks', progress: 30 })
+    // Stage 2: Scan keyboard hooks (15-30%)
+    event.sender.send('scan-progress', { stage: 'hooks', progress: 16 })
+    await delay(400)
     const hookResult = await scanHooksInternal()
     if (hookResult.success) {
       results.hooks = hookResult.hooks
@@ -1072,10 +1251,35 @@ ipcMain.handle('run-full-scan', async (event) => {
         severity: 'high'
       })))
     }
-    event.sender.send('scan-progress', { stage: 'hooks', progress: 50 })
+    event.sender.send('scan-progress', { stage: 'hooks', progress: 30 })
+    await delay(600)
 
-    // Scan persistence (60%)
-    event.sender.send('scan-progress', { stage: 'persistence', progress: 55 })
+    // Stage 3: File system scan for keyloggers (30-70%) — the main heavy stage
+    event.sender.send('scan-progress', { stage: 'files', progress: 31 })
+    await delay(300)
+    const fileResult = await scanFileSystem(event, 31, 70)
+    if (fileResult.success) {
+      results.files = fileResult.files
+      const highRiskFiles = fileResult.files.filter(f => f.risk.level === 'high')
+      results.threats.push(...highRiskFiles.map(f => ({
+        type: 'Suspicious File',
+        name: f.name,
+        path: f.path,
+        reason: f.reason,
+        details: `File size: ${Math.round(f.size / 1024)} KB`,
+        severity: 'high'
+      })))
+    }
+    event.sender.send('scan-progress', {
+      stage: 'files',
+      progress: 70,
+      filesScanned: fileResult.filesScanned
+    })
+    await delay(500)
+
+    // Stage 4: Scan persistence mechanisms (70-85%)
+    event.sender.send('scan-progress', { stage: 'persistence', progress: 71 })
+    await delay(400)
     const persistResult = await scanPersistenceInternal()
     if (persistResult.success) {
       results.persistence = persistResult.items
@@ -1088,15 +1292,18 @@ ipcMain.handle('run-full-scan', async (event) => {
         severity: 'high'
       })))
     }
-    event.sender.send('scan-progress', { stage: 'persistence', progress: 75 })
+    event.sender.send('scan-progress', { stage: 'persistence', progress: 85 })
+    await delay(600)
 
-    // Scan network (80%)
-    event.sender.send('scan-progress', { stage: 'network', progress: 80 })
+    // Stage 5: Scan network connections (85-98%)
+    event.sender.send('scan-progress', { stage: 'network', progress: 86 })
+    await delay(400)
     const networkResult = await scanNetworkInternal()
     if (networkResult.success) {
       results.network = networkResult.connections
     }
-    event.sender.send('scan-progress', { stage: 'network', progress: 95 })
+    event.sender.send('scan-progress', { stage: 'network', progress: 98 })
+    await delay(500)
 
     event.sender.send('scan-progress', { stage: 'complete', progress: 100 })
 
@@ -1108,11 +1315,15 @@ ipcMain.handle('run-full-scan', async (event) => {
         totalHooks: results.hooks.length,
         totalPersistence: results.persistence.length,
         totalConnections: results.network.length,
+        totalFiles: results.files.length,
+        filesScanned: fileResult.filesScanned,
+        dirsScanned: fileResult.dirsScanned,
         threatsFound: results.threats.length,
         highRiskCount: results.threats.filter(t => t.severity === 'high').length,
         mediumRiskCount: results.processes.filter(p => p.risk.level === 'medium').length +
                         results.hooks.filter(h => h.risk === 'medium').length +
-                        results.persistence.filter(i => i.risk.level === 'medium').length,
+                        results.persistence.filter(i => i.risk.level === 'medium').length +
+                        results.files.filter(f => f.risk.level === 'medium').length,
         riskLevel: results.threats.length > 0 ? 'high' : 'safe'
       }
     }
@@ -1148,6 +1359,169 @@ async function scanNetworkInternal() {
   if (platform === 'win32') return await scanWindowsNetwork()
   return await scanUnixNetwork()
 }
+
+// ========== Threat Removal ==========
+
+ipcMain.handle('remove-threat', async (event, threatPath) => {
+  try {
+    if (!threatPath || !fs.existsSync(threatPath)) {
+      return { success: false, error: 'File not found' }
+    }
+
+    // Create quarantine directory
+    const quarantineDir = path.join(os.homedir(), '.keyguard_quarantine')
+    if (!fs.existsSync(quarantineDir)) {
+      fs.mkdirSync(quarantineDir, { recursive: true })
+    }
+
+    // Move file to quarantine (rename) instead of deleting
+    const fileName = path.basename(threatPath)
+    const quarantinePath = path.join(quarantineDir, `${Date.now()}_${fileName}.quarantined`)
+    fs.renameSync(threatPath, quarantinePath)
+
+    return {
+      success: true,
+      action: 'quarantined',
+      originalPath: threatPath,
+      quarantinePath: quarantinePath
+    }
+  } catch (error) {
+    return { success: false, error: error.message }
+  }
+})
+
+ipcMain.handle('delete-threat', async (event, threatPath) => {
+  try {
+    if (!threatPath || !fs.existsSync(threatPath)) {
+      return { success: false, error: 'File not found' }
+    }
+    fs.unlinkSync(threatPath)
+    return { success: true, action: 'deleted', path: threatPath }
+  } catch (error) {
+    return { success: false, error: error.message }
+  }
+})
+
+// ========== Test Keylogger Files ==========
+
+ipcMain.handle('create-test-keyloggers', async () => {
+  const testDir = path.join(os.homedir(), 'KeyGuard_Test_Threats')
+
+  try {
+    if (!fs.existsSync(testDir)) {
+      fs.mkdirSync(testDir, { recursive: true })
+    }
+
+    const testFiles = [
+      {
+        name: 'keylogger_stealth.pyw',
+        content: `# TEST FILE - Created by KeyGuard for demonstration purposes
+# This is NOT a real keylogger - it is a harmless test file
+import keyboard
+import logging
+
+class KeyloggerCapture:
+    def __init__(self):
+        self.log = []
+    def start_capture(self):
+        keyboard.on_press(self.on_key)
+    def on_key(self, event):
+        self.log.append(event.name)
+
+# THIS FILE IS SAFE - Created for KeyGuard testing only
+print("Test keylogger file - harmless")
+`
+      },
+      {
+        name: 'keyboard_hook_monitor.vbs',
+        content: `' TEST FILE - Created by KeyGuard for demonstration purposes
+' This is NOT a real keylogger - it is a harmless test file
+Set objShell = CreateObject("WScript.Shell")
+' Simulated keyboard hook - NOT functional
+' SetWindowsHookEx keyboard capture simulation
+' GetAsyncKeyState monitoring test
+WScript.Echo "Test keyboard hook file - harmless"
+`
+      },
+      {
+        name: 'spyrix_keylog_capture.exe.txt',
+        content: `TEST FILE - Created by KeyGuard for demonstration purposes
+This file simulates a keylogger executable signature.
+It is completely harmless and contains no executable code.
+Keywords: keylogger, keystroke capture, stealth mode, hidden recording
+Created for testing KeyGuard detection capabilities.
+`
+      },
+      {
+        name: 'hidden_keyboard_recorder.ahk',
+        content: `; TEST FILE - Created by KeyGuard for demonstration purposes
+; This is NOT a real keylogger - it is a harmless test file
+#NoTrayIcon
+SetKeyDelay, 0
+; Simulated keyboard capture hook
+; keystroke monitor stealth mode
+Loop {
+    Input, key, L1
+    ; FileAppend, %key%, keylog.txt  ; Commented out - not functional
+}
+; THIS FILE IS SAFE - Created for KeyGuard testing only
+`
+      },
+      {
+        name: 'ardamax_keylogger_config.dat',
+        content: `[Config]
+; TEST FILE - Created by KeyGuard for demonstration purposes
+; Simulates Ardamax keylogger configuration
+stealth_mode=true
+capture_keyboard=true
+send_logs=false
+hide_process=true
+; THIS FILE IS SAFE - Created for KeyGuard testing only
+`
+      },
+      {
+        name: 'elite_keylogger_service.wsf',
+        content: `<!-- TEST FILE - Created by KeyGuard for demonstration purposes -->
+<job>
+<script language="VBScript">
+' Simulated elite keylogger service
+' keyboard hook capture stealth monitor
+WScript.Echo "Test file - completely harmless"
+</script>
+</job>
+`
+      }
+    ]
+
+    const created = []
+    for (const file of testFiles) {
+      const filePath = path.join(testDir, file.name)
+      fs.writeFileSync(filePath, file.content, 'utf8')
+      created.push({ name: file.name, path: filePath })
+    }
+
+    return {
+      success: true,
+      directory: testDir,
+      files: created,
+      count: created.length
+    }
+  } catch (error) {
+    return { success: false, error: error.message }
+  }
+})
+
+ipcMain.handle('remove-test-keyloggers', async () => {
+  const testDir = path.join(os.homedir(), 'KeyGuard_Test_Threats')
+  try {
+    if (fs.existsSync(testDir)) {
+      fs.rmSync(testDir, { recursive: true, force: true })
+    }
+    return { success: true }
+  } catch (error) {
+    return { success: false, error: error.message }
+  }
+})
 
 // ========== External Links ==========
 

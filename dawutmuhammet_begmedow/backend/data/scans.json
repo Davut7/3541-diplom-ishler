@@ -1,773 +1,3856 @@
 {
   "scans": [
     {
-      "id": "98d4decd-416f-4eb5-885b-788f24144c22",
-      "fileName": "test_ok.txt",
-      "filePath": "",
-      "fileSize": 12,
-      "fileSizeFormatted": "12 Bytes",
+      "id": "2133bb89-e684-489e-a354-842546064118",
+      "fileName": "free_game_crack.bat",
+      "filePath": "/Users/macbookpro/Desktop/free_game_crack.bat",
+      "fileSize": 208,
+      "fileSizeFormatted": "208 B",
       "fileType": {
-        "type": "Text File",
-        "risk": "low"
-      },
-      "status": "clean",
-      "threatScore": 0,
-      "entropy": {
-        "entropy": 3.0221,
-        "interpretation": "Normal"
-      },
-      "hashes": {
-        "md5": "f0ef7081e1539ac00ef5b761b4fb01b3",
-        "sha1": "33ab5639bfd8e7b95eb1d8d0b87781d4ffea4d5d",
-        "sha256": "1894a19c85ba153acbf743ac4e43fc004c891604b26f8c69e1e83ea2afc7c48f"
-      },
-      "patterns": [],
-      "virusTotal": {
-        "available": true,
-        "found": false,
-        "stats": {
-          "malicious": 0,
-          "suspicious": 0,
-          "harmless": 42,
-          "undetected": 8
-        },
-        "message": "File not found in VirusTotal database"
-      },
-      "scannedAt": "2026-04-18T06:14:23.556Z"
-    },
-    {
-      "id": "0bab4467-9cf5-4dcf-820c-d965bfca14d7",
-      "fileName": "test_mal.ps1",
-      "filePath": "",
-      "fileSize": 67,
-      "fileSizeFormatted": "67 Bytes",
-      "fileType": {
-        "type": "PowerShell",
-        "risk": "high"
+        "type": "Batch",
+        "risk": "medium"
       },
       "status": "malware",
-      "threatScore": 80,
+      "threatScore": 82,
       "entropy": {
-        "entropy": 4.4012,
-        "interpretation": "Normal"
+        "entropy": 4.8189,
+        "interpretation": "Normal",
+        "isPacked": false,
+        "isEncrypted": false
       },
       "hashes": {
-        "md5": "b5558634bfb2ce77b5544b390a6a655b",
-        "sha1": "390d6e03acbfa4d03f7e5d7137df0fb2543cf884",
-        "sha256": "c9726636cededa3cdcbef924ac232c495f66cf4862c2504d862b4641abd4a100"
+        "md5": "ebb6bbb689027b76a9d5b6410c555345",
+        "sha1": "3820efcc3591f382a7b2f840529727d8cf727764",
+        "sha256": "278bb276bb07568129837bcb7bde5db59f5e45d475e1cf1c94f32cf26a1cab9d"
       },
       "patterns": [
         {
           "name": "Command Prompt Reference",
           "severity": "high",
-          "count": 1
+          "count": 1,
+          "category": "execution"
         },
         {
           "name": "PowerShell Reference",
           "severity": "high",
-          "count": 1
+          "count": 1,
+          "category": "execution"
         },
         {
-          "name": "Remote Thread Creation",
+          "name": "Autorun Registry Key",
           "severity": "critical",
-          "count": 1
+          "count": 1,
+          "category": "persistence"
         },
         {
-          "name": "Dynamic Code Execution",
-          "severity": "high",
-          "count": 1
+          "name": "Ransomware Reference",
+          "severity": "critical",
+          "count": 1,
+          "category": "ransomware"
         },
         {
-          "name": "Command Execution",
+          "name": "Ransom Message",
+          "severity": "critical",
+          "count": 1,
+          "category": "ransomware"
+        },
+        {
+          "name": "Bitcoin Wallet Reference",
           "severity": "high",
-          "count": 1
+          "count": 1,
+          "category": "ransomware"
+        },
+        {
+          "name": "Tor Network Reference",
+          "severity": "high",
+          "count": 1,
+          "category": "c2"
         }
       ],
       "virusTotal": {
-        "available": true,
-        "found": true,
-        "stats": {
-          "malicious": 26,
-          "suspicious": 1,
-          "harmless": 49,
-          "undetected": 8
-        },
-        "message": "File found in VirusTotal database"
+        "available": false
       },
-      "scannedAt": "2026-04-18T06:14:23.475Z"
+      "scannedAt": "2026-04-20T10:28:51.940Z"
     },
     {
-      "id": "2197f5e0-2f47-4684-9e13-f6e16d676030",
-      "fileName": "test_malware.ps1",
-      "filePath": "",
-      "fileSize": 72,
-      "fileSizeFormatted": "72 Bytes",
+      "id": "1162ea61-d67e-490b-a1b3-00bcec30e6c2",
+      "fileName": "invoice_2026.pdf.exe",
+      "filePath": "/Users/macbookpro/Downloads/invoice_2026.pdf.exe",
+      "fileSize": 178,
+      "fileSizeFormatted": "178 B",
       "fileType": {
-        "type": "PowerShell",
+        "type": "PE Executable",
         "risk": "high"
       },
       "status": "malware",
-      "threatScore": 80,
+      "threatScore": 100,
       "entropy": {
-        "entropy": 4.4599,
-        "interpretation": "Normal"
+        "entropy": 5.1216,
+        "interpretation": "Normal",
+        "isPacked": false,
+        "isEncrypted": false
       },
       "hashes": {
-        "md5": "9863ecc7bd3b605fe783eb4b1b440e4c",
-        "sha1": "fc13cc31ea4634173b403ff9184b22f0dde85f96",
-        "sha256": "6fc6ff9867940bc4ba20e96efd8fce7ed69f9c4000ad82cb05fdf97753d21159"
+        "md5": "df5927f97dac750089ec428be9af5da3",
+        "sha1": "6c2d1b886462897d52b64c4cd74fe0b054612388",
+        "sha256": "1728c83fd23db58da86aceca02c24ec3a5ab27ca0e2025a6a8dea5b354024bd1"
+      },
+      "patterns": [
+        {
+          "name": "Remote Thread Creation",
+          "severity": "critical",
+          "count": 1,
+          "category": "injection"
+        },
+        {
+          "name": "Remote Memory Allocation",
+          "severity": "critical",
+          "count": 1,
+          "category": "injection"
+        },
+        {
+          "name": "Process Memory Write",
+          "severity": "critical",
+          "count": 1,
+          "category": "injection"
+        },
+        {
+          "name": "Shell Execution",
+          "severity": "high",
+          "count": 1,
+          "category": "execution"
+        },
+        {
+          "name": "File Download",
+          "severity": "high",
+          "count": 1,
+          "category": "network"
+        },
+        {
+          "name": "System Registry Access",
+          "severity": "medium",
+          "count": 1,
+          "category": "persistence"
+        },
+        {
+          "name": "Autorun Registry Key",
+          "severity": "critical",
+          "count": 1,
+          "category": "persistence"
+        },
+        {
+          "name": "Double Extension (Social Engineering)",
+          "severity": "critical",
+          "count": 1,
+          "category": "evasion"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:50.488Z"
+    },
+    {
+      "id": "5739e9ea-6394-4f3b-aa95-66f0bf4d1ada",
+      "fileName": "discord.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/utils/discord.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.799Z"
+    },
+    {
+      "id": "c34589b0-6fe6-4473-88a4-3fd66a908379",
+      "fileName": "test_video_limit_reached.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/tests/test_video_limit_reached.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.797Z"
+    },
+    {
+      "id": "8a2a04e6-792c-4ac1-aae8-6128586fe334",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/tests/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.792Z"
+    },
+    {
+      "id": "31e16466-cc28-453a-b748-1df62eb3defd",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/hooks/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.676Z"
+    },
+    {
+      "id": "7da45217-2926-4da2-ab1e-6e01abccf71a",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/dto/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.572Z"
+    },
+    {
+      "id": "564f33fd-275a-4d22-9a7d-e8907f48d943",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/downloaders/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.571Z"
+    },
+    {
+      "id": "7726ab02-0391-4e6e-b836-f7ba7db9b392",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/cmd/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.568Z"
+    },
+    {
+      "id": "1bb7e60d-16b9-488e-87b7-a26fd7abbd52",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.566Z"
+    },
+    {
+      "id": "01747eb7-1b69-45c8-b3c6-76e43598ddce",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/charts/task-manager/images/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.559Z"
+    },
+    {
+      "id": "d174aef4-a5f4-4d65-aa24-308f113962e1",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/charts/frontend/images/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.558Z"
+    },
+    {
+      "id": "9e34c64e-7f39-4d34-889a-ae57ace2b859",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/charts/backend/images/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.557Z"
+    },
+    {
+      "id": "d4124216-6a54-4a3b-8020-e8b2561b185b",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/charts/airflow/images/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.556Z"
+    },
+    {
+      "id": "74d65c4f-0832-4c1f-abd7-f9075deedc0a",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/charts/admin-backend/images/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.547Z"
+    },
+    {
+      "id": "dc11da22-4033-4baa-a1ad-3fa1030e403c",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/charts/admin/images/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.546Z"
+    },
+    {
+      "id": "36b43f9b-ac2a-454d-bf01-915e77dc5ae8",
+      "fileName": "jest.setup.ts",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/api/jest.setup.ts",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:13.280Z"
+    },
+    {
+      "id": "40494a99-3a14-4f66-95f4-4d0265b3ab04",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/airflow/plugins/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:10.934Z"
+    },
+    {
+      "id": "bff0e6ab-feaa-48a8-85fe-e10931addb4a",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/airflow/dags/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:10.915Z"
+    },
+    {
+      "id": "6e8210fe-6f79-4a95-88b4-882735d4ef89",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/TMCELL_profile/ui/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:10.673Z"
+    },
+    {
+      "id": "de6543b8-e644-45af-aa09-455a0341e305",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/TMCELL_profile/tmcell/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:10.671Z"
+    },
+    {
+      "id": "f6d260a3-df5b-4544-9ffc-c143fb6f3b1b",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/TMCELL_profile/auth/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:10.568Z"
+    },
+    {
+      "id": "e9f73566-ecf2-4634-9c47-dd87c1db5ead",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/TMCELL_profile/accounts/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:10.568Z"
+    },
+    {
+      "id": "fb81ab23-1eca-40ba-9bf7-afd843bf10ce",
+      "fileName": "free_game_crack.bat",
+      "filePath": "/Users/macbookpro/Desktop/free_game_crack.bat",
+      "fileSize": 208,
+      "fileSizeFormatted": "208 B",
+      "fileType": {
+        "type": "Batch",
+        "risk": "medium"
+      },
+      "status": "suspicious",
+      "threatScore": 62,
+      "entropy": {
+        "entropy": 4.8189,
+        "interpretation": "Normal",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "ebb6bbb689027b76a9d5b6410c555345",
+        "sha1": "3820efcc3591f382a7b2f840529727d8cf727764",
+        "sha256": "278bb276bb07568129837bcb7bde5db59f5e45d475e1cf1c94f32cf26a1cab9d"
       },
       "patterns": [
         {
           "name": "Command Prompt Reference",
           "severity": "high",
-          "count": 1
+          "count": 1,
+          "category": "execution"
         },
         {
           "name": "PowerShell Reference",
           "severity": "high",
-          "count": 1
+          "count": 1,
+          "category": "execution"
         },
         {
-          "name": "Remote Thread Creation",
+          "name": "Autorun Registry Key",
           "severity": "critical",
-          "count": 1
+          "count": 1,
+          "category": "persistence"
         },
         {
-          "name": "Dynamic Code Execution",
-          "severity": "high",
-          "count": 1
+          "name": "Ransomware Reference",
+          "severity": "critical",
+          "count": 1,
+          "category": "ransomware"
         },
         {
-          "name": "Command Execution",
+          "name": "Cryptocurrency Reference",
+          "severity": "medium",
+          "count": 1,
+          "category": "ransomware"
+        },
+        {
+          "name": "Tor Network Reference",
           "severity": "high",
-          "count": 1
+          "count": 1,
+          "category": "c2"
         }
       ],
       "virusTotal": {
-        "available": true,
-        "found": true,
-        "stats": {
-          "malicious": 26,
-          "suspicious": 2,
-          "harmless": 66,
-          "undetected": 18
-        },
-        "message": "File found in VirusTotal database"
+        "available": false
       },
-      "scannedAt": "2026-04-18T06:12:55.776Z"
+      "scannedAt": "2026-04-20T10:28:10.454Z"
     },
     {
-      "id": "aaa11986-1710-41e4-8b9f-0273122f340f",
-      "fileName": "test_clean.txt",
-      "filePath": "",
-      "fileSize": 40,
-      "fileSizeFormatted": "40 Bytes",
-      "fileType": {
-        "type": "Text File",
-        "risk": "low"
-      },
-      "status": "clean",
-      "threatScore": 0,
-      "entropy": {
-        "entropy": 4.0215,
-        "interpretation": "Normal"
-      },
-      "hashes": {
-        "md5": "83dc47bf75b74bed3c0e7792b6acdd19",
-        "sha1": "dfdb89a35c6a5a1df6e1c0603fae9f8c97f364c1",
-        "sha256": "cce9a3b7ed623929f77f9f4d5791227319b553eb652f94dc02458369882c2271"
-      },
-      "patterns": [],
-      "virusTotal": {
-        "available": true,
-        "found": false,
-        "stats": {
-          "malicious": 0,
-          "suspicious": 0,
-          "harmless": 48,
-          "undetected": 16
-        },
-        "message": "File not found in VirusTotal database"
-      },
-      "scannedAt": "2026-04-17T19:26:42.547Z"
-    },
-    {
-      "id": "0f437a65-dfbe-4f49-a21a-daa4ef3b5d7b",
-      "fileName": "test_suspicious.js",
-      "filePath": "",
-      "fileSize": 56,
-      "fileSizeFormatted": "56 Bytes",
+      "id": "3ebcb31c-1b13-44f7-94a1-041c8c79689f",
+      "fileName": "errors.js",
+      "filePath": "/Users/macbookpro/Desktop/alpha_servers/aws_cli/src/utils/errors.js",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
       "fileType": {
         "type": "JavaScript",
         "risk": "medium"
       },
-      "status": "suspicious",
-      "threatScore": 50,
+      "status": "malware",
+      "threatScore": 70,
       "entropy": {
-        "entropy": 4.2709,
-        "interpretation": "Normal"
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
       },
       "hashes": {
-        "md5": "7d24a0623cb19fbed6b896150022ba43",
-        "sha1": "6746562f0410366e9bfe0f54ab72177dd0cf69ac",
-        "sha256": "0007568a7b43743850552e4bbee2958d6d5a0918c7fdde90d136520c8dd42640"
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:10.065Z"
+    },
+    {
+      "id": "48c3eb11-35cf-4729-ad8e-683ec38f62d7",
+      "fileName": "errors.js",
+      "filePath": "/Users/macbookpro/Desktop/alpha_servers/aws_bot/src/utils/errors.js",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "JavaScript",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:09.840Z"
+    },
+    {
+      "id": "76ba75a4-57ef-413e-9247-35e38fafd149",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/alpha_servers/alphapanel/cli/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:09.258Z"
+    },
+    {
+      "id": "d2d7622b-ae83-40ce-a45c-8826a1c30469",
+      "fileName": "Screenshot 2026-04-20 at 09.10.26.png",
+      "filePath": "/Users/macbookpro/Desktop/Screenshot 2026-04-20 at 09.10.26.png",
+      "fileSize": 309764,
+      "fileSizeFormatted": "302.5 KB",
+      "fileType": {
+        "type": "PNG",
+        "risk": "low"
+      },
+      "status": "potentially_unwanted",
+      "threatScore": 33,
+      "entropy": {
+        "entropy": 7.9721,
+        "interpretation": "Highly Packed/Encrypted",
+        "isPacked": true,
+        "isEncrypted": true
+      },
+      "hashes": {
+        "md5": "a5ab4d534233e912906040c606e68f57",
+        "sha1": "93349b41e0ef15a8943786d1e0292ed3fe0277b8",
+        "sha256": "614993409c89aacc8a6d28e91ccf7be28fe3f07cbb16eecf2f39f5c0eabe697b"
+      },
+      "patterns": [
+        {
+          "name": "Screenshot Capture",
+          "severity": "high",
+          "count": 2,
+          "category": "spyware"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:08.048Z"
+    },
+    {
+      "id": "e86db830-6edf-4a49-a2b7-f67e0a6635cc",
+      "fileName": ".localized",
+      "filePath": "/Users/macbookpro/Desktop/.localized",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.619Z"
+    },
+    {
+      "id": "e0bb38b5-c2be-4de9-b717-5e0f97b3e00a",
+      "fileName": "sqlite3.dll",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/sqlite3.dll",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "DLL",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 75,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.258Z"
+    },
+    {
+      "id": "0e120805-57d8-426a-93b6-8d90000b1c29",
+      "fileName": "python37.dll",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/python37.dll",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "DLL",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 75,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.256Z"
+    },
+    {
+      "id": "d45754bd-568c-43e2-b6d9-0848259e9c5f",
+      "fileName": "python3.dll",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/python3.dll",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "DLL",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 75,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.256Z"
+    },
+    {
+      "id": "73ff1fa2-730d-43ca-a131-63fbfa058487",
+      "fileName": "xwrt.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/xwrt.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.253Z"
+    },
+    {
+      "id": "4d1288ad-5288-484c-9981-b561b2d5d02d",
+      "fileName": "snapshot.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/snapshot.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.253Z"
+    },
+    {
+      "id": "94440f0f-f965-4339-bea4-bd326cc30013",
+      "fileName": "padavan.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/padavan.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.253Z"
+    },
+    {
+      "id": "3c9ed62d-a573-4e5f-a838-6f2d49812611",
+      "fileName": "openwrt.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/openwrt.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.252Z"
+    },
+    {
+      "id": "0609e9d7-ffb4-4656-a138-dc83060d6655",
+      "fileName": "main.sh",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/main.sh",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Shell",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.252Z"
+    },
+    {
+      "id": "3eabdc6a-3476-4b97-acc7-b282c627742f",
+      "fileName": "main.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/main.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.251Z"
+    },
+    {
+      "id": "a235f8d6-3b05-432b-bb75-0d702a7d9cad",
+      "fileName": "libssl-1_1.dll",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/libssl-1_1.dll",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "DLL",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 75,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.250Z"
+    },
+    {
+      "id": "89240732-959b-4f35-b9cd-5a26363a4bd0",
+      "fileName": "english.sh",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/data/english.sh",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Shell",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.080Z"
+    },
+    {
+      "id": "be0d41b3-d322-42a8-abd6-76b3bc8c9809",
+      "fileName": "base.en.lmo",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/data/base.en.lmo",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.079Z"
+    },
+    {
+      "id": "45987442-3949-4778-8a97-78f23e481ef8",
+      "fileName": "invoice_2026.pdf.exe",
+      "filePath": "/Users/macbookpro/Downloads/invoice_2026.pdf.exe",
+      "fileSize": 178,
+      "fileSizeFormatted": "178 B",
+      "fileType": {
+        "type": "PE Executable",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 100,
+      "entropy": {
+        "entropy": 5.1216,
+        "interpretation": "Normal",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "df5927f97dac750089ec428be9af5da3",
+        "sha1": "6c2d1b886462897d52b64c4cd74fe0b054612388",
+        "sha256": "1728c83fd23db58da86aceca02c24ec3a5ab27ca0e2025a6a8dea5b354024bd1"
+      },
+      "patterns": [
+        {
+          "name": "Remote Thread Creation",
+          "severity": "critical",
+          "count": 1,
+          "category": "injection"
+        },
+        {
+          "name": "Remote Memory Allocation",
+          "severity": "critical",
+          "count": 1,
+          "category": "injection"
+        },
+        {
+          "name": "Process Memory Write",
+          "severity": "critical",
+          "count": 1,
+          "category": "injection"
+        },
+        {
+          "name": "Shell Execution",
+          "severity": "high",
+          "count": 1,
+          "category": "execution"
+        },
+        {
+          "name": "File Download",
+          "severity": "high",
+          "count": 1,
+          "category": "network"
+        },
+        {
+          "name": "System Registry Access",
+          "severity": "medium",
+          "count": 1,
+          "category": "persistence"
+        },
+        {
+          "name": "Autorun Registry Key",
+          "severity": "critical",
+          "count": 1,
+          "category": "persistence"
+        },
+        {
+          "name": "Double Extension (Social Engineering)",
+          "severity": "critical",
+          "count": 1,
+          "category": "evasion"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.067Z"
+    },
+    {
+      "id": "c20de8c4-1154-41d9-8832-04479abe07b8",
+      "fileName": ".localized",
+      "filePath": "/Users/macbookpro/Downloads/.localized",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:07.059Z"
+    },
+    {
+      "id": "a1478e59-fc9a-436e-8861-d6103c0be430",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/TMCELL_profile/ui/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:06.874Z"
+    },
+    {
+      "id": "f5b67e42-6a6b-491f-b727-96e03719bb9e",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/TMCELL_profile/tmcell/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:06.872Z"
+    },
+    {
+      "id": "8df6bf7d-7f71-488e-bdf2-34d42ff6c304",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/TMCELL_profile/auth/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:06.870Z"
+    },
+    {
+      "id": "25c21f4c-e5f3-4fe0-a850-15d87e6d2578",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/TMCELL_profile/accounts/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:06.869Z"
+    },
+    {
+      "id": "0e5c802d-cb3c-4254-b2ca-26264da6e53b",
+      "fileName": "free_game_crack.bat",
+      "filePath": "/Users/macbookpro/Desktop/free_game_crack.bat",
+      "fileSize": 208,
+      "fileSizeFormatted": "208 B",
+      "fileType": {
+        "type": "Batch",
+        "risk": "medium"
+      },
+      "status": "suspicious",
+      "threatScore": 62,
+      "entropy": {
+        "entropy": 4.8189,
+        "interpretation": "Normal",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "ebb6bbb689027b76a9d5b6410c555345",
+        "sha1": "3820efcc3591f382a7b2f840529727d8cf727764",
+        "sha256": "278bb276bb07568129837bcb7bde5db59f5e45d475e1cf1c94f32cf26a1cab9d"
       },
       "patterns": [
         {
           "name": "Command Prompt Reference",
           "severity": "high",
-          "count": 1
+          "count": 1,
+          "category": "execution"
         },
         {
           "name": "PowerShell Reference",
           "severity": "high",
-          "count": 1
+          "count": 1,
+          "category": "execution"
         },
         {
-          "name": "Dynamic Code Execution",
-          "severity": "high",
-          "count": 1
+          "name": "Autorun Registry Key",
+          "severity": "critical",
+          "count": 1,
+          "category": "persistence"
         },
         {
-          "name": "Command Execution",
+          "name": "Ransomware Reference",
+          "severity": "critical",
+          "count": 1,
+          "category": "ransomware"
+        },
+        {
+          "name": "Cryptocurrency Reference",
+          "severity": "medium",
+          "count": 1,
+          "category": "ransomware"
+        },
+        {
+          "name": "Tor Network Reference",
           "severity": "high",
-          "count": 1
+          "count": 1,
+          "category": "c2"
         }
       ],
       "virusTotal": {
-        "available": true,
-        "found": true,
-        "stats": {
-          "malicious": 0,
-          "suspicious": 0,
-          "harmless": 53,
-          "undetected": 6
-        },
-        "message": "File found in VirusTotal database"
+        "available": false
       },
-      "scannedAt": "2026-04-17T19:26:42.478Z"
+      "scannedAt": "2026-04-20T10:28:06.851Z"
     },
     {
-      "id": "ff037299-a6b3-408d-b00c-bf50fe9d4506",
-      "fileName": "invoice_details.exe",
-      "filePath": "",
-      "fileSize": 5955908,
-      "fileSizeFormatted": "5.68 MB",
+      "id": "30e7e9cd-f28f-4295-85bc-ce0e71d69c0c",
+      "fileName": "errors.js",
+      "filePath": "/Users/macbookpro/Desktop/alpha_servers/aws_cli/src/utils/errors.js",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
       "fileType": {
-        "type": "PE Executable",
-        "risk": "high"
+        "type": "JavaScript",
+        "risk": "medium"
       },
       "status": "malware",
-      "threatScore": 85,
+      "threatScore": 70,
       "entropy": {
-        "entropy": 5.53,
-        "interpretation": "Some Compression"
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
       },
       "hashes": {
-        "sha256": "85b16a4fa60a3c6ef80e85a7f454360f474243f4b7b57e906616becc1647fd4e",
-        "md5": "88aae3d8f1e2bdc923c0a281e9fc3b04",
-        "sha1": "d78fb83f63ad64fd306d9a236004417af9ad7615"
-      },
-      "patterns": [
-        {
-          "name": "Process Injection",
-          "severity": "critical",
-          "count": 2
-        },
-        {
-          "name": "Keylogger Pattern",
-          "severity": "critical",
-          "count": 1
-        },
-        {
-          "name": "Persistence Mechanism",
-          "severity": "critical",
-          "count": 1
-        },
-        {
-          "name": "Encrypted Strings",
-          "severity": "high",
-          "count": 4
-        },
-        {
-          "name": "Anti-Debug Check",
-          "severity": "high",
-          "count": 2
-        }
-      ],
-      "virusTotal": {
-        "available": true,
-        "found": true,
-        "stats": {
-          "malicious": 28,
-          "suspicious": 3,
-          "harmless": 35,
-          "undetected": 28
-        },
-        "message": "File found in VirusTotal database"
-      },
-      "scannedAt": "2026-04-17T19:16:09.886Z"
-    },
-    {
-      "id": "demo-001",
-      "fileName": "chrome_installer.exe",
-      "filePath": "/Downloads/chrome_installer.exe",
-      "fileSize": 89456123,
-      "fileSizeFormatted": "85.31 MB",
-      "fileType": {
-        "type": "PE Executable",
-        "risk": "high"
-      },
-      "status": "clean",
-      "threatScore": 8,
-      "entropy": {
-        "entropy": 4.23,
-        "interpretation": "Normal"
-      },
-      "hashes": {
-        "sha256": "a7b9c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
         "md5": "d41d8cd98f00b204e9800998ecf8427e",
-        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
-      "patterns": [],
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
       "virusTotal": {
-        "available": true,
-        "found": false,
-        "stats": {
-          "malicious": 0,
-          "suspicious": 0,
-          "harmless": 65,
-          "undetected": 5
-        },
-        "message": "File not found in VirusTotal database"
+        "available": false
       },
-      "scannedAt": "2026-02-28T10:15:00.000Z"
+      "scannedAt": "2026-04-20T10:28:06.670Z"
     },
     {
-      "id": "demo-002",
-      "fileName": "quarterly_report.pdf",
-      "filePath": "/Documents/Reports/quarterly_report.pdf",
-      "fileSize": 2456789,
-      "fileSizeFormatted": "2.34 MB",
+      "id": "82ee32d8-847e-48c6-93ab-69dddd411bfa",
+      "fileName": "errors.js",
+      "filePath": "/Users/macbookpro/Desktop/alpha_servers/aws_bot/src/utils/errors.js",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
       "fileType": {
-        "type": "PDF Document",
+        "type": "JavaScript",
         "risk": "medium"
       },
-      "status": "clean",
-      "threatScore": 3,
-      "entropy": {
-        "entropy": 3.87,
-        "interpretation": "Normal"
-      },
-      "hashes": {
-        "sha256": "b8c9d4e5f6a7890123456789012345678901bcdef2345678901bcdef234567",
-        "md5": "e41d8cd98f00b204e9800998ecf8428f",
-        "sha1": "eb39a3ee5e6b4b0d3255bfef95601890afd80710"
-      },
-      "patterns": [],
-      "virusTotal": {
-        "available": true,
-        "found": false,
-        "stats": {
-          "malicious": 0,
-          "suspicious": 0,
-          "harmless": 70,
-          "undetected": 2
-        },
-        "message": "File not found in VirusTotal database"
-      },
-      "scannedAt": "2026-02-28T09:45:00.000Z"
-    },
-    {
-      "id": "demo-003",
-      "fileName": "free_game_crack.exe",
-      "filePath": "/Downloads/free_game_crack.exe",
-      "fileSize": 1245678,
-      "fileSizeFormatted": "1.19 MB",
-      "fileType": {
-        "type": "PE Executable",
-        "risk": "high"
-      },
-      "status": "suspicious",
-      "threatScore": 52,
-      "entropy": {
-        "entropy": 6.89,
-        "interpretation": "Possibly Packed"
-      },
-      "hashes": {
-        "sha256": "c9d0e5f6a7b8901234567890123456789012cdef3456789012cdef345678",
-        "md5": "f51d8cd98f00b204e9800998ecf8429g",
-        "sha1": "fc39a3ee5e6b4b0d3255bfef95601890afd80711"
-      },
-      "patterns": [
-        {
-          "name": "Network Communication",
-          "severity": "medium",
-          "count": 4
-        },
-        {
-          "name": "Registry Access",
-          "severity": "medium",
-          "count": 2
-        },
-        {
-          "name": "Encrypted Strings",
-          "severity": "high",
-          "count": 1
-        }
-      ],
-      "virusTotal": {
-        "available": true,
-        "found": true,
-        "stats": {
-          "malicious": 8,
-          "suspicious": 3,
-          "harmless": 45,
-          "undetected": 14
-        },
-        "message": "File found in VirusTotal database"
-      },
-      "scannedAt": "2026-02-28T08:30:00.000Z"
-    },
-    {
-      "id": "demo-004",
-      "fileName": "invoice_march2026.pdf.exe",
-      "filePath": "/Downloads/invoice_march2026.pdf.exe",
-      "fileSize": 567890,
-      "fileSizeFormatted": "554.58 KB",
-      "fileType": {
-        "type": "PE Executable",
-        "risk": "high"
-      },
       "status": "malware",
-      "threatScore": 91,
+      "threatScore": 70,
       "entropy": {
-        "entropy": 7.82,
-        "interpretation": "Highly Packed/Encrypted"
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
       },
       "hashes": {
-        "sha256": "d0e1f6a7b8c9012345678901234567890123def4567890123def456789",
-        "md5": "g61d8cd98f00b204e9800998ecf842ah",
-        "sha1": "gd39a3ee5e6b4b0d3255bfef95601890afd80712"
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "patterns": [
         {
-          "name": "Process Injection",
+          "name": "Known Malware Hash (SHA-256)",
           "severity": "critical",
-          "count": 3
-        },
-        {
-          "name": "Persistence Mechanism",
-          "severity": "critical",
-          "count": 2
-        },
-        {
-          "name": "Keylogger Pattern",
-          "severity": "critical",
-          "count": 1
-        },
-        {
-          "name": "Anti-Debug Check",
-          "severity": "high",
-          "count": 4
-        },
-        {
-          "name": "Encrypted Strings",
-          "severity": "high",
-          "count": 6
-        },
-        {
-          "name": "Network Communication",
-          "severity": "medium",
-          "count": 5
+          "count": 1,
+          "category": "signature"
         }
       ],
       "virusTotal": {
-        "available": true,
-        "found": true,
-        "stats": {
-          "malicious": 42,
-          "suspicious": 5,
-          "harmless": 12,
-          "undetected": 11
-        },
-        "message": "File found in VirusTotal database"
+        "available": false
       },
-      "scannedAt": "2026-02-28T07:15:00.000Z"
+      "scannedAt": "2026-04-20T10:28:06.647Z"
     },
     {
-      "id": "demo-005",
-      "fileName": "vacation_photos.zip",
-      "filePath": "/Downloads/vacation_photos.zip",
-      "fileSize": 45678901,
-      "fileSizeFormatted": "43.56 MB",
+      "id": "a3f76b77-1c7c-4421-819f-c22679f08c4d",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/alpha_servers/alphapanel/cli/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
       "fileType": {
-        "type": "ZIP Archive",
+        "type": "Python",
         "risk": "medium"
       },
-      "status": "clean",
-      "threatScore": 5,
-      "entropy": {
-        "entropy": 7.12,
-        "interpretation": "Some Compression"
-      },
-      "hashes": {
-        "sha256": "e1f2a7b8c9d0123456789012345678901234ef5678901234ef567890",
-        "md5": "h71d8cd98f00b204e9800998ecf842bi",
-        "sha1": "he39a3ee5e6b4b0d3255bfef95601890afd80713"
-      },
-      "patterns": [],
-      "virusTotal": {
-        "available": true,
-        "found": false,
-        "stats": {
-          "malicious": 0,
-          "suspicious": 0,
-          "harmless": 68,
-          "undetected": 4
-        },
-        "message": "File not found in VirusTotal database"
-      },
-      "scannedAt": "2026-02-27T16:30:00.000Z"
-    },
-    {
-      "id": "demo-006",
-      "fileName": "update_script.ps1",
-      "filePath": "/Scripts/update_script.ps1",
-      "fileSize": 8192,
-      "fileSizeFormatted": "8 KB",
-      "fileType": {
-        "type": "PowerShell",
-        "risk": "high"
-      },
-      "status": "suspicious",
-      "threatScore": 45,
-      "entropy": {
-        "entropy": 5.34,
-        "interpretation": "Some Compression"
-      },
-      "hashes": {
-        "sha256": "f2a3b8c9d0e1234567890123456789012345f6789012345f6789012",
-        "md5": "i81d8cd98f00b204e9800998ecf842cj",
-        "sha1": "if39a3ee5e6b4b0d3255bfef95601890afd80714"
-      },
-      "patterns": [
-        {
-          "name": "Obfuscated Code",
-          "severity": "high",
-          "count": 2
-        },
-        {
-          "name": "Network Communication",
-          "severity": "medium",
-          "count": 3
-        },
-        {
-          "name": "File System Access",
-          "severity": "low",
-          "count": 8
-        }
-      ],
-      "virusTotal": {
-        "available": true,
-        "found": true,
-        "stats": {
-          "malicious": 3,
-          "suspicious": 2,
-          "harmless": 52,
-          "undetected": 13
-        },
-        "message": "File found in VirusTotal database"
-      },
-      "scannedAt": "2026-02-27T14:20:00.000Z"
-    },
-    {
-      "id": "demo-007",
-      "fileName": "presentation.pptx",
-      "filePath": "/Documents/Work/presentation.pptx",
-      "fileSize": 5678901,
-      "fileSizeFormatted": "5.42 MB",
-      "fileType": {
-        "type": "MS PowerPoint",
-        "risk": "low"
-      },
-      "status": "clean",
-      "threatScore": 2,
-      "entropy": {
-        "entropy": 3.45,
-        "interpretation": "Normal"
-      },
-      "hashes": {
-        "sha256": "a3b4c9d0e1f2345678901234567890123456a7890123456a78901234",
-        "md5": "j91d8cd98f00b204e9800998ecf842dk",
-        "sha1": "jg39a3ee5e6b4b0d3255bfef95601890afd80715"
-      },
-      "patterns": [],
-      "virusTotal": {
-        "available": true,
-        "found": false,
-        "stats": {
-          "malicious": 0,
-          "suspicious": 0,
-          "harmless": 72,
-          "undetected": 0
-        },
-        "message": "File not found in VirusTotal database"
-      },
-      "scannedAt": "2026-02-27T11:00:00.000Z"
-    },
-    {
-      "id": "demo-008",
-      "fileName": "ransomware_sample.exe",
-      "filePath": "/Downloads/ransomware_sample.exe",
-      "fileSize": 1048576,
-      "fileSizeFormatted": "1 MB",
-      "fileType": {
-        "type": "PE Executable",
-        "risk": "high"
-      },
       "status": "malware",
-      "threatScore": 98,
+      "threatScore": 70,
       "entropy": {
-        "entropy": 7.95,
-        "interpretation": "Highly Packed/Encrypted"
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
       },
       "hashes": {
-        "sha256": "b4c5d0e1f2a3456789012345678901234567b8901234567b890123456",
-        "md5": "k02d8cd98f00b204e9800998ecf842el",
-        "sha1": "kh39a3ee5e6b4b0d3255bfef95601890afd80716"
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "patterns": [
         {
-          "name": "Encryption Routine",
+          "name": "Known Malware Hash (SHA-256)",
           "severity": "critical",
-          "count": 8
-        },
-        {
-          "name": "File System Access",
-          "severity": "low",
-          "count": 25
-        },
-        {
-          "name": "Process Injection",
-          "severity": "critical",
-          "count": 2
-        },
-        {
-          "name": "Persistence Mechanism",
-          "severity": "critical",
-          "count": 3
-        },
-        {
-          "name": "Anti-Debug Check",
-          "severity": "high",
-          "count": 5
-        },
-        {
-          "name": "Network Communication",
-          "severity": "medium",
-          "count": 4
+          "count": 1,
+          "category": "signature"
         }
       ],
       "virusTotal": {
-        "available": true,
-        "found": true,
-        "stats": {
-          "malicious": 58,
-          "suspicious": 4,
-          "harmless": 5,
-          "undetected": 3
-        },
-        "message": "File found in VirusTotal database"
+        "available": false
       },
-      "scannedAt": "2026-02-27T09:45:00.000Z"
+      "scannedAt": "2026-04-20T10:28:06.555Z"
     },
     {
-      "id": "demo-009",
-      "fileName": "family_photo.jpg",
-      "filePath": "/Pictures/family_photo.jpg",
-      "fileSize": 3456789,
-      "fileSizeFormatted": "3.3 MB",
+      "id": "bad6ade6-3602-4757-895b-53e90fe96d18",
+      "fileName": "Screenshot 2026-04-20 at 09.10.26.png",
+      "filePath": "/Users/macbookpro/Desktop/Screenshot 2026-04-20 at 09.10.26.png",
+      "fileSize": 309764,
+      "fileSizeFormatted": "302.5 KB",
       "fileType": {
-        "type": "JPEG Image",
+        "type": "PNG",
         "risk": "low"
-      },
-      "status": "clean",
-      "threatScore": 0,
-      "entropy": {
-        "entropy": 7.65,
-        "interpretation": "Some Compression"
-      },
-      "hashes": {
-        "sha256": "c5d6e1f2a3b4567890123456789012345678c9012345678c90123456",
-        "md5": "l13d8cd98f00b204e9800998ecf842fm",
-        "sha1": "li39a3ee5e6b4b0d3255bfef95601890afd80717"
-      },
-      "patterns": [],
-      "virusTotal": {
-        "available": true,
-        "found": false,
-        "stats": {
-          "malicious": 0,
-          "suspicious": 0,
-          "harmless": 70,
-          "undetected": 2
-        },
-        "message": "File not found in VirusTotal database"
-      },
-      "scannedAt": "2026-02-26T18:30:00.000Z"
-    },
-    {
-      "id": "demo-010",
-      "fileName": "system_optimizer.exe",
-      "filePath": "/Downloads/system_optimizer.exe",
-      "fileSize": 15728640,
-      "fileSizeFormatted": "15 MB",
-      "fileType": {
-        "type": "PE Executable",
-        "risk": "high"
       },
       "status": "potentially_unwanted",
-      "threatScore": 35,
+      "threatScore": 33,
       "entropy": {
-        "entropy": 5.89,
-        "interpretation": "Some Compression"
+        "entropy": 7.9721,
+        "interpretation": "Highly Packed/Encrypted",
+        "isPacked": true,
+        "isEncrypted": true
       },
       "hashes": {
-        "sha256": "d6e7f2a3b4c5678901234567890123456789d0123456789d012345678",
-        "md5": "m24d8cd98f00b204e9800998ecf842gn",
-        "sha1": "mj39a3ee5e6b4b0d3255bfef95601890afd80718"
+        "md5": "a5ab4d534233e912906040c606e68f57",
+        "sha1": "93349b41e0ef15a8943786d1e0292ed3fe0277b8",
+        "sha256": "614993409c89aacc8a6d28e91ccf7be28fe3f07cbb16eecf2f39f5c0eabe697b"
       },
       "patterns": [
         {
-          "name": "Registry Access",
-          "severity": "medium",
-          "count": 6
-        },
-        {
-          "name": "File System Access",
-          "severity": "low",
-          "count": 12
-        },
-        {
-          "name": "Network Communication",
-          "severity": "medium",
-          "count": 2
+          "name": "Screenshot Capture",
+          "severity": "high",
+          "count": 2,
+          "category": "spyware"
         }
       ],
       "virusTotal": {
-        "available": true,
-        "found": true,
-        "stats": {
-          "malicious": 2,
-          "suspicious": 4,
-          "harmless": 55,
-          "undetected": 9
-        },
-        "message": "File found in VirusTotal database"
+        "available": false
       },
-      "scannedAt": "2026-02-26T15:15:00.000Z"
+      "scannedAt": "2026-04-20T10:28:06.350Z"
+    },
+    {
+      "id": "f025b868-1665-4d99-9560-ad231b8cfe9d",
+      "fileName": ".localized",
+      "filePath": "/Users/macbookpro/Desktop/.localized",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:06.213Z"
+    },
+    {
+      "id": "b0b16e65-0ad0-41c6-8a9c-97f7a603f3b9",
+      "fileName": "sqlite3.dll",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/sqlite3.dll",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "DLL",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 75,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.841Z"
+    },
+    {
+      "id": "59a27853-95d6-4a1d-92a8-b1331796c916",
+      "fileName": "python37.dll",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/python37.dll",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "DLL",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 75,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.839Z"
+    },
+    {
+      "id": "62d64699-d112-47bf-8d68-d72b0ef38504",
+      "fileName": "python3.dll",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/python3.dll",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "DLL",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 75,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.838Z"
+    },
+    {
+      "id": "59a422f7-402f-4ca6-a60f-ec5b0c73cf85",
+      "fileName": "xwrt.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/xwrt.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.835Z"
+    },
+    {
+      "id": "e4da006e-96e5-4608-835b-78c64a13824a",
+      "fileName": "snapshot.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/snapshot.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.835Z"
+    },
+    {
+      "id": "5c25c802-a434-40ad-8e86-9e2e65496c0c",
+      "fileName": "padavan.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/padavan.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.835Z"
+    },
+    {
+      "id": "c3e5e67c-e62a-4a55-80ae-e9bdbf91e878",
+      "fileName": "openwrt.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/openwrt.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.834Z"
+    },
+    {
+      "id": "102d6f2c-377a-4c46-8926-cf2f9e3f37b2",
+      "fileName": "main.sh",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/main.sh",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Shell",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.833Z"
+    },
+    {
+      "id": "d37be8b8-0eb4-4dea-b80c-1e5dc4fe2525",
+      "fileName": "main.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/main.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.832Z"
+    },
+    {
+      "id": "d3bbd4bf-0786-429a-9c2e-35571525b075",
+      "fileName": "libssl-1_1.dll",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/libssl-1_1.dll",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "DLL",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 75,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.831Z"
+    },
+    {
+      "id": "ef1ae320-7262-4fc5-8acf-1272382d900d",
+      "fileName": "english.sh",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/data/english.sh",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Shell",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.757Z"
+    },
+    {
+      "id": "b7715f70-ff02-4bd4-9081-d25d248f0026",
+      "fileName": "base.en.lmo",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/data/base.en.lmo",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.756Z"
+    },
+    {
+      "id": "bd2fd60f-0b5c-4bab-ac14-ad0bed6fa280",
+      "fileName": "invoice_2026.pdf.exe",
+      "filePath": "/Users/macbookpro/Downloads/invoice_2026.pdf.exe",
+      "fileSize": 178,
+      "fileSizeFormatted": "178 B",
+      "fileType": {
+        "type": "PE Executable",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 100,
+      "entropy": {
+        "entropy": 5.1216,
+        "interpretation": "Normal",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "df5927f97dac750089ec428be9af5da3",
+        "sha1": "6c2d1b886462897d52b64c4cd74fe0b054612388",
+        "sha256": "1728c83fd23db58da86aceca02c24ec3a5ab27ca0e2025a6a8dea5b354024bd1"
+      },
+      "patterns": [
+        {
+          "name": "Remote Thread Creation",
+          "severity": "critical",
+          "count": 1,
+          "category": "injection"
+        },
+        {
+          "name": "Remote Memory Allocation",
+          "severity": "critical",
+          "count": 1,
+          "category": "injection"
+        },
+        {
+          "name": "Process Memory Write",
+          "severity": "critical",
+          "count": 1,
+          "category": "injection"
+        },
+        {
+          "name": "Shell Execution",
+          "severity": "high",
+          "count": 1,
+          "category": "execution"
+        },
+        {
+          "name": "File Download",
+          "severity": "high",
+          "count": 1,
+          "category": "network"
+        },
+        {
+          "name": "System Registry Access",
+          "severity": "medium",
+          "count": 1,
+          "category": "persistence"
+        },
+        {
+          "name": "Autorun Registry Key",
+          "severity": "critical",
+          "count": 1,
+          "category": "persistence"
+        },
+        {
+          "name": "Double Extension (Social Engineering)",
+          "severity": "critical",
+          "count": 1,
+          "category": "evasion"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.745Z"
+    },
+    {
+      "id": "7ae7a197-915f-4635-9e44-0c0f2f39c00b",
+      "fileName": ".localized",
+      "filePath": "/Users/macbookpro/Downloads/.localized",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:28:05.737Z"
+    },
+    {
+      "id": "bb7f0182-c502-41d9-a10e-6f94857ac220",
+      "fileName": "discord.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/utils/discord.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.327Z"
+    },
+    {
+      "id": "7b6d1425-a919-49e5-95b5-10ae6fbc19b4",
+      "fileName": "test_video_limit_reached.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/tests/test_video_limit_reached.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.325Z"
+    },
+    {
+      "id": "05d22d34-4d67-4bf5-b17d-dd68d34b528a",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/tests/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.323Z"
+    },
+    {
+      "id": "ab5192fc-97dd-431b-88df-7fb1d6134a89",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/hooks/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.312Z"
+    },
+    {
+      "id": "00e6d2e7-7734-4367-bb32-970c35f9eb19",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/dto/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.311Z"
+    },
+    {
+      "id": "56f59e00-acb1-4fd4-9d47-111e7c3e2799",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/downloaders/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.310Z"
+    },
+    {
+      "id": "0208e77a-2755-4b8f-b8f6-de14064281af",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/cmd/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.307Z"
+    },
+    {
+      "id": "076d5705-31f7-44f9-a2fb-1e407f9b011a",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/content/parsers/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.305Z"
+    },
+    {
+      "id": "51aeb9e2-47e5-4a17-a103-9e02cd0f1c48",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/charts/task-manager/images/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.298Z"
+    },
+    {
+      "id": "5774f8e6-b24b-4457-8373-effbac7a4e80",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/charts/frontend/images/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.296Z"
+    },
+    {
+      "id": "372e0443-ba63-4e1d-acc0-5663dd039b25",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/charts/backend/images/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.295Z"
+    },
+    {
+      "id": "2d2803b4-8073-4884-bac0-a9dcf62e26cc",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/charts/airflow/images/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.294Z"
+    },
+    {
+      "id": "4d6ba952-9b56-4690-80ef-065f96073654",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/charts/admin-backend/images/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.286Z"
+    },
+    {
+      "id": "f669143e-e352-4adc-9fd7-bcd1c978ca1c",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/charts/admin/images/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.285Z"
+    },
+    {
+      "id": "e521ca8e-ab13-4250-b0e7-84499f8c69a0",
+      "fileName": "jest.setup.ts",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/api/jest.setup.ts",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:14.238Z"
+    },
+    {
+      "id": "1e9b25bf-d5ca-494e-9a98-cb4a509440c2",
+      "fileName": ".gitkeep",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/airflow/plugins/.gitkeep",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.965Z"
+    },
+    {
+      "id": "cbaccac4-ea09-4793-bd8f-fc6d9f117d3f",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/bullshit-tube/airflow/dags/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.946Z"
+    },
+    {
+      "id": "0e6aa2c9-ae48-4a3f-8af8-74c58cb422de",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/TMCELL_profile/ui/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.870Z"
+    },
+    {
+      "id": "c64fd183-6a59-4ce1-ab70-f8f69f90e067",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/TMCELL_profile/tmcell/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.868Z"
+    },
+    {
+      "id": "5a15eb0d-9099-46e5-ac7e-4c75491f4eac",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/TMCELL_profile/auth/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.865Z"
+    },
+    {
+      "id": "95ee98d3-9e41-47a9-aca7-7ea7ee5d1074",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/projects/TMCELL_profile/accounts/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.864Z"
+    },
+    {
+      "id": "79948834-3723-477f-be38-d401b1b549ee",
+      "fileName": "free_game_crack.bat",
+      "filePath": "/Users/macbookpro/Desktop/free_game_crack.bat",
+      "fileSize": 208,
+      "fileSizeFormatted": "208 B",
+      "fileType": {
+        "type": "Batch",
+        "risk": "medium"
+      },
+      "status": "suspicious",
+      "threatScore": 62,
+      "entropy": {
+        "entropy": 4.8189,
+        "interpretation": "Normal",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "ebb6bbb689027b76a9d5b6410c555345",
+        "sha1": "3820efcc3591f382a7b2f840529727d8cf727764",
+        "sha256": "278bb276bb07568129837bcb7bde5db59f5e45d475e1cf1c94f32cf26a1cab9d"
+      },
+      "patterns": [
+        {
+          "name": "Command Prompt Reference",
+          "severity": "high",
+          "count": 1,
+          "category": "execution"
+        },
+        {
+          "name": "PowerShell Reference",
+          "severity": "high",
+          "count": 1,
+          "category": "execution"
+        },
+        {
+          "name": "Autorun Registry Key",
+          "severity": "critical",
+          "count": 1,
+          "category": "persistence"
+        },
+        {
+          "name": "Ransomware Reference",
+          "severity": "critical",
+          "count": 1,
+          "category": "ransomware"
+        },
+        {
+          "name": "Cryptocurrency Reference",
+          "severity": "medium",
+          "count": 1,
+          "category": "ransomware"
+        },
+        {
+          "name": "Tor Network Reference",
+          "severity": "high",
+          "count": 1,
+          "category": "c2"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.848Z"
+    },
+    {
+      "id": "1bc42c60-b72a-4c1e-a096-a0251ea19576",
+      "fileName": "errors.js",
+      "filePath": "/Users/macbookpro/Desktop/alpha_servers/aws_cli/src/utils/errors.js",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "JavaScript",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.699Z"
+    },
+    {
+      "id": "ea5ffc7b-702b-4265-8a46-957a36140e6e",
+      "fileName": "errors.js",
+      "filePath": "/Users/macbookpro/Desktop/alpha_servers/aws_bot/src/utils/errors.js",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "JavaScript",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.681Z"
+    },
+    {
+      "id": "cb9b40f7-38ca-45e7-85e1-8b73a0ac7aa9",
+      "fileName": "__init__.py",
+      "filePath": "/Users/macbookpro/Desktop/alpha_servers/alphapanel/cli/__init__.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.624Z"
+    },
+    {
+      "id": "7e5eecaa-ef96-4045-8536-978fb28ff594",
+      "fileName": "Screenshot 2026-04-20 at 09.10.26.png",
+      "filePath": "/Users/macbookpro/Desktop/Screenshot 2026-04-20 at 09.10.26.png",
+      "fileSize": 309764,
+      "fileSizeFormatted": "302.5 KB",
+      "fileType": {
+        "type": "PNG",
+        "risk": "low"
+      },
+      "status": "potentially_unwanted",
+      "threatScore": 33,
+      "entropy": {
+        "entropy": 7.9721,
+        "interpretation": "Highly Packed/Encrypted",
+        "isPacked": true,
+        "isEncrypted": true
+      },
+      "hashes": {
+        "md5": "a5ab4d534233e912906040c606e68f57",
+        "sha1": "93349b41e0ef15a8943786d1e0292ed3fe0277b8",
+        "sha256": "614993409c89aacc8a6d28e91ccf7be28fe3f07cbb16eecf2f39f5c0eabe697b"
+      },
+      "patterns": [
+        {
+          "name": "Screenshot Capture",
+          "severity": "high",
+          "count": 2,
+          "category": "spyware"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.450Z"
+    },
+    {
+      "id": "9267024e-b13b-4ec9-a6b4-c7d3a5bf052a",
+      "fileName": ".localized",
+      "filePath": "/Users/macbookpro/Desktop/.localized",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Unknown",
+        "risk": "low"
+      },
+      "status": "suspicious",
+      "threatScore": 65,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.344Z"
+    },
+    {
+      "id": "fa113804-59e9-4ded-a4d5-646d0687d8c3",
+      "fileName": "sqlite3.dll",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/sqlite3.dll",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "DLL",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 75,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.012Z"
+    },
+    {
+      "id": "529a4a09-9c5c-4aeb-b02c-66347a9fd9e3",
+      "fileName": "python37.dll",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/python37.dll",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "DLL",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 75,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.010Z"
+    },
+    {
+      "id": "c68f49bc-42ec-4d0d-8c4a-66d7efb90f01",
+      "fileName": "python3.dll",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/python3.dll",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "DLL",
+        "risk": "high"
+      },
+      "status": "malware",
+      "threatScore": 75,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.008Z"
+    },
+    {
+      "id": "1f55cac9-611c-4945-a7a4-bc674679d569",
+      "fileName": "xwrt.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/xwrt.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.006Z"
+    },
+    {
+      "id": "0501d423-d9c6-4b5f-b2ad-3c780f15d2de",
+      "fileName": "snapshot.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/snapshot.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.005Z"
+    },
+    {
+      "id": "4cbe1919-2758-4b9c-b3ed-ae8dcde93301",
+      "fileName": "padavan.py",
+      "filePath": "/Users/macbookpro/Desktop/()/mi4c_backup_and_flash_PCWRT/main/padavan.py",
+      "fileSize": 0,
+      "fileSizeFormatted": "0 B",
+      "fileType": {
+        "type": "Python",
+        "risk": "medium"
+      },
+      "status": "malware",
+      "threatScore": 70,
+      "entropy": {
+        "entropy": 0,
+        "interpretation": "Empty",
+        "isPacked": false,
+        "isEncrypted": false
+      },
+      "hashes": {
+        "md5": "d41d8cd98f00b204e9800998ecf8427e",
+        "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "patterns": [
+        {
+          "name": "Known Malware Hash (SHA-256)",
+          "severity": "critical",
+          "count": 1,
+          "category": "signature"
+        }
+      ],
+      "virusTotal": {
+        "available": false
+      },
+      "scannedAt": "2026-04-20T10:27:13.005Z"
     }
   ]
 }

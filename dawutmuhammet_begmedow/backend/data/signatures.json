@@ -1,0 +1,189 @@
+{
+  "lastUpdated": "2026-04-20T10:28:50.137Z",
+  "version": "1.13",
+  "knownHashes": [
+    "275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f",
+    "cc805d5fab1fd71a4ab352a9c533e65fb2d5b885518f4e565e68847223b8e6b8",
+    "24d004a104d4d54034dbcffc2a4b19a11f39008a575aa614ea04703480b1022c",
+    "7c465ea7bcccf4f94147add808f24629644be11c0ba4823f16e8c19e0090f3ff",
+    "f34d5f2d4577ed6d9ceec516c1f5a744117908f5e8b15ee95e1e1c6f61d31e40",
+    "031778604a0c4d52f99dede82f1af7a88e3f5b36fb0d4be5b12a4ef4575e2fc3",
+    "94a9a1c6d2b08ad65eb39b47de68bd8c0ea5dc8fdfffe72aea32cdbb70c31f02",
+    "a1874f714f7a1513e7c5c55224b3c6b3c3c5a4f5d8e9f0a1b2c3d4e5f6a7b8c9",
+    "b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2",
+    "c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3",
+    "d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4",
+    "e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5",
+    "f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6"
+  ],
+  "suspiciousStrings": [
+    {
+      "pattern": "cmd.exe",
+      "name": "Command Prompt Reference",
+      "severity": "high",
+      "category": "execution"
+    },
+    {
+      "pattern": "powershell",
+      "name": "PowerShell Reference",
+      "severity": "high",
+      "category": "execution"
+    },
+    {
+      "pattern": "WScript.Shell",
+      "name": "Windows Script Host",
+      "severity": "critical",
+      "category": "execution"
+    },
+    {
+      "pattern": "CreateRemoteThread",
+      "name": "Remote Thread Creation",
+      "severity": "critical",
+      "category": "injection"
+    },
+    {
+      "pattern": "VirtualAllocEx",
+      "name": "Remote Memory Allocation",
+      "severity": "critical",
+      "category": "injection"
+    },
+    {
+      "pattern": "WriteProcessMemory",
+      "name": "Process Memory Write",
+      "severity": "critical",
+      "category": "injection"
+    },
+    {
+      "pattern": "NtCreateThreadEx",
+      "name": "NT Thread Creation",
+      "severity": "critical",
+      "category": "injection"
+    },
+    {
+      "pattern": "ShellExecute",
+      "name": "Shell Execution",
+      "severity": "high",
+      "category": "execution"
+    },
+    {
+      "pattern": "URLDownloadToFile",
+      "name": "File Download",
+      "severity": "high",
+      "category": "network"
+    },
+    {
+      "pattern": "InternetOpenUrl",
+      "name": "Internet URL Access",
+      "severity": "high",
+      "category": "network"
+    },
+    {
+      "pattern": "RegSetValue",
+      "name": "Registry Modification",
+      "severity": "medium",
+      "category": "persistence"
+    },
+    {
+      "pattern": "HKEY_LOCAL_MACHINE",
+      "name": "System Registry Access",
+      "severity": "medium",
+      "category": "persistence"
+    },
+    {
+      "pattern": "CurrentVersion\\\\Run",
+      "name": "Autorun Registry Key",
+      "severity": "critical",
+      "category": "persistence"
+    },
+    {
+      "pattern": "schtasks",
+      "name": "Scheduled Task",
+      "severity": "high",
+      "category": "persistence"
+    },
+    {
+      "pattern": "fromCharCode",
+      "name": "String Obfuscation",
+      "severity": "high",
+      "category": "obfuscation"
+    },
+    {
+      "pattern": "atob(",
+      "name": "Base64 Decode",
+      "severity": "medium",
+      "category": "obfuscation"
+    },
+    {
+      "pattern": "socket.connect",
+      "name": "Network Socket Connect",
+      "severity": "medium",
+      "category": "network"
+    },
+    {
+      "pattern": "ransomware",
+      "name": "Ransomware Reference",
+      "severity": "critical",
+      "category": "ransomware"
+    },
+    {
+      "pattern": "ransom note",
+      "name": "Ransom Note Reference",
+      "severity": "critical",
+      "category": "ransomware"
+    },
+    {
+      "pattern": "your files have been encrypted",
+      "name": "Ransom Message",
+      "severity": "critical",
+      "category": "ransomware"
+    },
+    {
+      "pattern": "bitcoin wallet",
+      "name": "Bitcoin Wallet Reference",
+      "severity": "high",
+      "category": "ransomware"
+    },
+    {
+      "pattern": ".onion",
+      "name": "Tor Network Reference",
+      "severity": "high",
+      "category": "c2"
+    },
+    {
+      "pattern": "mimikatz",
+      "name": "Mimikatz Reference",
+      "severity": "critical",
+      "category": "credential_theft"
+    },
+    {
+      "pattern": "metasploit",
+      "name": "Metasploit Reference",
+      "severity": "critical",
+      "category": "exploit_framework"
+    },
+    {
+      "pattern": "cobaltstrike",
+      "name": "Cobalt Strike Reference",
+      "severity": "critical",
+      "category": "c2"
+    },
+    {
+      "pattern": "keylogger",
+      "name": "Keylogger Pattern",
+      "severity": "critical",
+      "category": "spyware"
+    },
+    {
+      "pattern": "GetClipboardData",
+      "name": "Clipboard Access",
+      "severity": "high",
+      "category": "spyware"
+    },
+    {
+      "pattern": "IsDebuggerPresent",
+      "name": "Anti-Debug Check",
+      "severity": "high",
+      "category": "evasion"
+    }
+  ]
+}

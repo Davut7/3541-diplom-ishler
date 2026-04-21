@@ -12,6 +12,7 @@
     </div>
 
     <template v-else>
+      <!-- Overview Stats from Real Data -->
       <div class="stats-overview">
         <div class="stat-box" v-for="(stat, i) in overviewStats" :key="i">
           <div class="stat-icon" :style="{ background: stat.color }">
@@ -23,129 +24,6 @@
           </div>
         </div>
       </div>
-
-      <div class="charts-grid">
-        <!-- Attack Success Rates Chart -->
-        <Card class="chart-card">
-          <template #content>
-            <h3><i class="pi pi-chart-bar"></i> {{ t.statistics.attackEffectiveness }}</h3>
-            <p class="chart-subtitle">{{ language === 'en' ? 'Based on research papers (2014-2026)' : 'Ylmy işler esasynda (2014-2026)' }}</p>
-            <div class="chart-container">
-              <Bar :data="attackChartData" :options="barChartOptions" />
-            </div>
-          </template>
-        </Card>
-
-        <!-- Defense Effectiveness Chart -->
-        <Card class="chart-card">
-          <template #content>
-            <h3><i class="pi pi-chart-pie"></i> {{ t.statistics.defenseEffectiveness }}</h3>
-            <p class="chart-subtitle">{{ language === 'en' ? 'Against various attack types' : 'Dürli hüjüm görnüşlerine garşy' }}</p>
-            <div class="chart-container">
-              <Doughnut :data="defenseChartData" :options="doughnutOptions" />
-            </div>
-          </template>
-        </Card>
-
-        <!-- Risk Distribution by Category -->
-        <Card class="chart-card">
-          <template #content>
-            <h3><i class="pi pi-exclamation-triangle"></i> {{ t.statistics.riskDistribution }}</h3>
-            <p class="chart-subtitle">{{ language === 'en' ? 'Impact on different domains' : 'Dürli ugurlara täsiri' }}</p>
-            <div class="chart-container">
-              <Radar :data="riskRadarData" :options="radarOptions" />
-            </div>
-          </template>
-        </Card>
-
-        <!-- Research Timeline -->
-        <Card class="chart-card">
-          <template #content>
-            <h3><i class="pi pi-chart-line"></i> {{ t.statistics.timeline }}</h3>
-            <p class="chart-subtitle">{{ language === 'en' ? 'Published research and real-world incidents' : 'Neşir edilen ylmy işler we hakyky wakalar' }}</p>
-            <div class="chart-container">
-              <Line :data="timelineData" :options="lineChartOptions" />
-            </div>
-          </template>
-        </Card>
-      </div>
-
-      <!-- Attack vs Defense Comparison Table -->
-      <Card class="comparison-card">
-        <template #content>
-          <h3><i class="pi pi-table"></i> {{ t.statistics.comparisonTable }}</h3>
-          <p class="table-subtitle">{{ language === 'en' ? 'Based on real research data' : 'Hakyky ylmy maglumatlara esaslanýar' }}</p>
-          <DataTable :value="comparisonData" stripedRows class="comparison-table"
-                     :paginator="true" :rows="6" responsiveLayout="scroll">
-            <Column field="attack" :header="t.statistics.attack">
-              <template #body="{ data }">
-                <div class="attack-cell">
-                  <span class="attack-name">{{ data.attack }}</span>
-                  <span class="attack-year">{{ data.year }}</span>
-                </div>
-              </template>
-            </Column>
-            <Column field="category" :header="language === 'en' ? 'Category' : 'Kategoriýa'">
-              <template #body="{ data }">
-                <Tag :value="formatCategory(data.category)" :severity="getCategorySeverity(data.category)" />
-              </template>
-            </Column>
-            <Column field="successRate" :header="language === 'en' ? 'Success Rate' : 'Üstünlik %'">
-              <template #body="{ data }">
-                <div class="rate-cell">
-                  <ProgressBar :value="data.successRate" :showValue="false" style="height: 8px; width: 80px" />
-                  <span>{{ data.successRate }}%</span>
-                </div>
-              </template>
-            </Column>
-            <Column field="risk" :header="t.statistics.riskLevel">
-              <template #body="{ data }">
-                <Tag :severity="getRiskSeverity(data.risk)" :value="formatRisk(data.risk)" />
-              </template>
-            </Column>
-            <Column field="bestDefense" :header="t.statistics.bestDefense"></Column>
-            <Column field="effectiveness" :header="t.statistics.effectiveness">
-              <template #body="{ data }">
-                <div class="effectiveness-cell">
-                  <ProgressBar :value="data.effectiveness" :showValue="false"
-                               :style="{ height: '8px', width: '80px' }"
-                               :class="getEffectivenessClass(data.effectiveness)" />
-                  <span>{{ data.effectiveness }}%</span>
-                </div>
-              </template>
-            </Column>
-          </DataTable>
-        </template>
-      </Card>
-
-      <!-- Industry Impact Section -->
-      <Card class="industry-card">
-        <template #content>
-          <h3><i class="pi pi-building"></i> {{ language === 'en' ? 'Industry Impact Analysis' : 'Pudak täsiri derňewi' }}</h3>
-          <div class="industry-grid">
-            <div class="industry-item" v-for="(data, industry) in industryData" :key="industry">
-              <div class="industry-header">
-                <i :class="getIndustryIcon(industry)"></i>
-                <span>{{ formatIndustry(industry) }}</span>
-              </div>
-              <div class="industry-stats">
-                <div class="industry-stat">
-                  <label>{{ language === 'en' ? 'Attack Risk' : 'Hüjüm howpy' }}</label>
-                  <ProgressBar :value="data.attackRisk" :showValue="true" style="height: 12px" />
-                </div>
-                <div class="industry-stat">
-                  <label>{{ language === 'en' ? 'AI Adoption' : 'AI ulanma' }}</label>
-                  <ProgressBar :value="data.adoption" :showValue="true" style="height: 12px" class="adoption-bar" />
-                </div>
-                <div class="industry-stat incidents">
-                  <span class="incident-count">{{ data.incidents2023 }}</span>
-                  <span class="incident-label">{{ language === 'en' ? 'Incidents (2023)' : 'Wakalar (2023)' }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </Card>
 
       <!-- Real Simulation Statistics -->
       <Card class="simulations-card" v-if="simulationSummary.totalSimulations > 0">
@@ -241,44 +119,164 @@
         </template>
       </Card>
 
-      <!-- Key Insights -->
-      <Card class="insights-card">
+      <!-- WAF Protection Analytics -->
+      <Card class="waf-analytics-card">
         <template #content>
-          <h3><i class="pi pi-lightbulb"></i> {{ t.statistics.keyInsights }}</h3>
-          <div class="insights-grid">
-            <div class="insight-item" v-for="(insight, i) in insights" :key="i">
-              <div class="insight-icon" :style="{ background: insight.color }">
-                <i :class="insight.icon"></i>
+          <h3><i class="pi pi-shield"></i> {{ language === 'en' ? 'WAF Protection Analytics' : 'WAF Gorag Analitikasy' }}</h3>
+          <p class="table-subtitle">{{ language === 'en' ? 'Real-time Web Application Firewall statistics' : 'Hakyky wagtda Web Programma Firewall statistikasy' }}</p>
+
+          <!-- WAF Summary Cards -->
+          <div class="waf-summary">
+            <div class="waf-stat-box">
+              <div class="waf-stat-icon threats">
+                <i class="pi pi-exclamation-triangle"></i>
               </div>
-              <div class="insight-content">
-                <h4>{{ insight.title }}</h4>
-                <p>{{ insight.desc }}</p>
-                <span v-if="insight.source" class="insight-source">{{ insight.source }}</span>
+              <div class="waf-stat-content">
+                <span class="waf-stat-value">{{ wafStats.totalThreats }}</span>
+                <span class="waf-stat-label">{{ language === 'en' ? 'Total Threats' : 'Jemi howplar' }}</span>
               </div>
             </div>
+            <div class="waf-stat-box">
+              <div class="waf-stat-icon blocked">
+                <i class="pi pi-ban"></i>
+              </div>
+              <div class="waf-stat-content">
+                <span class="waf-stat-value">{{ wafStats.blocked }}</span>
+                <span class="waf-stat-label">{{ language === 'en' ? 'Blocked' : 'Bloklanan' }}</span>
+              </div>
+            </div>
+            <div class="waf-stat-box">
+              <div class="waf-stat-icon alerted">
+                <i class="pi pi-bell"></i>
+              </div>
+              <div class="waf-stat-content">
+                <span class="waf-stat-value">{{ wafStats.alerted }}</span>
+                <span class="waf-stat-label">{{ language === 'en' ? 'Alerted' : 'Duýdurylan' }}</span>
+              </div>
+            </div>
+            <div class="waf-stat-box">
+              <div class="waf-stat-icon rate">
+                <i class="pi pi-percentage"></i>
+              </div>
+              <div class="waf-stat-content">
+                <span class="waf-stat-value">{{ wafStats.blockRate }}%</span>
+                <span class="waf-stat-label">{{ language === 'en' ? 'Block Rate' : 'Bloklama %' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- WAF Threats by Type -->
+          <div v-if="wafStats.byType && wafStats.byType.length > 0" class="waf-threats-section">
+            <h4 style="margin: 1.5rem 0 1rem;">{{ language === 'en' ? 'Threats by Type' : 'Görnüşi boýunça howplar' }}</h4>
+            <DataTable :value="wafStats.byType" stripedRows responsiveLayout="scroll">
+              <Column field="type" :header="language === 'en' ? 'Attack Type' : 'Hüjüm görnüşi'">
+                <template #body="{ data }">
+                  <Tag :value="formatWafType(data.type)" :severity="getWafTypeSeverity(data.type)" />
+                </template>
+              </Column>
+              <Column field="count" :header="language === 'en' ? 'Detected' : 'Tapyldy'"></Column>
+              <Column field="blocked" :header="language === 'en' ? 'Blocked' : 'Bloklanan'"></Column>
+              <Column field="avgRisk" :header="language === 'en' ? 'Avg Risk Score' : 'Ortaça howp baly'">
+                <template #body="{ data }">
+                  <div class="rate-cell">
+                    <ProgressBar :value="data.avgRisk" :showValue="false" style="height: 8px; width: 80px"
+                                 :class="data.avgRisk >= 85 ? 'risk-critical' : data.avgRisk >= 70 ? 'risk-high' : 'risk-medium'" />
+                    <span>{{ data.avgRisk }}</span>
+                  </div>
+                </template>
+              </Column>
+            </DataTable>
+          </div>
+
+          <!-- Recent WAF Threats -->
+          <div v-if="wafStats.recentThreats && wafStats.recentThreats.length > 0" class="waf-threats-section">
+            <h4 style="margin: 1.5rem 0 1rem;">{{ language === 'en' ? 'Recent Threats' : 'Soňky howplar' }}</h4>
+            <DataTable :value="wafStats.recentThreats" stripedRows responsiveLayout="scroll" :rows="5" :paginator="wafStats.recentThreats.length > 5">
+              <Column field="timestamp" :header="language === 'en' ? 'Time' : 'Wagt'">
+                <template #body="{ data }">
+                  {{ formatTimestamp(data.timestamp) }}
+                </template>
+              </Column>
+              <Column field="ip" header="IP"></Column>
+              <Column field="attackType" :header="language === 'en' ? 'Type' : 'Görnüşi'">
+                <template #body="{ data }">
+                  <Tag :value="formatWafType(data.attackType)" :severity="getWafTypeSeverity(data.attackType)" />
+                </template>
+              </Column>
+              <Column field="path" :header="language === 'en' ? 'Target' : 'Nyşan'">
+                <template #body="{ data }">
+                  <code class="path-code">{{ data.method }} {{ data.path }}</code>
+                </template>
+              </Column>
+              <Column field="action" :header="language === 'en' ? 'Action' : 'Hereket'">
+                <template #body="{ data }">
+                  <Tag :value="data.action === 'block' ? (language === 'en' ? 'BLOCKED' : 'BLOKLANAN') : (language === 'en' ? 'ALERT' : 'DUÝDURYŞ')"
+                       :severity="data.action === 'block' ? 'danger' : 'warn'" />
+                </template>
+              </Column>
+              <Column field="riskScore" :header="language === 'en' ? 'Risk' : 'Howp'">
+                <template #body="{ data }">
+                  <span :class="['risk-badge', data.riskScore >= 85 ? 'critical' : data.riskScore >= 70 ? 'high' : 'medium']">
+                    {{ data.riskScore }}
+                  </span>
+                </template>
+              </Column>
+            </DataTable>
+          </div>
+
+          <!-- Blocked IPs -->
+          <div v-if="wafStats.blockedIPs && wafStats.blockedIPs.length > 0" class="waf-threats-section">
+            <h4 style="margin: 1.5rem 0 1rem;">{{ language === 'en' ? 'Currently Blocked IPs' : 'Häzir bloklanan IP-ler' }}</h4>
+            <DataTable :value="wafStats.blockedIPs" stripedRows responsiveLayout="scroll">
+              <Column field="ip" header="IP"></Column>
+              <Column field="violations" :header="language === 'en' ? 'Violations' : 'Bozulmalar'"></Column>
+              <Column field="blockedUntil" :header="language === 'en' ? 'Blocked Until' : 'Bloklanan wagty'">
+                <template #body="{ data }">
+                  {{ formatTimestamp(data.blockedUntil) }}
+                </template>
+              </Column>
+            </DataTable>
+          </div>
+
+          <!-- No threats message -->
+          <div v-if="wafStats.totalThreats === 0" class="waf-no-threats">
+            <i class="pi pi-check-circle"></i>
+            <p>{{ language === 'en' ? 'No threats detected yet. WAF is actively monitoring all requests.' : 'Heniz howp tapylmady. WAF ähli soraglary işjeň gözegçilik edýär.' }}</p>
           </div>
         </template>
       </Card>
 
-      <!-- Research References -->
-      <Card class="references-card">
-        <template #content>
-          <h3><i class="pi pi-book"></i> {{ language === 'en' ? 'Key Research Papers' : 'Esasy ylmy işler' }}</h3>
-          <div class="references-list">
-            <div class="reference-item" v-for="(citations, paper) in researchCitations" :key="paper">
-              <span class="paper-name">{{ formatPaperName(paper) }}</span>
-              <span class="citation-count">{{ citations.toLocaleString() }} {{ language === 'en' ? 'citations' : 'sitata' }}</span>
+      <!-- Simulation Charts (from real data) -->
+      <div class="charts-grid" v-if="attackStats.length > 0">
+        <!-- Attack Success Rate from Simulations -->
+        <Card class="chart-card">
+          <template #content>
+            <h3><i class="pi pi-chart-bar"></i> {{ language === 'en' ? 'Simulation Results by Attack' : 'Hüjüm boýunça simulýasiýa netijeleri' }}</h3>
+            <p class="chart-subtitle">{{ language === 'en' ? 'Real data from your experiments' : 'Siziň synag maglumatlaryňyz' }}</p>
+            <div class="chart-container">
+              <Bar :data="simAttackChartData" :options="barChartOptions" />
             </div>
-          </div>
-        </template>
-      </Card>
+          </template>
+        </Card>
+
+        <!-- Detection vs Success -->
+        <Card class="chart-card">
+          <template #content>
+            <h3><i class="pi pi-chart-bar"></i> {{ language === 'en' ? 'Detection vs Success Rate' : 'Tapylma we Üstünlik deňeşdirmesi' }}</h3>
+            <p class="chart-subtitle">{{ language === 'en' ? 'How well defenses detect attacks' : 'Goraglar hüjümleri nähili gowy tapýar' }}</p>
+            <div class="chart-container">
+              <Bar :data="detectionVsSuccessData" :options="groupedBarOptions" />
+            </div>
+          </template>
+        </Card>
+      </div>
     </template>
   </div>
 </template>
 
 <script>
 import { ref, computed, onMounted } from 'vue'
-import { Bar, Doughnut, Radar, Line } from 'vue-chartjs'
+import { Bar } from 'vue-chartjs'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -286,12 +284,7 @@ import {
   BarElement,
   Title,
   Tooltip,
-  Legend,
-  ArcElement,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler
+  Legend
 } from 'chart.js'
 
 ChartJS.register(
@@ -300,41 +293,24 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend,
-  ArcElement,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler
+  Legend
 )
 
 export default {
   name: 'StatisticsView',
-  components: { Bar, Doughnut, Radar, Line },
+  components: { Bar },
   props: { t: Object, language: String },
   setup(props) {
     const loading = ref(true)
-    const attacks = ref([])
-    const defenses = ref([])
     const statistics = ref(null)
-    const comparison = ref([])
 
-    const API_URL = 'http://localhost:4006/api'
+    const API_URL = 'http://localhost:7061/api'
 
-    // Fetch data from backend
+    // Fetch real data from backend
     onMounted(async () => {
       try {
-        const [attacksRes, defensesRes, statsRes, compareRes] = await Promise.all([
-          fetch(`${API_URL}/attacks`).then(r => r.json()),
-          fetch(`${API_URL}/defenses`).then(r => r.json()),
-          fetch(`${API_URL}/statistics`).then(r => r.json()),
-          fetch(`${API_URL}/compare`).then(r => r.json())
-        ])
-
-        attacks.value = attacksRes.attacks || []
-        defenses.value = defensesRes.defenses || []
+        const statsRes = await fetch(`${API_URL}/statistics`).then(r => r.json())
         statistics.value = statsRes.statistics || null
-        comparison.value = compareRes.comparison || []
       } catch (err) {
         console.error('Failed to fetch data:', err)
       } finally {
@@ -343,109 +319,69 @@ export default {
     })
 
     const overviewStats = computed(() => {
-      const criticalCount = attacks.value.filter(a => a.riskLevel === 'critical').length
-      const avgEffectiveness = defenses.value.length
-        ? Math.round(defenses.value.reduce((sum, d) => sum + d.effectiveness, 0) / defenses.value.length)
-        : 0
+      const summary = statistics.value?.summary || {}
+      const waf = statistics.value?.waf || {}
+      const totalSims = summary.totalSimulations || 0
+      const successRate = parseFloat(summary.overallSuccessRate) || 0
+      const detectionRate = parseFloat(summary.overallDetectionRate) || 0
+      const wafThreats = waf.totalThreats || 0
 
       return [
-        { icon: 'pi pi-bolt', value: attacks.value.length, label: props.t.statistics.totalAttacks, color: '#ef4444' },
-        { icon: 'pi pi-shield', value: defenses.value.length, label: props.t.statistics.totalDefenses, color: '#10b981' },
-        { icon: 'pi pi-percentage', value: `${avgEffectiveness}%`, label: props.t.statistics.avgEffectiveness, color: '#8b5cf6' },
-        { icon: 'pi pi-exclamation-circle', value: criticalCount, label: props.t.statistics.criticalRisks, color: '#f59e0b' }
+        { icon: 'pi pi-play', value: totalSims, label: props.language === 'en' ? 'Simulations Run' : 'Geçirilen simulýasiýalar', color: '#6366f1' },
+        { icon: 'pi pi-bolt', value: `${successRate}%`, label: props.language === 'en' ? 'Attack Success Rate' : 'Hüjüm üstünligi', color: '#ef4444' },
+        { icon: 'pi pi-eye', value: `${detectionRate}%`, label: props.language === 'en' ? 'Detection Rate' : 'Tapylma derejesi', color: '#10b981' },
+        { icon: 'pi pi-shield', value: wafThreats, label: props.language === 'en' ? 'WAF Threats Caught' : 'WAF tutulan howplar', color: '#f59e0b' }
       ]
     })
 
-    const attackChartData = computed(() => ({
-      labels: attacks.value.map(a => props.language === 'en' ? a.name.split(' ')[0] : (a.nameTk?.split(' ')[0] || a.name.split(' ')[0])),
-      datasets: [{
-        label: props.language === 'en' ? 'Success Rate (%)' : 'Üstünlik Derejesi (%)',
-        data: attacks.value.map(a => a.successRate),
-        backgroundColor: [
-          '#ef4444', '#f59e0b', '#8b5cf6', '#dc2626',
-          '#6366f1', '#0ea5e9', '#10b981', '#f97316', '#ec4899'
-        ],
-        borderRadius: 8
-      }]
-    }))
-
-    const defenseChartData = computed(() => ({
-      labels: defenses.value.map(d => props.language === 'en'
-        ? d.name.split(' ').slice(0, 2).join(' ')
-        : (d.nameTk?.split(' ').slice(0, 2).join(' ') || d.name.split(' ').slice(0, 2).join(' '))),
-      datasets: [{
-        data: defenses.value.map(d => d.effectiveness),
-        backgroundColor: ['#10b981', '#0ea5e9', '#8b5cf6', '#f59e0b', '#6366f1', '#ef4444', '#ec4899'],
-        borderWidth: 0
-      }]
-    }))
-
-    const industryData = computed(() => statistics.value?.industryImpact || {})
-
-    const riskRadarData = computed(() => {
-      const industry = statistics.value?.industryImpact || {}
+    // Charts based on real simulation data
+    const simAttackChartData = computed(() => {
+      const byAttack = statistics.value?.byAttack || []
       return {
-        labels: props.language === 'en'
-          ? ['Healthcare', 'Finance', 'Autonomous Systems', 'Security']
-          : ['Saglygy goraýyş', 'Maliýe', 'Awtonom ulgamlar', 'Howpsuzlyk'],
+        labels: byAttack.map(s => s.attackType.toUpperCase()),
         datasets: [{
-          label: props.language === 'en' ? 'Attack Risk' : 'Hüjüm howpy',
-          data: [
-            industry.healthcare?.attackRisk || 0,
-            industry.finance?.attackRisk || 0,
-            industry.autonomous?.attackRisk || 0,
-            industry.security?.attackRisk || 0
+          label: props.language === 'en' ? 'Success Rate (%)' : 'Üstünlik (%)',
+          data: byAttack.map(s => parseFloat(s.successRate) || 0),
+          backgroundColor: [
+            '#ef4444', '#f59e0b', '#8b5cf6', '#dc2626',
+            '#6366f1', '#0ea5e9', '#10b981', '#f97316', '#ec4899'
           ],
-          backgroundColor: 'rgba(239, 68, 68, 0.2)',
-          borderColor: '#ef4444',
-          pointBackgroundColor: '#ef4444'
-        }, {
-          label: props.language === 'en' ? 'AI Adoption' : 'AI ulanma',
-          data: [
-            industry.healthcare?.adoption || 0,
-            industry.finance?.adoption || 0,
-            industry.autonomous?.adoption || 0,
-            industry.security?.adoption || 0
-          ],
-          backgroundColor: 'rgba(16, 185, 129, 0.2)',
-          borderColor: '#10b981',
-          pointBackgroundColor: '#10b981'
+          borderRadius: 8
         }]
       }
     })
 
-    const timelineData = computed(() => {
-      const trends = statistics.value?.attackTrends || { years: [], publishedAttacks: [], publishedDefenses: [], realWorldIncidents: [] }
+    const detectionVsSuccessData = computed(() => {
+      const byAttack = statistics.value?.byAttack || []
       return {
-        labels: trends.years.map(String),
+        labels: byAttack.map(s => s.attackType.toUpperCase()),
         datasets: [
           {
-            label: props.language === 'en' ? 'Published Attacks' : 'Neşir edilen hüjümler',
-            data: trends.publishedAttacks,
-            borderColor: '#ef4444',
-            backgroundColor: 'rgba(239, 68, 68, 0.1)',
-            fill: true,
-            tension: 0.4
+            label: props.language === 'en' ? 'Attack Success %' : 'Hüjüm üstünligi %',
+            data: byAttack.map(s => parseFloat(s.successRate) || 0),
+            backgroundColor: 'rgba(239, 68, 68, 0.7)',
+            borderRadius: 6
           },
           {
-            label: props.language === 'en' ? 'Defense Methods' : 'Gorag usullary',
-            data: trends.publishedDefenses,
-            borderColor: '#10b981',
-            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-            fill: true,
-            tension: 0.4
-          },
-          {
-            label: props.language === 'en' ? 'Real-World Incidents' : 'Hakyky wakalar',
-            data: trends.realWorldIncidents,
-            borderColor: '#f59e0b',
-            backgroundColor: 'rgba(245, 158, 11, 0.1)',
-            fill: true,
-            tension: 0.4
+            label: props.language === 'en' ? 'Detection Rate %' : 'Tapylma derejesi %',
+            data: byAttack.map(s => parseFloat(s.detectionRate) || 0),
+            backgroundColor: 'rgba(16, 185, 129, 0.7)',
+            borderRadius: 6
           }
         ]
       }
     })
+
+    const groupedBarOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top' }
+      },
+      scales: {
+        y: { beginAtZero: true, max: 100 }
+      }
+    }
 
     const barChartOptions = {
       responsive: true,
@@ -454,7 +390,7 @@ export default {
         legend: { display: false },
         tooltip: {
           callbacks: {
-            label: (ctx) => `${ctx.parsed.y}% success rate`
+            label: (ctx) => `${ctx.parsed.y}%`
           }
         }
       },
@@ -463,43 +399,43 @@ export default {
       }
     }
 
-    const doughnutOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { position: 'right' }
+    // WAF statistics
+    const wafStats = computed(() => {
+      const waf = statistics.value?.waf || {}
+      return {
+        totalThreats: waf.totalThreats || 0,
+        blocked: waf.blocked || 0,
+        alerted: waf.alerted || 0,
+        blockRate: waf.blockRate || 0,
+        byType: waf.byType || [],
+        recentThreats: waf.recentThreats || [],
+        blockedIPs: waf.blockedIPs || []
       }
-    }
-
-    const radarOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        r: { beginAtZero: true, max: 100 }
-      }
-    }
-
-    const lineChartOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { position: 'top' }
-      },
-      scales: {
-        y: { beginAtZero: true }
-      }
-    }
-
-    const comparisonData = computed(() => {
-      return comparison.value.map(c => ({
-        ...c,
-        attack: props.language === 'en' ? c.attack : (attacks.value.find(a => a.name === c.attack)?.nameTk || c.attack),
-        risk: c.riskLevel,
-        year: attacks.value.find(a => a.name === c.attack)?.year || ''
-      }))
     })
 
-    const researchCitations = computed(() => statistics.value?.researchMetrics?.citationsLeadingPapers || {})
+    const formatWafType = (type) => {
+      const map = {
+        sql_injection: 'SQL Injection',
+        xss: 'XSS',
+        path_traversal: 'Path Traversal',
+        command_injection: 'CMD Injection',
+        bot_signatures: 'Bot/Scanner',
+        blocked_ip: 'Blocked IP'
+      }
+      return map[type] || type
+    }
+
+    const getWafTypeSeverity = (type) => {
+      const map = {
+        sql_injection: 'danger',
+        xss: 'danger',
+        command_injection: 'danger',
+        path_traversal: 'warn',
+        bot_signatures: 'info',
+        blocked_ip: 'danger'
+      }
+      return map[type] || 'info'
+    }
 
     // Real simulation data from database
     const simulationSummary = computed(() => {
@@ -544,134 +480,19 @@ export default {
       return name.replace(/([A-Z])/g, ' $1').trim()
     }
 
-    const insights = computed(() => [
-      {
-        icon: 'pi pi-exclamation-triangle',
-        title: props.language === 'en' ? 'C&W Attack is Most Powerful' : 'C&W Hüjümi Iň Güýçli',
-        desc: props.language === 'en'
-          ? 'Carlini & Wagner attack achieves 100% success rate even against defensive distillation.'
-          : 'Carlini & Wagner hüjümi gorag distilýasiýasyna garşy-da 100% üstünlik gazanýar.',
-        color: '#ef4444',
-        source: 'IEEE S&P 2017'
-      },
-      {
-        icon: 'pi pi-shield',
-        title: props.language === 'en' ? 'Differential Privacy Most Effective' : 'Diferensial Gizlinlik Iň Netijeli',
-        desc: props.language === 'en'
-          ? 'Provides 90% protection with mathematical guarantees against privacy attacks.'
-          : 'Gizlinlik hüjümlerine garşy matematiki kepillikler bilen 90% gorag berýär.',
-        color: '#10b981',
-        source: 'CCS 2016'
-      },
-      {
-        icon: 'pi pi-chart-line',
-        title: props.language === 'en' ? 'Attacks Growing Exponentially' : 'Hüjümler eksponensial ösýär',
-        desc: props.language === 'en'
-          ? 'Real-world AI security incidents increased from 0 in 2014 to 456 in 2026.'
-          : 'Hakyky AI howpsuzlyk wakalary 2014-de 0-dan 2026-de 456-a ýetdi.',
-        color: '#f59e0b',
-        source: 'MITRE Atlas 2026'
-      },
-      {
-        icon: 'pi pi-sync',
-        title: props.language === 'en' ? 'Defense Arms Race' : 'Gorag ýaryşy',
-        desc: props.language === 'en'
-          ? 'For every new attack, 0.8 new defenses are published, creating an ongoing security arms race.'
-          : 'Her täze hüjüm üçin 0.8 täze gorag neşir edilýär, ýaraglanma ýaryşyny döredýär.',
-        color: '#8b5cf6',
-        source: 'arXiv 2026'
-      }
-    ])
-
-    const getRiskSeverity = (risk) => {
-      if (risk === 'critical') return 'danger'
-      if (risk === 'high') return 'warn'
-      if (risk === 'medium') return 'info'
-      return 'success'
-    }
-
-    const formatRisk = (risk) => {
-      if (props.language === 'en') {
-        return risk.charAt(0).toUpperCase() + risk.slice(1)
-      }
-      const map = { critical: 'Howply', high: 'Ýokary', medium: 'Orta', low: 'Pes' }
-      return map[risk] || risk
-    }
-
-    const formatCategory = (cat) => {
-      if (props.language === 'en') {
-        return cat.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())
-      }
-      const map = {
-        adversarial: 'Garşydaş',
-        privacy: 'Gizlinlik',
-        training: 'Türgenleşik',
-        intellectual_property: 'Intellektual eýeçilik',
-        gan_specific: 'GAN-a degişli'
-      }
-      return map[cat] || cat
-    }
-
-    const getCategorySeverity = (cat) => {
-      const map = { adversarial: 'danger', privacy: 'warn', training: 'danger', intellectual_property: 'info', gan_specific: 'secondary' }
-      return map[cat] || 'info'
-    }
-
-    const getEffectivenessClass = (value) => {
-      if (value >= 80) return 'effectiveness-high'
-      if (value >= 60) return 'effectiveness-medium'
-      return 'effectiveness-low'
-    }
-
-    const getIndustryIcon = (industry) => {
-      const map = { healthcare: 'pi pi-heart', finance: 'pi pi-dollar', autonomous: 'pi pi-car', security: 'pi pi-lock' }
-      return map[industry] || 'pi pi-building'
-    }
-
-    const formatIndustry = (industry) => {
-      if (props.language === 'en') {
-        return industry.charAt(0).toUpperCase() + industry.slice(1)
-      }
-      const map = { healthcare: 'Saglygy goraýyş', finance: 'Maliýe', autonomous: 'Awtonom ulgamlar', security: 'Howpsuzlyk' }
-      return map[industry] || industry
-    }
-
-    const formatPaperName = (paper) => {
-      const map = {
-        'Goodfellow2014': 'Goodfellow et al. (2014) - Adversarial Examples',
-        'Madry2017': 'Madry et al. (2017) - PGD Attack',
-        'Carlini2017': 'Carlini & Wagner (2017) - C&W Attack',
-        'Szegedy2013': 'Szegedy et al. (2013) - Intriguing Properties'
-      }
-      return map[paper] || paper
-    }
-
     return {
       loading,
       overviewStats,
-      attackChartData,
-      defenseChartData,
-      riskRadarData,
-      timelineData,
+      simAttackChartData,
+      detectionVsSuccessData,
       barChartOptions,
-      doughnutOptions,
-      radarOptions,
-      lineChartOptions,
-      comparisonData,
-      industryData,
-      researchCitations,
-      insights,
+      groupedBarOptions,
       simulationSummary,
       attackStats,
       recentSimulations,
-      getRiskSeverity,
-      formatRisk,
-      formatCategory,
-      getCategorySeverity,
-      getEffectivenessClass,
-      getIndustryIcon,
-      formatIndustry,
-      formatPaperName,
+      wafStats,
+      formatWafType,
+      getWafTypeSeverity,
       formatTimestamp,
       formatDefenseName
     }
@@ -751,161 +572,15 @@ export default {
 
 .chart-container { height: 280px; }
 
-.comparison-card, .insights-card, .industry-card, .references-card { margin-bottom: 1.5rem; }
-
-.comparison-card h3, .insights-card h3, .industry-card h3, .references-card h3 {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.comparison-card h3 i, .insights-card h3 i, .industry-card h3 i, .references-card h3 i {
-  color: var(--primary-color);
-}
-
-.attack-cell {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.attack-name { font-weight: 600; }
-.attack-year { font-size: 0.75rem; color: var(--text-secondary); }
-
-.rate-cell, .effectiveness-cell {
+.rate-cell {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-}
-
-.effectiveness-high :deep(.p-progressbar-value) { background: #10b981; }
-.effectiveness-medium :deep(.p-progressbar-value) { background: #f59e0b; }
-.effectiveness-low :deep(.p-progressbar-value) { background: #ef4444; }
-
-.industry-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-.industry-item {
-  background: var(--bg-secondary);
-  border-radius: 12px;
-  padding: 1.25rem;
-}
-
-.industry-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.industry-header i {
-  font-size: 1.25rem;
-  color: var(--primary-color);
-}
-
-.industry-stat {
-  margin-bottom: 0.75rem;
-}
-
-.industry-stat label {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin-bottom: 0.25rem;
-}
-
-.industry-stat.incidents {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border-color);
-}
-
-.incident-count {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #ef4444;
-}
-
-.incident-label {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-}
-
-.adoption-bar :deep(.p-progressbar-value) { background: #10b981; }
-
-.insights-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
-
-.insight-item {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  background: var(--bg-secondary);
-  border-radius: 12px;
-}
-
-.insight-icon {
-  width: 45px;
-  height: 45px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.insight-icon i { color: white; font-size: 1.25rem; }
-
-.insight-content h4 { margin-bottom: 0.25rem; font-size: 0.95rem; }
-.insight-content p { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 0.5rem; }
-.insight-source {
-  font-size: 0.7rem;
-  color: var(--primary-color);
-  background: rgba(var(--primary-color-rgb), 0.1);
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-}
-
-.references-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.reference-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  background: var(--bg-secondary);
-  border-radius: 8px;
-}
-
-.paper-name { font-weight: 500; }
-.citation-count {
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  background: var(--bg-card);
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
 }
 
 @media (max-width: 1024px) {
   .stats-overview { grid-template-columns: repeat(2, 1fr); }
   .charts-grid { grid-template-columns: 1fr; }
-  .insights-grid { grid-template-columns: 1fr; }
-  .industry-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -916,15 +591,11 @@ export default {
   .stat-icon i { font-size: 1.2rem; }
   .chart-container { height: 220px; }
   .chart-card h3 { font-size: 0.9rem; }
-  .comparison-card :deep(.p-datatable) { overflow-x: auto; }
   .simulations-card :deep(.p-datatable) { overflow-x: auto; }
-  .reference-item { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
-  .insight-item { flex-direction: column; text-align: center; align-items: center; }
 }
 
 @media (max-width: 600px) {
   .stats-overview { grid-template-columns: 1fr; }
-  .industry-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
@@ -1010,5 +681,93 @@ export default {
 @media (max-width: 768px) {
   .simulation-summary { grid-template-columns: 1fr; }
   .summary-box { padding: 1rem; }
+}
+
+/* WAF Analytics Styles */
+.waf-analytics-card { margin-bottom: 1.5rem; }
+.waf-analytics-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+.waf-analytics-card h3 i { color: #10b981; }
+
+.waf-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.waf-stat-box {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.waf-stat-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.waf-stat-icon i { color: white; font-size: 1.2rem; }
+.waf-stat-icon.threats { background: #f59e0b; }
+.waf-stat-icon.blocked { background: #ef4444; }
+.waf-stat-icon.alerted { background: #6366f1; }
+.waf-stat-icon.rate { background: #10b981; }
+
+.waf-stat-value { display: block; font-size: 1.5rem; font-weight: 700; }
+.waf-stat-label { color: var(--text-secondary); font-size: 0.8rem; }
+
+.waf-threats-section { margin-top: 1rem; }
+
+.risk-critical :deep(.p-progressbar-value) { background: #ef4444; }
+.risk-high :deep(.p-progressbar-value) { background: #f59e0b; }
+.risk-medium :deep(.p-progressbar-value) { background: #6366f1; }
+
+.path-code {
+  font-family: monospace;
+  font-size: 0.8rem;
+  background: var(--bg-secondary);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.risk-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.risk-badge.critical { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.risk-badge.high { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.risk-badge.medium { background: rgba(99, 102, 241, 0.15); color: #6366f1; }
+
+.waf-no-threats {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+.waf-no-threats i {
+  font-size: 2.5rem;
+  color: #10b981;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .waf-summary { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .waf-summary { grid-template-columns: 1fr; }
 }
 </style>

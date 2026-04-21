@@ -1,12 +1,309 @@
 const express = require('express')
 const cors = require('cors')
 const initSqlJs = require('sql.js')
+const rateLimit = require('express-rate-limit')
+const helmet = require('helmet')
 
 const app = express()
 const PORT = process.env.PORT || 7061
 
+// ============================================
+// SECURITY MIDDLEWARE
+// ============================================
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false
+}))
 app.use(cors())
-app.use(express.json())
+app.use(express.json({ limit: '1mb' }))
+
+// Rate limiting - max 100 requests per minute per IP
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 100,
+  message: { success: false, error: 'Too many requests. IP temporarily blocked.', blocked: true },
+  standardHeaders: true,
+  legacyHeaders: false
+})
+app.use('/api/', limiter)
+
+// Stricter limit for simulation endpoint (expensive operation)
+const simulateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30,
+  message: { success: false, error: 'Simulation rate limit exceeded. Try again later.', blocked: true }
+})
+app.use('/api/simulate', simulateLimiter)
+
+// ============================================
+// WAF - WEB APPLICATION FIREWALL
+// ============================================
+
+// Attack pattern signatures
+const wafPatterns = {
+  sql_injection: [
+    /(\b(union|select|insert|update|delete|drop|alter|create|exec)\b.*\b(from|into|table|database|where)\b)/i,
+    /('|\")?\s*(or|and)\s+[\d\w]+=[\d\w]+/i,
+    /(--|#|\/\*|\*\/)/,
+    /(\b(char|nchar|varchar|nvarchar|cast|convert|concat)\s*\()/i,
+    /(\bwaitfor\s+delay\b|\bsleep\s*\()/i,
+    /(\binformation_schema\b|\bsys\.\b)/i
+  ],
+  xss: [
+    /<script[\s>]/i,
+    /javascript\s*:/i,
+    /on(load|error|click|mouseover|focus|blur|submit|change|input)\s*=/i,
+    /<(iframe|object|embed|link|style|img)[^>]*>/i,
+    /(document\.(cookie|write|location)|window\.(location|open))/i,
+    /eval\s*\(/i,
+    /(\balert\s*\(|\bconfirm\s*\(|\bprompt\s*\()/i
+  ],
+  path_traversal: [
+    /\.\.\//,
+    /\.\.\\/,
+    /(\/etc\/(passwd|shadow|hosts))/i,
+    /(\/proc\/self)/i,
+    /(%2e%2e|%252e%252e)/i,
+    /(\/var\/log|\/tmp\/)/i
+  ],
+  command_injection: [
+    /[;&|`]\s*(cat|ls|rm|wget|curl|bash|sh|python|perl|nc|netcat)/i,
+    /\$\(.*\)/,
+    /`[^`]*`/,
+    /(\|\||\&\&)\s*\w+/,
+    /(\/bin\/(sh|bash|zsh))/i
+  ],
+  bot_signatures: [
+    /(sqlmap|nikto|nmap|dirbuster|gobuster|hydra|burpsuite)/i,
+    /(havij|acunetix|netsparker|arachni|w3af)/i
+  ]
+}
+
+// WAF threat log (in-memory, also saved to DB)
+const wafThreatLog = []
+const blockedIPs = new Map() // IP -> { count, blockedUntil }
+
+// WAF middleware - inspects every request
+function wafMiddleware(req, res, next) {
+  // Skip WAF check for the test endpoint (it intentionally receives attack payloads)
+  if (req.path === '/api/waf/test') return next()
+
+  const clientIP = req.ip || req.connection.remoteAddress || 'unknown'
+  const now = Date.now()
+
+  // Check if IP is blocked
+  const blocked = blockedIPs.get(clientIP)
+  if (blocked && blocked.blockedUntil > now) {
+    const threat = {
+      id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
+      timestamp: new Date().toISOString(),
+      ip: clientIP,
+      method: req.method,
+      path: req.path,
+      attackType: 'blocked_ip',
+      action: 'block',
+      riskScore: 100,
+      details: `IP blocked until ${new Date(blocked.blockedUntil).toISOString()}`
+    }
+    wafThreatLog.unshift(threat)
+    saveWafThreat(threat)
+    return res.status(403).json({
+      success: false,
+      error: 'Access denied. Your IP has been temporarily blocked due to suspicious activity.',
+      blocked: true,
+      retryAfter: Math.ceil((blocked.blockedUntil - now) / 1000)
+    })
+  }
+
+  // Inspect request for attack patterns
+  const payload = JSON.stringify({
+    url: req.url,
+    query: req.query,
+    body: req.body,
+    params: req.params
+  })
+
+  const userAgent = req.headers['user-agent'] || ''
+  const fullPayload = payload + ' ' + userAgent
+
+  let detected = null
+  let maxRisk = 0
+
+  for (const [attackType, patterns] of Object.entries(wafPatterns)) {
+    for (const pattern of patterns) {
+      if (pattern.test(fullPayload)) {
+        const risk = attackType === 'sql_injection' ? 90
+          : attackType === 'xss' ? 85
+          : attackType === 'command_injection' ? 95
+          : attackType === 'path_traversal' ? 80
+          : attackType === 'bot_signatures' ? 70 : 60
+
+        if (risk > maxRisk) {
+          maxRisk = risk
+          detected = attackType
+        }
+      }
+    }
+  }
+
+  if (detected) {
+    // Record threat
+    const threat = {
+      id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
+      timestamp: new Date().toISOString(),
+      ip: clientIP,
+      method: req.method,
+      path: req.path,
+      attackType: detected,
+      action: maxRisk >= 85 ? 'block' : 'alert',
+      riskScore: maxRisk,
+      userAgent: userAgent.substring(0, 200),
+      details: `Detected ${detected} pattern in ${req.method} ${req.path}`
+    }
+    wafThreatLog.unshift(threat)
+    if (wafThreatLog.length > 500) wafThreatLog.pop()
+    saveWafThreat(threat)
+
+    // Increment block counter for IP
+    const ipRecord = blockedIPs.get(clientIP) || { count: 0, blockedUntil: 0 }
+    ipRecord.count++
+    if (ipRecord.count >= 5) {
+      // Block IP for 10 minutes after 5 violations
+      ipRecord.blockedUntil = now + 10 * 60 * 1000
+    }
+    blockedIPs.set(clientIP, ipRecord)
+
+    if (maxRisk >= 85) {
+      return res.status(403).json({
+        success: false,
+        error: 'Request blocked by WAF: Malicious pattern detected',
+        blocked: true,
+        attackType: detected,
+        riskScore: maxRisk
+      })
+    }
+  }
+
+  // Add WAF headers
+  res.setHeader('X-WAF-Protected', 'true')
+  res.setHeader('X-Content-Type-Options', 'nosniff')
+  next()
+}
+
+app.use(wafMiddleware)
+
+// Save WAF threat to database
+function saveWafThreat(threat) {
+  if (!db) return
+  try {
+    db.run(`
+      INSERT INTO waf_threats (id, timestamp, ip, method, path, attack_type, action, risk_score, user_agent, details)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [threat.id, threat.timestamp, threat.ip, threat.method, threat.path,
+        threat.attackType, threat.action, threat.riskScore, threat.userAgent || '', threat.details])
+  } catch (e) {}
+}
+
+// ============================================
+// WAF API ENDPOINTS
+// ============================================
+
+// Get WAF status and stats
+app.get('/api/waf/status', (req, res) => {
+  const totalThreats = wafThreatLog.length
+  const blockedCount = wafThreatLog.filter(t => t.action === 'block').length
+  const alertCount = wafThreatLog.filter(t => t.action === 'alert').length
+
+  const attackTypeStats = {}
+  wafThreatLog.forEach(t => {
+    attackTypeStats[t.attackType] = (attackTypeStats[t.attackType] || 0) + 1
+  })
+
+  res.json({
+    success: true,
+    waf: {
+      enabled: true,
+      version: '1.0.0',
+      totalThreatsDetected: totalThreats,
+      threatsBlocked: blockedCount,
+      threatsAlerted: alertCount,
+      blockedIPs: [...blockedIPs.entries()]
+        .filter(([_, v]) => v.blockedUntil > Date.now())
+        .map(([ip, v]) => ({ ip, violations: v.count, blockedUntil: new Date(v.blockedUntil).toISOString() })),
+      attackTypeBreakdown: attackTypeStats,
+      patterns: Object.keys(wafPatterns).map(type => ({
+        type,
+        rulesCount: wafPatterns[type].length
+      }))
+    }
+  })
+})
+
+// Get recent threats
+app.get('/api/waf/threats', (req, res) => {
+  const limit = Math.min(parseInt(req.query.limit) || 50, 200)
+  res.json({
+    success: true,
+    threats: wafThreatLog.slice(0, limit),
+    total: wafThreatLog.length
+  })
+})
+
+// Test WAF with a specific payload (for demonstration)
+app.post('/api/waf/test', (req, res) => {
+  const { payload, type } = req.body
+
+  if (!payload || typeof payload !== 'string') {
+    return res.status(400).json({ success: false, error: 'Payload is required' })
+  }
+
+  const results = []
+  for (const [attackType, patterns] of Object.entries(wafPatterns)) {
+    for (const pattern of patterns) {
+      if (pattern.test(payload)) {
+        results.push({
+          attackType,
+          pattern: pattern.toString(),
+          matched: true,
+          risk: attackType === 'sql_injection' ? 90
+            : attackType === 'xss' ? 85
+            : attackType === 'command_injection' ? 95
+            : attackType === 'path_traversal' ? 80
+            : attackType === 'bot_signatures' ? 70 : 60
+        })
+      }
+    }
+  }
+
+  res.json({
+    success: true,
+    payload: payload.substring(0, 100),
+    detected: results.length > 0,
+    threats: results,
+    wouldBlock: results.some(r => r.risk >= 85),
+    maxRiskScore: results.length > 0 ? Math.max(...results.map(r => r.risk)) : 0
+  })
+})
+
+// Unblock an IP manually
+app.delete('/api/waf/block/:ip', (req, res) => {
+  const ip = req.params.ip
+  if (blockedIPs.has(ip)) {
+    blockedIPs.delete(ip)
+    res.json({ success: true, message: `IP ${ip} unblocked` })
+  } else {
+    res.status(404).json({ success: false, error: 'IP not found in blocked list' })
+  }
+})
+
+// Clear WAF threat log
+app.delete('/api/waf/threats', (req, res) => {
+  wafThreatLog.length = 0
+  if (db) {
+    try { db.run('DELETE FROM waf_threats') } catch (e) {}
+  }
+  res.json({ success: true, message: 'WAF threat log cleared' })
+})
 
 // ============================================
 // SQLite Database
@@ -45,7 +342,22 @@ async function initDatabase() {
     )
   `)
 
-  console.log('Database initialized successfully')
+  db.run(`
+    CREATE TABLE IF NOT EXISTS waf_threats (
+      id TEXT PRIMARY KEY,
+      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+      ip TEXT NOT NULL,
+      method TEXT,
+      path TEXT,
+      attack_type TEXT NOT NULL,
+      action TEXT NOT NULL,
+      risk_score INTEGER,
+      user_agent TEXT,
+      details TEXT
+    )
+  `)
+
+  console.log('Database initialized successfully (with WAF protection)')
 }
 
 // ============================================
@@ -729,9 +1041,24 @@ app.get('/api/defenses/:id', (req, res) => {
   }
 })
 
-// Enhanced simulation with defense
+// Enhanced simulation with defense (input validated)
 app.post('/api/simulate', (req, res) => {
   const { attackType, defenseType, strength, targetLayer } = req.body
+
+  // Input validation
+  if (!attackType || typeof attackType !== 'string' || attackType.length > 50) {
+    return res.status(400).json({ success: false, error: 'Invalid attack type parameter' })
+  }
+  if (defenseType && (typeof defenseType !== 'string' || defenseType.length > 50)) {
+    return res.status(400).json({ success: false, error: 'Invalid defense type parameter' })
+  }
+  if (strength !== undefined && (typeof strength !== 'number' || strength < 0 || strength > 100)) {
+    return res.status(400).json({ success: false, error: 'Strength must be a number between 0 and 100' })
+  }
+  if (targetLayer && (typeof targetLayer !== 'string' || targetLayer.length > 100)) {
+    return res.status(400).json({ success: false, error: 'Invalid target layer parameter' })
+  }
+
   const attack = attackTypes[attackType]
   const defense = defenseType ? defenseMechanisms[defenseType] : null
 
@@ -852,10 +1179,10 @@ function getDefenseRecommendations(attackType) {
   }))
 }
 
-// Get statistics from database
+// Get statistics from database (includes WAF analytics)
 app.get('/api/statistics', (req, res) => {
   if (!db) {
-    return res.json({ success: true, statistics: { simulations: [], summary: {} } })
+    return res.json({ success: true, statistics: { simulations: [], summary: {}, waf: {} } })
   }
 
   try {
@@ -890,6 +1217,37 @@ app.get('/api/statistics', (req, res) => {
     const totalSuccess = statistics.reduce((sum, s) => sum + s.successfulAttacks, 0)
     const totalDetected = statistics.reduce((sum, s) => sum + s.detectedAttacks, 0)
 
+    // WAF Analytics
+    const wafTotalThreats = wafThreatLog.length
+    const wafBlocked = wafThreatLog.filter(t => t.action === 'block').length
+    const wafAlerted = wafThreatLog.filter(t => t.action === 'alert').length
+
+    const wafByType = {}
+    wafThreatLog.forEach(t => {
+      if (!wafByType[t.attackType]) {
+        wafByType[t.attackType] = { count: 0, blocked: 0, avgRisk: 0, totalRisk: 0 }
+      }
+      wafByType[t.attackType].count++
+      if (t.action === 'block') wafByType[t.attackType].blocked++
+      wafByType[t.attackType].totalRisk += t.riskScore || 0
+      wafByType[t.attackType].avgRisk = Math.round(wafByType[t.attackType].totalRisk / wafByType[t.attackType].count)
+    })
+
+    const wafRecentThreats = wafThreatLog.slice(0, 20).map(t => ({
+      id: t.id,
+      timestamp: t.timestamp,
+      ip: t.ip,
+      method: t.method,
+      path: t.path,
+      attackType: t.attackType,
+      action: t.action,
+      riskScore: t.riskScore
+    }))
+
+    const activeBlockedIPs = [...blockedIPs.entries()]
+      .filter(([_, v]) => v.blockedUntil > Date.now())
+      .map(([ip, v]) => ({ ip, violations: v.count, blockedUntil: new Date(v.blockedUntil).toISOString() }))
+
     res.json({
       success: true,
       statistics: {
@@ -901,12 +1259,27 @@ app.get('/api/statistics', (req, res) => {
           overallDetectionRate: totalSims > 0 ? ((totalDetected / totalSims) * 100).toFixed(1) : 0,
           mostTestedAttack: statistics[0]?.attackType || 'N/A',
           mostSuccessfulAttack: [...statistics].sort((a, b) => b.successRate - a.successRate)[0]?.attackType || 'N/A'
+        },
+        waf: {
+          enabled: true,
+          totalThreats: wafTotalThreats,
+          blocked: wafBlocked,
+          alerted: wafAlerted,
+          blockedIPs: activeBlockedIPs,
+          byType: Object.entries(wafByType).map(([type, data]) => ({
+            type,
+            count: data.count,
+            blocked: data.blocked,
+            avgRisk: data.avgRisk
+          })),
+          recentThreats: wafRecentThreats,
+          blockRate: wafTotalThreats > 0 ? ((wafBlocked / wafTotalThreats) * 100).toFixed(1) : 0
         }
       }
     })
   } catch (err) {
     console.error('Stats Error:', err)
-    res.json({ success: true, statistics: { simulations: [], summary: {} } })
+    res.json({ success: true, statistics: { simulations: [], summary: {}, waf: {} } })
   }
 })
 
@@ -943,14 +1316,22 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     message: 'GAN Security API is running',
-    version: '2.0.0',
+    version: '2.1.0',
     database: db ? 'connected' : 'not connected',
+    waf: {
+      enabled: true,
+      threatsDetected: wafThreatLog.length,
+      blockedIPs: [...blockedIPs.entries()].filter(([_, v]) => v.blockedUntil > Date.now()).length
+    },
     endpoints: {
       attacks: '/api/attacks',
       defenses: '/api/defenses',
       statistics: '/api/statistics',
       simulate: '/api/simulate',
-      compare: '/api/compare'
+      compare: '/api/compare',
+      wafStatus: '/api/waf/status',
+      wafThreats: '/api/waf/threats',
+      wafTest: '/api/waf/test'
     }
   })
 })
@@ -961,11 +1342,14 @@ initDatabase().then(() => {
     console.log(`
 ╔══════════════════════════════════════════════════════════════╗
 ║           GAN Security Analyzer - Backend Server             ║
-║                      Version 2.0.0                           ║
+║                      Version 2.1.0                           ║
 ╠══════════════════════════════════════════════════════════════╣
 ║  Attacks Database: ${Object.keys(attackTypes).length} types                                  ║
 ║  Defenses Database: ${Object.keys(defenseMechanisms).length} mechanisms                              ║
 ║  SQLite: Enabled                                             ║
+║  WAF Protection: ACTIVE                                      ║
+║  Rate Limiting: 100 req/min (API), 30 req/min (Simulate)    ║
+║  Attack Detection: SQL, XSS, Path Traversal, CMD Injection  ║
 ║  Based on: Real research papers (2014-2026)                  ║
 ╚══════════════════════════════════════════════════════════════╝
 

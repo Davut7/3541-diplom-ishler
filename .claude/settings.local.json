@@ -78,7 +78,23 @@
       "Bash(curl -s http://localhost:7011/api/logs)",
       "Bash(python3 -c ':*)",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\)['statistics']; print\\('Overview:', json.dumps\\(d['overview']\\)\\); print\\('Behavioral:', json.dumps\\(d['behavioral']\\)\\)\")",
-      "Bash(pip3 install:*)"
+      "Bash(pip3 install:*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(f'  {v[\\\\\"name\\\\\"]:30s} -> {v[\\\\\"type\\\\\"]}'\\) for v in d['deployed']]\")",
+      "Bash(curl -s -X POST http://localhost:7041/api/system-scan -H 'Content-Type: application/json' -d '{\"scanType\":\"quick\"}')",
+      "Bash(curl -s -X POST http://localhost:7041/api/signatures/update)",
+      "Bash(curl -s -X POST http://localhost:7041/api/test-virus/cleanup)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'  Removed {d[\\\\\"removed\\\\\"]} test files'\\)\")",
+      "Bash(curl -s -X POST http://localhost:7041/api/test-virus/deploy)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'  {d[\\\\\"message\\\\\"]}'\\)\")",
+      "Bash(python3 -c \"import sys,json; print\\(f'  Removed {json.load\\(sys.stdin\\)[\\\\\"removed\\\\\"]} files'\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'   {d[\\\\\"message\\\\\"]}'\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'   Removed {d[\\\\\"removed\\\\\"]} files'\\)\")",
+      "Bash(time curl:*)",
+      "Bash(python3 -c \" import sys,json; d=json.load\\(sys.stdin\\) print\\(f' Files: {d[\\\\\"scannedFiles\\\\\"]} | Threats: {d[\\\\\"threatsFound\\\\\"]} | Time: {d[\\\\\"duration\\\\\"]}s'\\) for t in d['threats']: print\\(f' [{t[\\\\\"status\\\\\"]:10s}] {t[\\\\\"threatScore\\\\\"]:3d}% | {t[\\\\\"fileName\\\\\"]:35s}'\\) \" curl -s -X POST http://localhost:7041/api/test-virus/cleanup)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Sigs: {d[\\\\\"totalSignatures\\\\\"]}'\\)\")",
+      "Bash(python3 -c \" import sys,json; d=json.load\\(sys.stdin\\) print\\(f' {d[\\\\\"scannedFiles\\\\\"]} files | {d[\\\\\"threatsFound\\\\\"]} threats | {d[\\\\\"duration\\\\\"]}s'\\) for t in d['threats']: print\\(f' {t[\\\\\"threatScore\\\\\"]:3d}% {t[\\\\\"fileName\\\\\"]:35s} {[p[\\\\\"name\\\\\"] for p in t[\\\\\"patterns\\\\\"][:2]]}'\\) \" curl -s -X POST http://localhost:7041/api/test-virus/cleanup)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d['message']\\)\")",
+      "Bash(npx electron:*)"
     ]
   }
 }

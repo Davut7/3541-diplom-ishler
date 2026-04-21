@@ -39,6 +39,15 @@
         </div>
 
         <Button :label="language === 'en' ? 'Start Scan' : 'Skany Başla'" icon="pi pi-play" @click="startScan" class="start-btn" />
+
+        <div v-if="isElectron" class="test-section">
+          <p class="test-label"><i class="pi pi-flask"></i> {{ language === 'en' ? 'Testing Tools' : 'Synag Gurallary' }}</p>
+          <div class="test-buttons">
+            <Button :label="language === 'en' ? 'Create Test Threats' : 'Synag Howplaryny Döret'" icon="pi pi-exclamation-triangle" severity="warn" outlined size="small" @click="createTestFiles" :loading="creatingTests" />
+            <Button :label="language === 'en' ? 'Remove Test Threats' : 'Synag Howplaryny Poz'" icon="pi pi-trash" severity="secondary" outlined size="small" @click="removeTestFiles" />
+          </div>
+          <small v-if="testMessage" class="test-message" :class="testMessageType">{{ testMessage }}</small>
+        </div>
       </template>
     </Card>
 
@@ -67,6 +76,10 @@
           <div class="scan-stat">
             <span class="stat-value">{{ scannedItems.hooks }}</span>
             <span class="stat-label">{{ language === 'en' ? 'Hooks' : 'Hooklar' }}</span>
+          </div>
+          <div class="scan-stat">
+            <span class="stat-value">{{ scannedItems.files }}</span>
+            <span class="stat-label">{{ language === 'en' ? 'Files' : 'Faýllar' }}</span>
           </div>
           <div class="scan-stat">
             <span class="stat-value">{{ scannedItems.persistence }}</span>
@@ -99,6 +112,7 @@
           </div>
           <div class="result-stats">
             <span>{{ scannedItems.processes }} {{ language === 'en' ? 'processes' : 'proses' }}</span>
+            <span>{{ scannedItems.files }} {{ language === 'en' ? 'files' : 'faýl' }}</span>
             <span>{{ scannedItems.hooks }} {{ language === 'en' ? 'hooks' : 'hook' }}</span>
             <span>{{ scannedItems.persistence }} {{ language === 'en' ? 'startup' : 'başlangyç' }}</span>
             <span>{{ threats.length }} {{ language === 'en' ? 'threats' : 'howp' }}</span>
@@ -153,7 +167,21 @@
                 <span class="reason-text">{{ data.reason }}</span>
               </template>
             </Column>
+            <Column :header="language === 'en' ? 'Actions' : 'Hereketler'" style="width: 220px" v-if="isElectron">
+              <template #body="{ data }">
+                <div class="threat-actions" v-if="data.path && !data.removed">
+                  <Button :label="language === 'en' ? 'Quarantine' : 'Karantin'" icon="pi pi-lock" severity="warn" size="small" @click="quarantineThreat(data)" :loading="data.removing" />
+                  <Button :label="language === 'en' ? 'Delete' : 'Poz'" icon="pi pi-trash" severity="danger" size="small" @click="deleteThreat(data)" :loading="data.removing" />
+                </div>
+                <Tag v-else-if="data.removed" :value="data.removed === 'quarantined' ? (language === 'en' ? 'Quarantined' : 'Karantinde') : (language === 'en' ? 'Deleted' : 'Pozuldy')" :severity="data.removed === 'quarantined' ? 'warn' : 'success'" />
+              </template>
+            </Column>
           </DataTable>
+
+          <div v-if="threats.some(t => t.path && !t.removed)" class="bulk-actions">
+            <Button :label="language === 'en' ? 'Quarantine All Threats' : 'Ähli Howplary Karantinle'" icon="pi pi-lock" severity="warn" @click="quarantineAll" />
+            <Button :label="language === 'en' ? 'Delete All Threats' : 'Ähli Howplary Poz'" icon="pi pi-trash" severity="danger" outlined @click="deleteAll" />
+          </div>
         </div>
 
         <div v-else class="clean-result">
@@ -212,6 +240,29 @@
                 <Column field="risk" :header="language === 'en' ? 'Risk' : 'Howp'" style="width: 100px">
                   <template #body="{ data }">
                     <Tag :value="data.risk" :severity="getRiskSeverity(data.risk)" />
+                  </template>
+                </Column>
+              </DataTable>
+            </AccordionContent>
+          </AccordionPanel>
+
+          <AccordionPanel value="files">
+            <AccordionHeader>
+              <i class="pi pi-folder"></i> {{ language === 'en' ? 'Scanned Files' : 'Skanerlenen Faýllar' }} ({{ language === 'en' ? (scannedItems.files + ' checked, ' + (scanResults.files?.length || 0) + ' suspicious') : (scannedItems.files + ' barlandy, ' + (scanResults.files?.length || 0) + ' şübheli') }})
+            </AccordionHeader>
+            <AccordionContent>
+              <p v-if="!scanResults.files?.length" class="no-data">{{ language === 'en' ? 'No suspicious files found.' : 'Şübheli faýl tapylmady.' }}</p>
+              <DataTable v-else :value="scanResults.files" :paginator="true" :rows="10" size="small">
+                <Column field="name" :header="language === 'en' ? 'File Name' : 'Faýl Ady'" />
+                <Column field="path" :header="language === 'en' ? 'Path' : 'Ýoly'" style="max-width: 300px">
+                  <template #body="{ data }">
+                    <code style="font-size: 0.85em; word-break: break-all;">{{ data.path }}</code>
+                  </template>
+                </Column>
+                <Column field="reason" :header="language === 'en' ? 'Reason' : 'Sebäbi'" />
+                <Column field="risk.level" :header="language === 'en' ? 'Risk' : 'Howp'" style="width: 100px">
+                  <template #body="{ data }">
+                    <Tag :value="data.risk?.level" :severity="getRiskSeverity(data.risk?.level)" />
                   </template>
                 </Column>
               </DataTable>
@@ -311,11 +362,15 @@ export default {
     const showDetails = ref(false)
     const scanTime = ref(0)
     let scanTimer = null
-    const scannedItems = ref({ processes: 0, hooks: 0, persistence: 0, network: 0 })
+    const scannedItems = ref({ processes: 0, hooks: 0, persistence: 0, network: 0, files: 0 })
 
     const isElectron = computed(() => {
       return typeof window !== 'undefined' && window.electronAPI
     })
+
+    const creatingTests = ref(false)
+    const testMessage = ref('')
+    const testMessageType = ref('')
 
     const scanAreas = ref({
       processes: true,
@@ -357,7 +412,7 @@ export default {
       threats.value = []
       mediumRiskItems.value = []
       scanResults.value = {}
-      scannedItems.value = { processes: 0, hooks: 0, persistence: 0, network: 0 }
+      scannedItems.value = { processes: 0, hooks: 0, persistence: 0, network: 0, files: 0 }
       emit('start-scan')
 
       // Start timer
@@ -371,7 +426,13 @@ export default {
           window.electronAPI.onScanProgress((data) => {
             scanProgress.value = data.progress
             currentStage.value = data.stage
-            updateCurrentAction(data.stage)
+            updateCurrentAction(data.stage, data)
+            if (data.filesScanned) {
+              scannedItems.value.files = data.filesScanned
+            }
+            if (data.currentDir) {
+              currentAction.value += ` (${data.currentDir.split('/').slice(-2).join('/')})`
+            }
           })
 
           if (scanType.value === 'quick') {
@@ -389,7 +450,9 @@ export default {
                   name: p.name,
                   path: p.path,
                   reason: p.risk.reason,
-                  details: p.risk.details
+                  details: p.risk.details,
+                  removed: null,
+                  removing: false
                 })
               })
 
@@ -415,9 +478,14 @@ export default {
               scannedItems.value.hooks = result.results.hooks?.length || 0
               scannedItems.value.persistence = result.results.persistence?.length || 0
               scannedItems.value.network = result.results.network?.length || 0
+              scannedItems.value.files = result.summary?.filesScanned || scannedItems.value.files
 
-              // Get all threats
-              threats.value = result.results.threats || []
+              // Get all threats — add reactive fields for removal actions
+              threats.value = (result.results.threats || []).map(t => ({
+                ...t,
+                removed: null,
+                removing: false
+              }))
 
               // Get medium risk items
               result.results.processes?.filter(p => p.risk.level === 'medium').forEach(p => {
@@ -439,15 +507,23 @@ export default {
         }
       } else {
         // Demo mode for web
-        const stages = ['processes', 'hooks', 'persistence', 'network', 'complete']
+        const stages = ['processes', 'hooks', 'files', 'persistence', 'network', 'complete']
+        const stageWeights = [15, 15, 40, 15, 13, 2]
+        let cumulativeProgress = 0
         for (let i = 0; i < stages.length; i++) {
           currentStage.value = stages[i]
-          updateCurrentAction(stages[i])
+          updateCurrentAction(stages[i], { filesScanned: scannedItems.value.files })
 
-          for (let j = 0; j < 20; j++) {
-            await new Promise(resolve => setTimeout(resolve, 100))
-            scanProgress.value = (i * 20) + j
+          const steps = Math.max(stageWeights[i], 5)
+          for (let j = 0; j < steps; j++) {
+            await new Promise(resolve => setTimeout(resolve, stages[i] === 'files' ? 200 : 120))
+            scanProgress.value = Math.min(cumulativeProgress + Math.round((j / steps) * stageWeights[i]), 99)
+            if (stages[i] === 'files') {
+              scannedItems.value.files += Math.floor(Math.random() * 300) + 100
+              updateCurrentAction('files', { filesScanned: scannedItems.value.files })
+            }
           }
+          cumulativeProgress += stageWeights[i]
 
           // Simulate data
           if (stages[i] === 'processes') scannedItems.value.processes = Math.floor(Math.random() * 150) + 100
@@ -465,21 +541,117 @@ export default {
       emit('stop-scan')
     }
 
-    const updateCurrentAction = (stage) => {
+    const updateCurrentAction = (stage, data) => {
       const actions = props.language === 'en' ? {
         'processes': 'Scanning running processes...',
         'hooks': 'Checking keyboard hooks and accessibility permissions...',
+        'files': `Scanning file system for keyloggers... ${data?.filesScanned ? '(' + data.filesScanned + ' files checked)' : ''}`,
         'persistence': 'Analyzing startup items and persistence mechanisms...',
         'network': 'Scanning network connections...',
         'complete': 'Finalizing scan results...'
       } : {
         'processes': 'Işleýän prosesleri skanirleýär...',
         'hooks': 'Klawiatura hooklaryny we rugsat berişleri barlaýar...',
+        'files': `Faýl ulgamynda keyloggerleri gözleýär... ${data?.filesScanned ? '(' + data.filesScanned + ' faýl barlandy)' : ''}`,
         'persistence': 'Başlangyç elementlerini we durnuklylyk mehanizmlerini seljeriýär...',
         'network': 'Tor baglanyşyklaryny skanirleýär...',
         'complete': 'Skan netijelerini tamamlaýar...'
       }
       currentAction.value = actions[stage] || ''
+    }
+
+    // Test keylogger files
+    const createTestFiles = async () => {
+      if (!isElectron.value) return
+      creatingTests.value = true
+      testMessage.value = ''
+      try {
+        const result = await window.electronAPI.createTestKeyloggers()
+        if (result.success) {
+          testMessage.value = props.language === 'en'
+            ? `${result.count} test files created in ${result.directory}`
+            : `${result.count} synag faýly döredildi: ${result.directory}`
+          testMessageType.value = 'success'
+        } else {
+          testMessage.value = result.error
+          testMessageType.value = 'error'
+        }
+      } catch (e) {
+        testMessage.value = e.message
+        testMessageType.value = 'error'
+      }
+      creatingTests.value = false
+    }
+
+    const removeTestFiles = async () => {
+      if (!isElectron.value) return
+      try {
+        const result = await window.electronAPI.removeTestKeyloggers()
+        if (result.success) {
+          testMessage.value = props.language === 'en' ? 'Test files removed' : 'Synag faýllary pozuldy'
+          testMessageType.value = 'success'
+        }
+      } catch (e) {
+        testMessage.value = e.message
+        testMessageType.value = 'error'
+      }
+    }
+
+    // Threat removal — update by index to ensure Vue reactivity
+    const findThreatIndex = (threat) => {
+      return threats.value.findIndex(t => t.path === threat.path && t.name === threat.name)
+    }
+
+    const quarantineThreat = async (threat) => {
+      if (!isElectron.value || !threat.path) return
+      const idx = findThreatIndex(threat)
+      if (idx === -1) return
+      threats.value[idx] = { ...threats.value[idx], removing: true }
+      try {
+        const result = await window.electronAPI.removeThreat(threat.path)
+        if (result.success) {
+          threats.value[idx] = { ...threats.value[idx], removed: 'quarantined', removing: false }
+        } else {
+          threats.value[idx] = { ...threats.value[idx], removing: false }
+        }
+      } catch (e) {
+        console.error('Quarantine failed:', e)
+        threats.value[idx] = { ...threats.value[idx], removing: false }
+      }
+    }
+
+    const deleteThreat = async (threat) => {
+      if (!isElectron.value || !threat.path) return
+      const idx = findThreatIndex(threat)
+      if (idx === -1) return
+      threats.value[idx] = { ...threats.value[idx], removing: true }
+      try {
+        const result = await window.electronAPI.deleteThreat(threat.path)
+        if (result.success) {
+          threats.value[idx] = { ...threats.value[idx], removed: 'deleted', removing: false }
+        } else {
+          threats.value[idx] = { ...threats.value[idx], removing: false }
+        }
+      } catch (e) {
+        console.error('Delete failed:', e)
+        threats.value[idx] = { ...threats.value[idx], removing: false }
+      }
+    }
+
+    const quarantineAll = async () => {
+      for (let i = 0; i < threats.value.length; i++) {
+        if (threats.value[i].path && !threats.value[i].removed) {
+          await quarantineThreat(threats.value[i])
+        }
+      }
+    }
+
+    const deleteAll = async () => {
+      for (let i = 0; i < threats.value.length; i++) {
+        if (threats.value[i].path && !threats.value[i].removed) {
+          await deleteThreat(threats.value[i])
+        }
+      }
     }
 
     const cancelScan = () => {
@@ -497,7 +669,7 @@ export default {
       threats.value = []
       mediumRiskItems.value = []
       scanResults.value = {}
-      scannedItems.value = { processes: 0, hooks: 0, persistence: 0, network: 0 }
+      scannedItems.value = { processes: 0, hooks: 0, persistence: 0, network: 0, files: 0 }
     }
 
     const getRiskSeverity = (risk) => {
@@ -522,9 +694,11 @@ export default {
     return {
       scanType, isScanning, scanComplete, scanProgress, currentAction, currentStage,
       threats, mediumRiskItems, scanAreas, systemInfo, scannedItems, isElectron,
-      scanResults, showDetails, scanTime,
+      scanResults, showDetails, scanTime, creatingTests, testMessage, testMessageType,
       startScan, cancelScan, resetScan, getRiskSeverity, getAreaIcon,
-      formatTime, formatBytes
+      formatTime, formatBytes,
+      createTestFiles, removeTestFiles, quarantineThreat, deleteThreat,
+      quarantineAll, deleteAll
     }
   }
 }
@@ -1133,5 +1307,60 @@ export default {
     max-width: 140px;
     font-size: 0.7rem;
   }
+}
+
+/* Test Section */
+.test-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.test-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.test-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.test-message {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.test-message.success {
+  color: var(--green-400);
+}
+
+.test-message.error {
+  color: var(--red-400);
+}
+
+/* Threat Actions */
+.threat-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.bulk-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.no-data {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 1rem;
 }
 </style>
