@@ -6,6 +6,7 @@ export default {
     simulator: 'Simulator',
     statistics: 'Statistics',
     howItWorks: 'How It Works',
+    aiTest: 'AI Test',
     about: 'About'
   },
   footer: {

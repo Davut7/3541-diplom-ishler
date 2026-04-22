@@ -44,6 +44,7 @@ import SimulatorView from './views/SimulatorView.vue'
 import StatisticsView from './views/StatisticsView.vue'
 import HowItWorksView from './views/HowItWorksView.vue'
 import AboutView from './views/AboutView.vue'
+import AITestView from './views/AITestView.vue'
 
 import 'primeicons/primeicons.css'
 
@@ -54,7 +55,8 @@ const routes = [
   { path: '/simulator', name: 'simulator', component: SimulatorView },
   { path: '/statistics', name: 'statistics', component: StatisticsView },
   { path: '/how-it-works', name: 'howItWorks', component: HowItWorksView },
-  { path: '/about', name: 'about', component: AboutView }
+  { path: '/about', name: 'about', component: AboutView },
+  { path: '/ai-test', name: 'aiTest', component: AITestView }
 ]
 
 const router = createRouter({

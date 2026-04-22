@@ -42,6 +42,10 @@
           <i class="pi pi-question-circle"></i>
           {{ t.nav.howItWorks }}
         </router-link>
+        <router-link to="/ai-test" class="nav-link">
+          <i class="pi pi-microchip"></i>
+          {{ t.nav.aiTest || 'AI Test' }}
+        </router-link>
         <router-link to="/about" class="nav-link">
           <i class="pi pi-info-circle"></i>
           {{ t.nav.about }}
@@ -99,6 +103,10 @@
         <router-link to="/how-it-works" class="mobile-nav-link" @click="mobileMenuOpen = false">
           <i class="pi pi-question-circle"></i>
           {{ t.nav.howItWorks }}
+        </router-link>
+        <router-link to="/ai-test" class="mobile-nav-link" @click="mobileMenuOpen = false">
+          <i class="pi pi-microchip"></i>
+          {{ t.nav.aiTest || 'AI Test' }}
         </router-link>
         <router-link to="/about" class="mobile-nav-link" @click="mobileMenuOpen = false">
           <i class="pi pi-info-circle"></i>

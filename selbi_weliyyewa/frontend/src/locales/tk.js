@@ -6,6 +6,7 @@ export default {
     simulator: 'Simulýator',
     statistics: 'Statistika',
     howItWorks: 'Nähili işleýär',
+    aiTest: 'AI Synag',
     about: 'Hakynda'
   },
   footer: {

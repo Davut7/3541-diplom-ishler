@@ -1,0 +1,361 @@
+DIPLOM TASLAMASY: KEYGUARD — WINDOWS ULGAMYNDA KEYLOGGERLERI ANYKLAMAK
+Talyp: Rowşen Palwanow
+Görkezme teksti (~5-7 minut)
+
+═══════════════════════════════════════════════════════════════
+
+Hormatly komissiýa agzalary, mugallymlar we talyplar!
+
+Meniň diplom taslamam "KeyGuard — Windows operasion ulgamynda keyloggerleri anyklaýan programma" diýlip atlandyrylýar.
+
+Geliň, ilki bilen keylogger näme — şony jikme-jik düşündireýin. Keylogger — bu ulanyjynyň klawiaturada ýazýan ähli harplaryny, parollaryny, bank kartlarynyň maglumatlaryny, şahsy habarlaryny we hatda gizlin ýazgylaryny hem gizlinlikde ýazga alýan zyýanly programma. Mysal üçin, siz internet bankdan pul geçirýärsiňiz — keylogger siziň kartlaryňyzyň belgisini, PIN kodyny we parolyňyzy ýazga alýar. Ýa-da siz söýgüliňize hat ýazýarsyňyz — keylogger şol hatyňyzy hem ýazga alýar. Bu howp häzirki wagtda iň howply kiberhüjümleriň biri bolup durýar, sebäbi keylogger kompýuterde gizlin işleýär, hiç hili penjiräni açmaýar, hiç hili bildiriş bermeýär — ulanyjy onuň bardygyny bilmeýär. Şonuň üçin men bu programmany ýazdym — ulanyjylary bu gizlin howpdan goramak üçin.
+
+═══════════════════════════════════════════════════════════════
+
+TASLAMANYŇ MAKSADY WE WEZIPELERI
+
+Taslamanyň esasy maksady — Windows operasion ulgamynda gizlin işleýän keyloggerleri tapyp, ulanyjyny habardar etmek we olary karantin-e salmak ýa-da doly pozup aýyrmak mümkinçiligini döretmek.
+
+Taslamanyň wezipeleri şulardan ybarat:
+— Kompýuterdäki ähli işleýän prosesleri derňemek we olaryň arasyndan şübheli prosesleri tapmak
+— Klawiatura hooklaryny, ýagny SetWindowsHookEx ýaly Windows API çagyryşlaryny barlamak
+— Faýl ulgamyny skanirläp, şübheli faýllary tapmak
+— Ulgam registrini barlamak — keyloggerleriň kompýuter açylanda awtomatik işlemegini anyklamak
+— Tor baglanyşyklaryny barlamak — ogrlanan maglumatlaryň daşary iberilýändigini anyklamak
+— Tapylan howplary karantin-e salmak ýa-da doly pozmak
+— Ulanyjylara keyloggerleriň nähili işleýändigini öwretmek
+
+Şeýle hem bu taslama okuw maksatly bolup, talyplara we ulanyjylara keyloggerleriň nähili işleýändigini, haýsy Windows API-lerini ulanýandygyny we olaryň garşysyna nähili goranmalydygyny öwredýär. Programmanyň içinde "Nähili işleýär" atly aýratyn okuw sahypasy bar.
+
+═══════════════════════════════════════════════════════════════
+
+ULANYLAN TEHNOLOGIÝALAR — JIKME-JIK
+
+Taslamanyň tehniki tarapyna geçsek, men üç gatly arhitektura ulandym. Bu uly programmalarda ulanylýan ýaýran usul — her gatlak öz wezipesini ýerine ýetirýär.
+
+--- BIRINJI GATLAK: FRONTEND (Ulanyjy Interfeýsi) ---
+
+Frontend — bu ulanyjynyň görýän we basýan bölegi, ýagny programmanyň ýüzi. Men ony şu tehnologiýalar bilen ýazdym:
+
+Vue.js 3 — bu häzirki zaman JavaScript freýmworky. Men ony saýladym, sebäbi ol komponent esasly arhitektura ulanýar. Bu näme diýmek? Her sahypa, her bölek — ol aýratyn komponent. Mysal üçin, ScanView.vue — skanirleme sahypasy, ProcessesView.vue — prosesler sahypasy, HomeView.vue — baş sahypa, ProtectionView.vue — gorag sahypasy, StatisticsView.vue — statistika sahypasy, HowItWorksView.vue — okuw sahypasy, AboutView.vue — taslama hakynda sahypa. Jemi 7 sany sahypa bar.
+
+Vue Router 4.2 — bu sahypalar arasynda geçmek üçin ulanylýar. Mysal üçin, ulanyjy "/scan" ýazan wagty skanirleme sahypasy açylýar, "/processes" ýazan wagty prosesler sahypasy açylýar. Sahypa täzeden ýüklenmeýär, diňe kontenty çalşýar — muňa Single Page Application diýilýär, ýagny bir sahypalyk programma.
+
+PrimeVue 4.0 — bu taýýar UI komponent kitaphanasy. Tablisalar, düwmeler, grafik panelleri, progress bar, dialog penjireleri — bularyň hemmesini PrimeVue berýär. Men özüm ýazmadym, sebäbi bu wagty tygşytlaýar we professional görünýär.
+
+Chart.js we Vue-ChartJS — bu statistika sahypasynda grafikleri çyzmak üçin ulanylýar. Mysal üçin, howp görnüşleriniň tortly diagrammasy, howp derejesiniň çyzgylyk diagrammasy — bular şu kitaphanalar bilen çekilýär.
+
+Axios — bu HTTP soraglaryny backend-e ibermek üçin ulanylýan kitaphana. Frontend bir zat bilmek islese — Axios arkaly backend-e sorag iberýär we jogap alýar.
+
+Vite — bu gurluşyk guraly, ýagny build tool. Ol kody tiz guraýar we gyzgyn ýüklemäni — hot reload — üpjün edýär. Bu näme diýmek? Men kody üýtgetsem, brauzerdäki sahypa awtomatik täzelenýär, sahypany el bilen täzelemegiň geregi ýok.
+
+Ulanyjy interfeýsi garaňky we ýagty režimleri goldaýar — ulanyjy islendik wagty üýtgedip bilýär. Garaňky režimde fon gara (#0a0a0f) bolýar, ýagty režimde ak (#f8fafc) bolýar. Temany üýtgetmek üçin sidebar-daky aý/gün ikonasyna basýarsyňyz.
+
+Interfeýs iki dilde doly işleýär — türkmen we iňlis dillerinde. /frontend/src/locales/en.js faýlynda iňlis terjimesi, /frontend/src/locales/tk.js faýlynda türkmen terjimesi saklanýar. Dil üýtgetmek üçin sidebar-daky "TM" ýa-da "EN" düwmesine basýarsyňyz.
+
+Interfeýs mobil enjamlar üçin hem adaptasiýa edilen — responsive dizaýn. Dört sany breakpoint bar: 1024px, 768px, 600px we 480px. Uly ekranda 4 sütünli görünýär, planşetde 2 sütünli, telefonda 1 sütünli. Kiçi ekranda sidebar gizlenýär we hamburger menýu peýda bolýar.
+
+Şriftler: esasy tekst üçin Inter şrifti, kod we tehniki maglumatlar üçin JetBrains Mono monospace şrifti ulanylýar.
+
+--- IKINJI GATLAK: BACKEND (Serwer Tarapy) ---
+
+Backend — bu programmanyň "beýni" — ähli logika şu ýerde işleýär. Node.js we Express.js ulanylyp ýazyldy.
+
+Express.js — bu Node.js üçin web serwer freýmworky. Serwer 7051-nji portda işleýär. Frontend 7050-nji portda işleýär we Vite proxy arkaly backend-e soraglary iberýär.
+
+Backend-de 6 sany API endpoint bar:
+
+1) GET /api/processes — kompýuterdäki ähli işleýän prosesleri alýar. Bu endpoint hakyky operasion ulgam buýruklaryny ulanýar: macOS we Linux ulgamlarynda "ps aux" buýrugyny, Windows-da "tasklist /FO CSV /V" buýrugyny çagyrýar. Her proses üçin PID belgisini, adyny, CPU ulanyşyny prosentde, ýat ulanyşyny, howp derejesini gaýtaryp berýär.
+
+2) POST /api/scan — ulgamy skanirleýär. Scan görnüşini kabul edýär: "quick", "full" ýa-da "custom". Skanirlemeden soň netijeleri JSON formatda gaýtarýar: tapylan howplaryň sanawyny, skanerlenen prosesleriň sanyny, wagty we platformany. Her skanirleme netijesi backend/data/scans.json faýlyna ýazylýar — bu taryhyň ýitmezligi üçin.
+
+3) GET /api/history — geçirilen skanirlemeleriň taryhyny gaýtarýar. Iň soňky 50 skanirleme saklanýar.
+
+4) GET /api/protection — gorag ýagdaýyny gaýtarýar: haýsy goraglar açyk, haýsy ýapyk, soňky skanirleme haçan edildi, jemi näçe howp tapyldy.
+
+5) GET /api/keylogger-types — keyloggerleriň görnüşleri hakynda maglumatlary gaýtarýar. Üç görnüş bar: programma keyloggerleri, apparat keyloggerleri we ýadro keyloggerleri.
+
+6) GET /api/system — ulgam maglumatlary: platforma, prosessor ýadrolary, ýat, işlän wagty we ş.m.
+
+Howp anyklaýyş mehanizmi: Backend-de 16 sany regex şablony bar — bular şübheli proses atlaryny barlaýar. Mysal üçin:
+— /^keylog/i — keylogger prosesini tapýar, howp derejesi "Critical"
+— /keystroke.?log/i — klawiatura ýazgylaryny tutýan programma, howp derejesi "Critical"
+— /hook.?inject/i — hook inýeksiýa, howp derejesi "Critical"
+— /mimikatz/i — parol ogurlaýjy programma, howp derejesi "Critical"
+— /meterpreter/i — penetrasiýa guraly, howp derejesi "Critical"
+— /^spyware/i — gözegçilik programmasy, howp derejesi "High"
+— /hydra/i — parol döwüji gural, howp derejesi "High"
+— /ettercap/i — MITM hüjüm guraly, howp derejesi "Critical"
+
+Şeýle hem 40-dan gowrak ygtybarly proses sanawy bar (whitelist) — bular hiç wagt howply diýlip belgilenmeýär. Mysal üçin: chrome, firefox, code (Visual Studio Code), node, python, slack, discord, telegram, zoom, spotify we ş.m.
+
+Howp derejeleri 5 basgançaga bölünýär:
+— Critical — gyssagly howp, hökman aýyrmaly
+— High — ýokary howp
+— Medium — orta howp, barlamaly
+— Low — pes howp
+— Safe — ygtybarly, howp ýok
+
+--- ÜÇÜNJI GATLAK: ELECTRON (Desktop Programma) ---
+
+Electron — bu web tehnologiýalaryny ulanyp desktop programma ýazmaga mümkinçilik berýän freýmwork. Ýagny men Vue.js bilen ýazan web programmamy Electron bilen "gaplamak" arkaly ony Windows, macOS we Linux üçin adaty programma hökmünde ýaýradyp bilýärin.
+
+Electron-yň esasy faýly electron/main.js-de 1400x900 ölçegli penjire döredilýär. Programma açylanda garaňky fon (#0a0a0f) bilen ýüklenýär.
+
+Electron-da IPC — Inter-Process Communication — ýagny prosesara habarlaşma ulanylýar. Bu näme diýmek? Frontend (renderer prosesi) göni operasion ulgama girip bilmeýär — howpsuzlyk sebäpli. Şonuň üçin ol IPC arkaly Electron-yň esasy prosesine haýyş iberýär, esasy proses ulgam buýruklaryny ýerine ýetirýär we netijäni yza iberýär.
+
+Electron-da 10-dan gowrak IPC handler bar:
+— "get-processes" — ulgamdaky prosesleri almak
+— "scan-hooks" — klawiatura hooklaryny barlamak
+— "scan-persistence" — awtomatik başlangyç elementleri barlamak
+— "scan-network" — tor baglanyşyklaryny barlamak
+— "get-system-info" — ulgam maglumatlary almak (platforma, prosessor, ýat, uptime, ulanyjy ady)
+— "run-full-scan" — doly ulgam skanirlemesini başlatmak
+— "remove-threat" — howpy karantin-e salmak
+— "delete-threat" — howpy doly pozmak
+— "create-test-keyloggers" — synag üçin galp keylogger faýllaryny döretmek
+— "remove-test-keyloggers" — synag faýllaryny pozmak
+
+Howpsuzlyk çäreleri: Electron-da contextIsolation: true diýlip belgilenen — bu renderer prosesiniň Node.js API-lerine göni girip bilmezligini üpjün edýär. nodeIntegration: false — Node.js modullary renderer-de ýapyk. preload.js faýly arkaly diňe zerur we ygtybarly funksiýalar frontend-e açylýar. Bu nähili işleýär? preload.js-de contextBridge.exposeInMainWorld() ulanylyp, diňe saýlanan funksiýalar window.electronAPI obýektine goşulýar. Frontend diňe şolary çagyryp bilýär, başga hiç zat.
+
+Electron Builder bilen programma paketlenýär:
+— Windows üçin: NSIS installer we portable wersiýa
+— macOS üçin: DMG we ZIP
+— Linux üçin: AppImage we .deb paket
+
+═══════════════════════════════════════════════════════════════
+
+PROGRAMMANYŇ ESASY FUNKSIÝALARY — JIKME-JIK
+
+--- 1. ULGAMY SKANIRLEMEK ---
+
+Programma üç görnüşli skanirleme hödürleýär:
+
+Çalt skanirleme (Quick Scan) — diňe işleýän prosesleri barlaýar. Bu iň çalt usul. Programma "ps aux" (macOS/Linux) ýa-da "tasklist" (Windows) buýrugyny çagyrýar, ähli prosesleri alýar we olary şübheli şablonlar bilen deňeşdirýär. Birnäçe sekundyň içinde netije berýär.
+
+Doly skanirleme (Full Scan) — ulgamyň ähli bölegini barlaýar. Bu 5 basgançakdan ybarat:
+  1-nji basgançak: Prosesleri skanirlemek — ähli işleýän prosesleri derňeýär (takmynan 100-200 proses)
+  2-nji basgançak: Hooklary barlamak — klawiatura hooklaryny we rugsat berişleri barlaýar
+  3-nji basgançak: Faýl ulgamyny skanirlemek — bu iň uzyn basgançak, müňlerçe faýl barlanýar
+  4-nji basgançak: Başlangyç elementleri barlamak — macOS-da LaunchAgents, LaunchDaemons kataloglaryny barlaýar, Windows-da registr ýazgylaryny barlaýar
+  5-nji basgançak: Tor baglanyşyklaryny skanirlemek — şübheli tor baglanyşyklaryny barlaýar
+
+Skanirlemäniň öňe gidişi progress bar-da gösterilýär. Her basgançakda näme edilýändigi ýazylýar. Taýmer wagty görkezýär. Skanirlemäni islendik wagty "Cancel" düwmesi bilen ýatyryp bolýar.
+
+Saýlama skanirleme (Custom Scan) — ulanyjy haýsy ugurlary barlamalydygyny özi saýlaýar: prosesler, registr, başlangyç elementleri, hooklar, faýllar, tor — bularyň haýsysyny barlamak isleseň, çekbox bilen saýlaýarsyň.
+
+--- 2. HOWPLARY ANYKLAMAK — JIKME-JIK ---
+
+Programma birnäçe usul bilen keyloggerleri tapýar:
+
+Hook anyklaýyş: Windows-da keyloggerler köplenç SetWindowsHookEx API funksiýasyny ulanýarlar. Bu funksiýa klawiatura wakalaryna "hook" goýýar — ýagny her düwmä basylanda keylogger şol wakalary tutýar. Biziň programma şol hooklary anyklaýar.
+
+API monitoringi: Käbir keyloggerler GetAsyncKeyState() we GetKeyboardState() ýaly API-leri ulanýarlar. Bular klawiaturanyň ýagdaýyny soraýan funksiýalar. Keylogger her sekundda ýa-da her millisekuntda bu funksiýalary çagyrýar we haýsy düwmeler basylandygyny barlaýar. Biziň programma şeýle şübheli API çagyryşlaryny yzarlaýar.
+
+Proses derňewi: Her proses üçin ady, ýoly, ulanyjysy, parent prosesi we beýleki häsiýetleri derňelýär. 40-dan gowrak keylogger ady bilen deňeşdirilýär — meselem: "ardamax", "spyrix", "refog", "mspy", "flexispy", "cocospy", "wolfeye", "mimikatz", "meterpreter" we başgalar. Eger proses ady şolaryň birine meňzese — howply diýlip belgilenýär. Şeýle hem şübheli ýerlerde ýerleşýän prosesler barlanýar — meselem /tmp/, /var/tmp/, AppData/Local/Temp ýaly wagtlaýyn kataloglar.
+
+Registr barlagy: Windows-da keyloggerler köplenç registr-de awtomatiki işletme ýazgylaryny goşýarlar — kompýuter her açylanda keylogger awtomatiki başlaýar. Programma şol registr ýazgylaryny barlaýar. macOS-da bolsa LaunchAgents we LaunchDaemons kataloglaryndaky plist faýllaryny barlaýar.
+
+Tor monitoringi: Keylogger ogrlanan maglumatlary bir ýere ibermeli — köplenç internet arkaly. Programma ähli tor baglanyşyklaryny barlaýar we şübheli baglanyşyklary anyklaýar — meselem nämälim IP salgylara maglumat iberilýän bolsa.
+
+--- 3. PROSES MONITORY ---
+
+Bu sahypada kompýuterdäki ähli işleýän prosesler tablisada görkezilýär. Her proses üçin:
+— PID — prosesiň belgisi (unique identifikator)
+— Ady — prosesiň ady (meselem "chrome", "node", "keylogger")
+— CPU% — prosessoryň näçe prosentini ulanýar
+— Ýat — operatiw ýadyň näçesini ulanýar (MB ýa-da KB)
+— Howp derejesi — Safe, Low, Medium, High ýa-da Critical
+— Ýoly — prosesiň faýl ulgamyndaky ýoly
+
+Prosesler howp derejesine görä düzülýär — iň howplusy ýokarda. Gözleg funksiýasy bar — proses adyny ýazyp gözläp bolýar. Ähli ygtybarly prosesler ýaşyl, şübheli prosesler sary, howply prosesler gyzyl reňkde belgilenýär.
+
+--- 4. GORAG DOLANDYRYŞY ---
+
+Gorag sahypasynda 6 sany gorag funksiýasy bar, her birini toggle düwmesi bilen açyp/ýapyp bolýar:
+
+— Hook monitoringi (hookMonitor) — klawiatura hooklaryny yzarlaýar
+— API monitoringi (apiMonitor) — GetAsyncKeyState ýaly API çagyryşlaryny yzarlaýar
+— Proses goragy (processGuard) — täze prosesleri gözegçilikde saklaýar
+— Bufer goragy (clipboardGuard) — clipboard-y (göçürme/goýma) goraýar, sebäbi käbir keyloggerler clipboard maglumatlary hem ogurlaýar
+— Tor goragy (networkGuard) — şübheli tor baglanyşyklaryny böwetleýär
+— Awtomatiki skanirleme (autoScan) — tertip boýunça awtomatiki skanirleýär
+
+--- 5. STATISTIKA WE HASABAT ---
+
+Programma geçirilen ähli skanirlemeleriň taryhyny backend/data/scans.json faýlynda saklaýar — JSON formatda. Iň soňky 50 sany skanirleme saklanýar. Her skanirlemede şular ýazylýar:
+— Skanirlemäniň belgisi (UUID — unique identifier, her skanirleme üçin özboluşly belgi)
+— Görnüşi (quick, full, custom)
+— Skanerlenen prosesleriň sany
+— Tapylan howplaryň sany we sanawy
+— Skanerlenen ugurlar (prosesler, faýllar, hooklar, tor...)
+— Dowamlylygy (millisekuntda)
+— Platforma (darwin, win32, linux)
+— Senesi we wagty
+
+Statistika sahypasynda Chart.js arkaly grafiklerde görkezilýär:
+— Howp görnüşleriniň tortly diagrammasy (pie chart)
+— Howp derejesiniň çyzgylyk diagrammasy (line chart)
+— Skanirlemeleriň senesi boýunça bar chart
+— Jemi statistika: ähli skanirlemeleriň sany, jemi tapylan howplar, aýrylan howplar, gorag günleri
+
+--- 6. OKUW BÖLÜMI (How It Works) ---
+
+"Nähili işleýär" sahypasynda keyloggerleriň üç görnüşi jikme-jik düşündirilýär:
+
+Programma üpjünçilik keyloggerleri (Software Keyloggers):
+— Hook-based — SetWindowsHookEx API arkaly klawiatura wakalaryny tutýarlar. WH_KEYBOARD_LL ýa-da WH_KEYBOARD hook görnüşlerini ulanýarlar.
+— API-based — GetAsyncKeyState(), GetKeyboardState() API-lerini yzygiderli çagyrýarlar. Her millisekuntda klawiaturanyň ýagdaýyny barlaýarlar.
+— Form grabbers — web brauzerlerden form maglumatlaryny tutýarlar — parollary, ulanyjy atlaryny.
+— Memory-injection — beýleki prosesleriň ýadyna kod goýýarlar we şol prosesiň içinden işleýärler.
+
+Apparat keyloggerleri (Hardware Keyloggers):
+— USB keyloggerler — klawiatura bilen kompýuteriň arasynda goşulýan kiçijik enjam. Gözi bilen görmeli.
+— Simsiz snifferler (Wireless sniffers) — simsiz klawiaturalaryň signallaryny tutýarlar.
+— Akustik keyloggerler — düwmeleriň sesinden haýsy düwmäniň basylandygyny anyklaýarlar (emeli aň ulanýarlar).
+
+Ýadro keyloggerleri (Kernel Keyloggers):
+— Rootkit esasly — operasion ulgamyň ýadrosyna ornaşýarlar, tapylmagy gaty kyn.
+— Draýwer esasly — klawiatura draýweri hökmünde işleýärler.
+— Süzgüç draýwerleri (Filter drivers) — klawiatura we ulgamyň arasynda süzgüç bolup durýarlar.
+
+--- 7. HOWPLARY AÝYRMAK ---
+
+Electron desktop wersiýasynda tapylan howplary iki usul bilen aýyryp bolýar:
+— Karantin (Quarantine) — howply faýl aýratyn ygtybarly ýere göçürilýär, işlemeginiň öňi alynýar, emma pozulmaýar — gerekli bolsa dikeltmek mümkin.
+— Doly pozmak (Delete) — howply faýl doly pozulýar, dikeldip bolmaýar.
+"Quarantine All" we "Delete All" düwmeleri bilen ähli howplary bir wagtda aýyryp bolýar.
+
+--- 8. SYNAG GURALLARY (Testing Tools) ---
+
+Programma synag üçin galp keylogger faýllaryny döredip we pozup bilýär. "Create Test Threats" düwmesine basanyňda, programma wagtlaýyn katalogda "keylogger", "spyware" ýaly atlary bolan galp faýllary döredýär. Soň skan edeniňde ol faýllar howp hökmünde tapylýar — bu programmanyň dogry işleýändigini barlamak üçin amatlydyr. "Remove Test Threats" düwmesi bilen synag faýllary pozulýar.
+
+═══════════════════════════════════════════════════════════════
+
+BAŞ SAHYPA (HOME) — JIKME-JIK
+
+Programma açylanda baş sahypa görkezilýär. Bu sahypada:
+
+1) Hero bölümi — uly galkan ikonasy pulsirleýän halkalar bilen, ýanynda "No hooks detected", "Monitoring active", "Protected" ýaly animasiýaly bildirişler bar. "Start Scan" we "View Processes" düwmeleri bar.
+
+2) Çalt statistika — 4 sany kart: ulgam ýagdaýy (goragly/howply), tapylan howplar sany, hakyky wagtly monitor ýagdaýy, soňky skanirleme wagty.
+
+3) Gorag aýratynlyklary — 4 sany feature karty: ulgam skany, hakyky wagtly gorag, proses derňewi, doly gorag.
+
+4) Howp görnüşleri — 3 kart:
+   — SetWindowsHookEx — ýokary howp (gyzyl), 90% howp çyzgygy
+   — GetAsyncKeyState — orta howp (sary), 60% howp çyzgygy
+   — Raw Input API — pes howp (gök), 30% howp çyzgygy
+
+5) Ulgam ýagdaýy — işleýän prosesleriň sany, klawiatura hooklaryň sany, soňky skan wagty, gorag günleri.
+
+6) Çalt hereketler — 4 sany düwme: çalt skan, prosesleri gör, gorag sazlamalary, statistika.
+
+═══════════════════════════════════════════════════════════════
+
+PROGRAMMANYŇ ARHITEKTURASYNYŇ IŞLEÝŞI
+
+Geliň, maglumatlaryň nähili akyşyny düşündireýin:
+
+1) Ulanyjy "Start Scan" düwmesine basýar (Frontend — Vue.js)
+2) Frontend Axios arkaly POST /api/scan soragyny Backend-e iberýär (port 7051)
+3) Backend "ps aux" ýa-da "tasklist" buýrugyny çagyrýar — bu hakyky OS buýrugy
+4) OS jogap berýär — ähli prosesleriň sanawyny gaýtarýar
+5) Backend her prosesi 16 sany regex şablony bilen barlaýar
+6) Backend faýl ulgamyndaky LaunchAgents kataloglaryny barlaýar
+7) Netijäni JSON formatda Frontend-e iberýär
+8) Frontend netijeleri görkezýär — howplar gyzyl tablisada, arassa netije ýaşyl galkan bilen
+
+Electron rejiminde bolsa maglumatlaryň akyşy biraz başgaça:
+1) Ulanyjy "Start Scan" basýar (Renderer prosesi)
+2) Renderer window.electronAPI.runFullScan() çagyrýar
+3) Preload.js bu çagyryşy IPC arkaly Main prosesine iberýär
+4) Main proses OS buýruklaryny çagyrýar we netijeleri derňeýär
+5) Progress update-leri IPC arkaly yzyna iberilýär — progress bar hakyky wagtda täzelenýär
+6) Soňky netijeler IPC arkaly Renderer-e gaýtarylýar
+
+═══════════════════════════════════════════════════════════════
+
+PROGRAMMANYŇ HOWPSUZLYK ÇÄRELERI
+
+Electron programmasynyň howpsuzlygyna uly üns berdim, sebäbi howpsuzlyk programmasy özi howpsuzlyk boşlugy bolmaly däl:
+
+1) contextIsolation: true — renderer prosesi Node.js API-lerine göni girip bilmeýär. Bu XSS (Cross-Site Scripting) hüjümleriniň öňüni alýar.
+
+2) nodeIntegration: false — renderer prosesinde require(), fs, child_process ýaly Node.js modullary elýeterli däl. Zyýanly skript faýl ulgamyna girip bilmez.
+
+3) preload.js — diňe zerur funksiýalar contextBridge.exposeInMainWorld() arkaly açylýar. Frontend diňe şu funksiýalary çagyryp bilýär: getProcesses, runFullScan, getSystemInfo, removeThreat, deleteThreat, createTestKeyloggers, removeTestKeyloggers. Başga hiç hili ulgam funksiýasy elýeterli däl.
+
+4) IPC validation — her IPC handler gelýän maglumatlary barlaýar. Nädogry maglumatlar ret edilýär.
+
+═══════════════════════════════════════════════════════════════
+
+TASLAMANYŇ ARTYKMAÇLYKLARY
+
+Birinji — köp usully anyklaýyş. Programma diňe bir usul bilen däl, 5 dürli usul bilen keyloggerleri gözleýär: proses derňewi, hook anyklaýyş, API monitoringi, faýl skanirlemesi we tor barlagy. Bu köp gatly gorag — bir usuldan sypan howp beýleki usul bilen tapylýar.
+
+Ikinji — köp platformalylyk. Programma esasan Windows üçin niýetlenen bolsa-da, macOS we Linux ulgamlarynda hem işleýär. Her platforma üçin aýratyn kod ýollary bar — meselem macOS-da "ps aux", Windows-da "tasklist" we PowerShell buýruklary ulanylýar.
+
+Üçünji — iki dilliligi. Interfeýs türkmen we iňlis dillerinde doly terjime edilen. Navigasiýa, düwmeler, tablisa sözbaşylary, bildirişler, okuw mazmunlary — hemmesi iki dilde.
+
+Dördünji — okuw gymmaty. Programma diňe bir gural bolman, eýsem keyloggerleriň işleýiş ýörelgesini, Windows API-lerini, goranma usullaryny öwredýän okuw serişdesi hem bolup durýar. "How It Works" sahypasynda ähli zat düşündirilýär.
+
+Bäşinji — hakyky ulgam integrasiýasy. Programma hakyky operasion ulgam buýruklaryny ulanyp, hakyky maglumatlary derňeýär — galp ýa-da simulýasiýa maglumatlar bilen işlemeýär. Web wersiýasynda demo rejim bar, emma Electron-da ähli zat hakyky.
+
+Altynjy — professional UI dizaýny. Garaňky we ýagty režimler, responsive dizaýn, animasiýalar, gradient düwmeler, professional reňk shemasy (gyzyl — howp, sary — duýduryş, ýaşyl — arassa).
+
+Ýedinji — howp dolandyryşy. Tapylan howplary diňe görkezmek bilen çäklenmän, karantin-e salyp ýa-da doly pozup bilýär.
+
+═══════════════════════════════════════════════════════════════
+
+PROGRAMMANY NÄHILI IŞLETMELI
+
+Programmany işletmek üçin şu buýruklar ulanylýar:
+
+1) npm run dev — frontend-i ösüş rejiminde işletýär (port 7050)
+2) Backend-i işletmek üçin: cd backend && node server.js (port 7051)
+3) npm run electron — Electron desktop programmasyny işletýär
+4) npm start — frontend-i gurup, Electron-y işletýär (taýýar wersiýa)
+5) npm run dist:win — Windows üçin installer döredýär
+6) npm run dist:mac — macOS üçin DMG döredýär
+7) npm run dist:linux — Linux üçin AppImage döredýär
+
+═══════════════════════════════════════════════════════════════
+
+NETIJE
+
+Şeýlelik bilen, KeyGuard taslamasy — bu häzirki zaman kiberhowpsuzlyk meseleleriniň birini çözmäge gönükdirilen amaly we okuw taslamasydyr.
+
+Taslama Vue.js 3, Node.js, Express.js we Electron ýaly häzirki zaman web tehnologiýalaryny ulanýar we üç gatly arhitekturada gurlupdyr: frontend — ulanyjy interfeýsi, backend — serwer logikasy, Electron — desktop programma gabygy.
+
+Programma 5 dürli usul bilen keyloggerleri anyklaýar: proses derňewi, hook anyklaýyş, API monitoringi, faýl skanirlemesi we tor barlagy. 16 sany regex şablony we 40-dan gowrak keylogger ady bilen deňeşdirýär. Howplary karantin-e salyp ýa-da pozup bilýär.
+
+Interfeýs türkmen we iňlis dillerinde işleýär, garaňky we ýagty režimleri goldaýar, mobil enjamlar üçin responsive dizaýn edilipdir. 7 sany sahypadan ybarat: baş sahypa, skanirleme, prosesler, gorag, statistika, okuw bölümi we taslama hakynda.
+
+Programma hakyky wagtda ulgamy skanirläp, howplary tapyp, ulanyjyny habardar edip we howplary aýyryp bilýär. Bu diňe bir gural bolman, eýsem kiberhowpsuzlyk boýunça okuw serişdesi hem bolup durýar.
+
+Ünsüňiz üçin sag boluň! Soraglaryňyza jogap bermäge taýýar.
+
+═══════════════════════════════════════════════════════════════
+
+MÜMKIN BOLJAK SORAGLAR WE JOGAPLAR
+
+Sorag: Programma hakyky keyloggerleri tapyp bilýärmi?
+Jogap: Hawa. Programma hakyky operasion ulgam buýruklaryny — ps aux, tasklist, PowerShell — ulanyp prosesleri alýar we olary 16 sany regex şablony we 40-dan gowrak belli keylogger ady bilen deňeşdirýär. Eger kompýuterde hakyky keylogger işleýän bolsa, programma ony tapyp bilýär.
+
+Sorag: Näme üçin web tehnologiýalary ulandyňyz, C++ ýa-da Python ulanmadyňyzmy?
+Jogap: Web tehnologiýalary — Vue.js, Node.js, Electron — köp platformalylyk berýär. Bir kod bilen Windows, macOS we Linux üçin programma döredip bolýar. Electron ulanyp, web programmany desktop programma öwürip bolýar. Şeýle hem Vue.js bilen professional we owadan interfeýs döretmek aňsat.
+
+Sorag: Electron howpsuzmy? Node.js integrasiýasy howply dälmi?
+Jogap: Node.js integrasiýasy öçürilen — nodeIntegration: false. Context isolation açyk — contextIsolation: true. Diňe preload.js arkaly saýlanan funksiýalar açylýar. Bu Electron-yň resmi howpsuzlyk maslahatlary boýunça edildi.
+
+Sorag: Bu programma antiwirusyň ýerine geçip bilýärmi?
+Jogap: Ýok, bu programma antiwirus programmalarynyň ýerini tutmaýar. Bu ýöriteleşdirilen gural — diňe keyloggerleri gözleýär. Antiwirus wiruslar, troýanlar, ransomware we ş.m. bilen göreşýär. Bu programma bolsa diňe klawiatura howplaryna ünsi jemleýär. Iň gowy gorag — ikisini bile ulanmak.
+
+Sorag: Nähili keylogger görnüşlerini tapýar?
+Jogap: Esasan programma üpjünçilik keyloggerlerini — hook esasly, API esasly, form grabber we memory-injection görnüşlerini tapýar. Apparat keyloggerlerini programma tapyp bilmeýär — olar fiziki enjam bolup, göz bilen barlamaly. Ýadro keyloggerlerini tapmak gaty kyn, emma registr we draýwer barlagy arkaly käbir alamatlary tapyp bilýär.
+
+Sorag: Programma ýat we prosessor köp ulanýarmy?
+Jogap: Ýok. Adaty ýagdaýda programma az resurs ulanýar. Skanirleme wagtynda prosessor ulanyşy artýar, emma skanirleme gutarandan soň adaty ýagdaýyna gaýdýar. Proses sanawy 5 sekunt timeout bilen çäklendirilýär — ulgamy togtatmaýar.
+
+═══════════════════════════════════════════════════════════════
