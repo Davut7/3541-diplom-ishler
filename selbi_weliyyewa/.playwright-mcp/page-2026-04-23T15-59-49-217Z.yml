@@ -1,0 +1,137 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - link "GANSecurity" [ref=e6] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e11]: GANSecurity
+    - navigation [ref=e12]:
+      - link " Home" [ref=e13] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e14]: 
+        - text: Home
+      - link " Attacks" [ref=e15] [cursor=pointer]:
+        - /url: /attacks
+        - generic [ref=e16]: 
+        - text: Attacks
+      - link " Defense" [ref=e17] [cursor=pointer]:
+        - /url: /defense
+        - generic [ref=e18]: 
+        - text: Defense
+      - link " Simulator" [ref=e19] [cursor=pointer]:
+        - /url: /simulator
+        - generic [ref=e20]: 
+        - text: Simulator
+      - link " Statistics" [ref=e21] [cursor=pointer]:
+        - /url: /statistics
+        - generic [ref=e22]: 
+        - text: Statistics
+      - link " How It Works" [ref=e23] [cursor=pointer]:
+        - /url: /how-it-works
+        - generic [ref=e24]: 
+        - text: How It Works
+      - link " AI Test" [ref=e25] [cursor=pointer]:
+        - /url: /ai-test
+        - generic [ref=e26]: 
+        - text: AI Test
+      - link " About" [ref=e27] [cursor=pointer]:
+        - /url: /about
+        - generic [ref=e28]: 
+        - text: About
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - button "EN" [ref=e31] [cursor=pointer]
+        - button "TM" [ref=e32] [cursor=pointer]
+      - button "" [ref=e33] [cursor=pointer]:
+        - generic [ref=e34]: 
+      - text: 
+  - text:        
+  - main [ref=e35]:
+    - generic [ref=e36]:
+      - generic [ref=e37]:
+        - heading " AI Security Tests" [level=1] [ref=e38]:
+          - generic [ref=e39]: 
+          - text: AI Security Tests
+        - paragraph [ref=e40]: "Three-stage demonstration: Generation → Attack → Defense using local AI (Ollama)"
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e46]: 
+          - generic [ref=e47]:
+            - text: "Ollama:"
+            - strong [ref=e48]: Connected
+        - generic [ref=e51]: "Model: llama3.2:1b"
+        - button "Check" [ref=e52] [cursor=pointer]:
+          - generic [ref=e53]: 
+          - generic [ref=e54]: Check
+      - generic [ref=e57]:
+        - heading " Configuration" [level=3] [ref=e58]:
+          - generic [ref=e59]: 
+          - text: Configuration
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - generic [ref=e62]: Image Category
+            - generic [ref=e63] [cursor=pointer]:
+              - combobox "Animals / Haýwanlar" [ref=e64]
+              - img [ref=e66]
+          - generic [ref=e68]:
+            - generic [ref=e69]: Attack Type
+            - generic [ref=e70] [cursor=pointer]:
+              - combobox "FGSM (Fast Gradient Sign)" [ref=e71]
+              - img [ref=e73]
+            - generic [ref=e75]: Single-step gradient attack. Fast but detectable at high ε. (Goodfellow, 2014)
+          - generic [ref=e76]:
+            - generic [ref=e77]: "Attack Strength: 60%"
+            - slider [ref=e80]
+          - generic [ref=e81]:
+            - generic [ref=e82]: Defense Type
+            - generic [ref=e83] [cursor=pointer]:
+              - combobox "Adversarial Training" [ref=e84]
+              - img [ref=e86]
+            - generic [ref=e88]: Trains model on adversarial examples. Most common defense, 85% effective.
+          - generic [ref=e89]:
+            - generic [ref=e90]: "Defense Strength: 70%"
+            - slider [ref=e93]
+      - generic [ref=e94]:
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - generic [ref=e99]: "1"
+            - generic [ref=e100]:
+              - heading "AI Image Generation" [level=2] [ref=e101]
+              - paragraph [ref=e102]: Local AI (Ollama) generates a realistic image through GAN pipeline
+            - button "Generate" [ref=e103] [cursor=pointer]:
+              - generic [ref=e104]: 
+              - generic [ref=e105]: Generate
+          - text: 
+          - generic [ref=e106]:
+            - generic [ref=e107]: 
+            - generic [ref=e108]: Click Generate to create an image
+          - text: 
+        - generic [ref=e111]:
+          - generic [ref=e112]:
+            - generic [ref=e113]: "2"
+            - generic [ref=e114]:
+              - heading "Generation + Attack" [level=2] [ref=e115]
+              - paragraph [ref=e116]: AI generates image, then adversarial attack corrupts it
+            - button "Generate + Attack" [ref=e117] [cursor=pointer]:
+              - generic [ref=e118]: 
+              - generic [ref=e119]: Generate + Attack
+          - text: 
+          - generic [ref=e120]:
+            - generic [ref=e121]: 
+            - generic [ref=e122]: Click to generate and attack
+          - text: 
+        - generic [ref=e125]:
+          - generic [ref=e126]:
+            - generic [ref=e127]: "3"
+            - generic [ref=e128]:
+              - heading "Generation + Attack + Defense" [level=2] [ref=e129]
+              - paragraph [ref=e130]: "Full pipeline: generate, attack, then defend"
+            - button "Full Pipeline" [active] [ref=e131] [cursor=pointer]:
+              - img [ref=e144]
+              - generic [ref=e133]: Full Pipeline
+          - text:    
+          - generic [ref=e146]:
+            - progressbar [ref=e147]:
+              - img [ref=e148]
+            - generic [ref=e150]: Running full pipeline...
+  - contentinfo [ref=e137]:
+    - paragraph [ref=e142]: © 2026 GAN Security - Diploma Project
+    - paragraph [ref=e143]: "Author: Selbi Weliýewa"

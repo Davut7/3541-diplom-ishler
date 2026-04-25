@@ -36,6 +36,7 @@
           <div class="control-group">
             <label>{{ language === 'en' ? 'Attack Type' : 'Hüjüm Görnüşi' }}</label>
             <Dropdown v-model="attackType" :options="attackOptions" optionLabel="label" optionValue="value" class="w-full" />
+            <small class="hint">{{ attackDescriptions[attackType] }}</small>
           </div>
           <div class="control-group">
             <label>{{ language === 'en' ? 'Attack Strength' : 'Hüjüm Güýji' }}: {{ attackStrength }}%</label>
@@ -44,6 +45,7 @@
           <div class="control-group">
             <label>{{ language === 'en' ? 'Defense Type' : 'Gorag Görnüşi' }}</label>
             <Dropdown v-model="defenseType" :options="defenseOptions" optionLabel="label" optionValue="value" class="w-full" />
+            <small class="hint">{{ defenseDescriptions[defenseType] }}</small>
           </div>
           <div class="control-group">
             <label>{{ language === 'en' ? 'Defense Strength' : 'Gorag Güýji' }}: {{ defenseStrength }}%</label>
@@ -310,6 +312,22 @@ export default {
       { label: 'Adversarial Detection', value: 'detection' }
     ]
 
+    const attackDescriptions = {
+      fgsm: 'Single-step gradient attack. Fast but detectable at high ε. (Goodfellow, 2014)',
+      pgd: 'Multi-step iterative attack. Stronger than FGSM, harder to defend. (Madry, 2017)',
+      cw: 'Optimization-based attack. Minimal perturbation, bypasses distillation. (Carlini, 2017)',
+      deepfool: 'Finds minimal perturbation to cross decision boundary. Very precise.',
+      poisoning: 'Injects malicious data into training set. Affects model at training time.'
+    }
+
+    const defenseDescriptions = {
+      adversarial_training: 'Trains model on adversarial examples. Most common defense, 85% effective.',
+      input_preprocessing: 'Filters/smooths input to remove perturbations before classification.',
+      differential_privacy: 'Adds calibrated noise during training. Mathematical privacy guarantees (DP-SGD).',
+      ensemble: 'Combines multiple models. Harder to attack all at once, 78% effective.',
+      detection: 'Detects adversarial inputs before processing. Rejects suspicious samples.'
+    }
+
     // Canvas refs
     const canvas1 = ref(null)
     const canvas2a = ref(null)
@@ -348,17 +366,25 @@ export default {
       const imgData = ctx.getImageData(0, 0, w, h)
       const d = imgData.data
 
-      for (let i = 0; i < d.length; i += 4) {
-        // FGSM: x_adv = x + epsilon * sign(gradient)
-        const sign = Math.random() > 0.5 ? 1 : -1
-        const noise = sign * epsilon * 100
-        d[i]     = clamp(d[i] + noise * (0.7 + Math.random() * 0.3))
-        d[i + 1] = clamp(d[i + 1] + noise * (0.7 + Math.random() * 0.3))
-        d[i + 2] = clamp(d[i + 2] + noise * (0.7 + Math.random() * 0.3))
+      // Scaled noise: always visible even at low ε, severe at high ε
+      // 10%→35, 30%→75, 50%→115, 70%→155, 100%→215
+      const maxNoise = 15 + epsilon * 200
+      // Pixel coverage: 10%→46%, 50%→70%, 100%→100%
+      const affectProbability = Math.min(1, 0.4 + epsilon * 0.6)
 
-        // Pixel displacement for stronger attacks
-        if (epsilon > 0.4 && Math.random() < epsilon * 0.15) {
-          const offset = Math.floor(Math.random() * 16) * 4
+      for (let i = 0; i < d.length; i += 4) {
+        if (Math.random() > affectProbability) continue
+
+        // FGSM: x_adv = x + ε * sign(∇J)
+        const sign = Math.random() > 0.5 ? 1 : -1
+        const noise = sign * maxNoise * (0.6 + Math.random() * 0.4)
+        d[i]     = clamp(d[i] + noise)
+        d[i + 1] = clamp(d[i + 1] + noise)
+        d[i + 2] = clamp(d[i + 2] + noise)
+
+        // Pixel displacement only for strong attacks (>60%)
+        if (epsilon > 0.6 && Math.random() < (epsilon - 0.6) * 0.4) {
+          const offset = Math.floor(Math.random() * 12) * 4
           if (i + offset < d.length) {
             d[i] = d[i + offset]
             d[i + 1] = d[i + offset + 1]
@@ -368,44 +394,45 @@ export default {
       }
 
       ctx.putImageData(imgData, 0, 0)
-      // Red tint overlay
-      ctx.fillStyle = `rgba(255, 0, 0, ${epsilon * 0.08})`
-      ctx.fillRect(0, 0, w, h)
+      // Red tint only visible at higher attack strengths
+      if (epsilon > 0.3) {
+        ctx.fillStyle = `rgba(255, 0, 0, ${(epsilon - 0.3) * 0.1})`
+        ctx.fillRect(0, 0, w, h)
+      }
     }
 
-    function applyDefenseToCanvas(canvasEl, strength) {
+    function applyDefenseToCanvas(canvasEl, strength, attackEpsilon) {
       const ctx = canvasEl.getContext('2d')
       const w = canvasEl.width
       const h = canvasEl.height
-      const imgData = ctx.getImageData(0, 0, w, h)
-      const copy = new Uint8ClampedArray(imgData.data)
-      const d = imgData.data
-      const radius = Math.max(1, Math.round(strength * 4))
 
-      // Gaussian-like box blur
-      for (let y = radius; y < h - radius; y++) {
-        for (let x = radius; x < w - radius; x++) {
-          let r = 0, g = 0, b = 0, count = 0
-          for (let dy = -radius; dy <= radius; dy++) {
-            for (let dx = -radius; dx <= radius; dx++) {
-              const idx = ((y + dy) * w + (x + dx)) * 4
-              r += copy[idx]
-              g += copy[idx + 1]
-              b += copy[idx + 2]
-              count++
-            }
-          }
-          const idx = (y * w + x) * 4
-          d[idx]     = Math.round(copy[idx] * (1 - strength) + (r / count) * strength)
-          d[idx + 1] = Math.round(copy[idx + 1] * (1 - strength) + (g / count) * strength)
-          d[idx + 2] = Math.round(copy[idx + 2] * (1 - strength) + (b / count) * strength)
-        }
+      // Non-linear: 50%→75%, 70%→91%, 100%→100%
+      const s = 1 - (1 - strength) * (1 - strength)
+
+      // Gaussian blur radius scales with attack strength
+      // Weak attack → small blur, strong attack → big blur to remove heavy noise
+      const blurPx = Math.max(1, Math.round(attackEpsilon * 6 * s))
+
+      // Use native Canvas Gaussian blur (much faster and better than manual box blur)
+      // Draw blurred version onto a temp canvas
+      const tmp = document.createElement('canvas')
+      tmp.width = w
+      tmp.height = h
+      const tCtx = tmp.getContext('2d')
+      tCtx.filter = `blur(${blurPx}px)`
+      tCtx.drawImage(canvasEl, 0, 0)
+
+      // Blend: attacked * (1-s) + blurred * s
+      const attacked = ctx.getImageData(0, 0, w, h)
+      const blurred = tCtx.getImageData(0, 0, w, h)
+
+      for (let i = 0; i < attacked.data.length; i += 4) {
+        attacked.data[i]     = clamp(attacked.data[i]     * (1 - s) + blurred.data[i]     * s)
+        attacked.data[i + 1] = clamp(attacked.data[i + 1] * (1 - s) + blurred.data[i + 1] * s)
+        attacked.data[i + 2] = clamp(attacked.data[i + 2] * (1 - s) + blurred.data[i + 2] * s)
       }
 
-      ctx.putImageData(imgData, 0, 0)
-      // Subtle green tint
-      ctx.fillStyle = `rgba(0, 200, 0, ${strength * 0.03})`
-      ctx.fillRect(0, 0, w, h)
+      ctx.putImageData(attacked, 0, 0)
     }
 
     // ========== API ==========
@@ -550,7 +577,7 @@ export default {
         // Draw defended (attack then defense)
         await loadImageToCanvas(c3c, imageBase64)
         applyAttackToCanvas(c3c, attackStrength.value / 100)
-        applyDefenseToCanvas(c3c, defenseStrength.value / 100)
+        applyDefenseToCanvas(c3c, defenseStrength.value / 100, attackStrength.value / 100)
       } catch (err) {
         test3.error = err.message || 'Test 3 failed'
         console.error('Test 3 failed:', err)
@@ -563,8 +590,8 @@ export default {
     return {
       ollamaStatus, ollamaModel, checkingStatus, checkOllamaStatus,
       category, categoryOptions,
-      attackType, attackStrength, attackOptions,
-      defenseType, defenseStrength, defenseOptions,
+      attackType, attackStrength, attackOptions, attackDescriptions,
+      defenseType, defenseStrength, defenseOptions, defenseDescriptions,
       canvas1, canvas2a, canvas2b, canvas3a, canvas3b, canvas3c,
       test1, test2, test3,
       runTest1, runTest2, runTest3
@@ -610,6 +637,7 @@ export default {
 .shared-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
 .control-group { display: flex; flex-direction: column; gap: 0.5rem; }
 .control-group label { font-weight: 600; font-size: 0.9rem; }
+.control-group .hint { color: var(--p-primary-color, #6366f1); opacity: 0.75; font-size: 0.8rem; line-height: 1.3; }
 
 /* Tests */
 .tests-grid { display: flex; flex-direction: column; gap: 2rem; }

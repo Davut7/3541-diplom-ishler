@@ -1,0 +1,228 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - link "GANSecurity" [ref=e6] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e11]: GANSecurity
+    - navigation [ref=e12]:
+      - link " Home" [ref=e13] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e14]: 
+        - text: Home
+      - link " Attacks" [ref=e15] [cursor=pointer]:
+        - /url: /attacks
+        - generic [ref=e16]: 
+        - text: Attacks
+      - link " Defense" [ref=e17] [cursor=pointer]:
+        - /url: /defense
+        - generic [ref=e18]: 
+        - text: Defense
+      - link " Simulator" [ref=e19] [cursor=pointer]:
+        - /url: /simulator
+        - generic [ref=e20]: 
+        - text: Simulator
+      - link " Statistics" [ref=e21] [cursor=pointer]:
+        - /url: /statistics
+        - generic [ref=e22]: 
+        - text: Statistics
+      - link " How It Works" [ref=e23] [cursor=pointer]:
+        - /url: /how-it-works
+        - generic [ref=e24]: 
+        - text: How It Works
+      - link " AI Test" [ref=e25] [cursor=pointer]:
+        - /url: /ai-test
+        - generic [ref=e26]: 
+        - text: AI Test
+      - link " About" [ref=e27] [cursor=pointer]:
+        - /url: /about
+        - generic [ref=e28]: 
+        - text: About
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - button "EN" [ref=e31] [cursor=pointer]
+        - button "TM" [ref=e32] [cursor=pointer]
+      - button "" [ref=e33] [cursor=pointer]:
+        - generic [ref=e34]: 
+      - text: 
+  - text:        
+  - main [ref=e35]:
+    - generic [ref=e36]:
+      - generic [ref=e37]:
+        - heading " AI Security Tests" [level=1] [ref=e38]:
+          - generic [ref=e39]: 
+          - text: AI Security Tests
+        - paragraph [ref=e40]: "Three-stage demonstration: Generation → Attack → Defense using local AI (Ollama)"
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e46]: 
+          - generic [ref=e47]:
+            - text: "Ollama:"
+            - strong [ref=e48]: Connected
+        - generic [ref=e51]: "Model: llama3.2:1b"
+        - button "Check" [ref=e52] [cursor=pointer]:
+          - generic [ref=e53]: 
+          - generic [ref=e54]: Check
+      - generic [ref=e57]:
+        - heading " Configuration" [level=3] [ref=e58]:
+          - generic [ref=e59]: 
+          - text: Configuration
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - generic [ref=e62]: Image Category
+            - generic [ref=e63] [cursor=pointer]:
+              - combobox "Animals / Haýwanlar" [ref=e64]
+              - img [ref=e66]
+          - generic [ref=e68]:
+            - generic [ref=e69]: Attack Type
+            - generic [ref=e70] [cursor=pointer]:
+              - combobox "FGSM (Fast Gradient Sign)" [ref=e71]
+              - img [ref=e73]
+            - generic [ref=e75]: Single-step gradient attack. Fast but detectable at high ε. (Goodfellow, 2014)
+          - generic [ref=e76]:
+            - generic [ref=e77]: "Attack Strength: 60%"
+            - slider [ref=e80]
+          - generic [ref=e81]:
+            - generic [ref=e82]: Defense Type
+            - generic [ref=e83] [cursor=pointer]:
+              - combobox "Adversarial Training" [ref=e84]
+              - img [ref=e86]
+            - generic [ref=e88]: Trains model on adversarial examples. Most common defense, 85% effective.
+          - generic [ref=e89]:
+            - generic [ref=e90]: "Defense Strength: 70%"
+            - slider [ref=e93]
+      - generic [ref=e94]:
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - generic [ref=e99]: "1"
+            - generic [ref=e100]:
+              - heading "AI Image Generation" [level=2] [ref=e101]
+              - paragraph [ref=e102]: Local AI (Ollama) generates a realistic image through GAN pipeline
+            - button "Generate" [active] [ref=e103] [cursor=pointer]:
+              - generic [ref=e257]: 
+              - generic [ref=e105]: Generate
+          - generic [ref=e259]:
+            - heading "GAN Generated Image — Pug" [level=4] [ref=e261]
+            - generic [ref=e263]:
+              - heading " AI Analysis" [level=4] [ref=e264]:
+                - generic [ref=e265]: 
+                - text: AI Analysis
+              - generic [ref=e266]:
+                - generic [ref=e267]: "Description:"
+                - emphasis [ref=e268]: A realistic and detailed illustration of a Pug dog, showcasing its characteristic short nose and fluffy coat.
+              - generic [ref=e269]:
+                - generic [ref=e270]: "GAN Type:"
+                - generic [ref=e272]: StyleGAN3
+              - generic [ref=e273]:
+                - generic [ref=e274]: "Quality:"
+                - progressbar [ref=e275]:
+                  - generic [ref=e277]: 85%
+              - generic [ref=e278]:
+                - generic [ref=e279]: "Realism:"
+                - progressbar [ref=e280]:
+                  - generic [ref=e282]: 86%
+              - generic [ref=e283]:
+                - generic [ref=e284]: "Model:"
+                - generic [ref=e286]: llama3.2:1b
+              - generic [ref=e287]:
+                - generic [ref=e288]: "Category:"
+                - generic [ref=e290]: animals
+          - text:  
+        - generic [ref=e111]:
+          - generic [ref=e112]:
+            - generic [ref=e113]: "2"
+            - generic [ref=e114]:
+              - heading "Generation + Attack" [level=2] [ref=e115]
+              - paragraph [ref=e116]: AI generates image, then adversarial attack corrupts it
+            - button "Generate + Attack" [ref=e117] [cursor=pointer]:
+              - generic [ref=e215]: 
+              - generic [ref=e119]: Generate + Attack
+          - generic [ref=e216]:
+            - generic [ref=e217]:
+              - generic [ref=e218]:
+                - heading "Original (GAN)" [level=4] [ref=e219]
+                - generic [ref=e222]: Clean
+              - generic [ref=e223]:
+                - generic [ref=e224]: 
+                - generic [ref=e226]: FGSM 60%
+              - generic [ref=e227]:
+                - heading "After Attack" [level=4] [ref=e228]
+                - generic [ref=e231]: "Success: 79%"
+            - generic [ref=e232]:
+              - heading " Attack Analysis" [level=4] [ref=e233]:
+                - generic [ref=e234]: 
+                - text: Attack Analysis
+              - generic [ref=e235]:
+                - generic [ref=e236]:
+                  - slider [ref=e238]:
+                    - generic [ref=e241]: "79"
+                  - generic [ref=e242]: Success Rate
+                - generic [ref=e243]:
+                  - slider [ref=e245]:
+                    - generic [ref=e248]: "57"
+                  - generic [ref=e249]: Pixels Affected
+                - generic [ref=e250]:
+                  - paragraph [ref=e251]:
+                    - strong [ref=e252]: "Impact:"
+                    - text: "{\"image\": \"The Owl image has been subtly altered, with the eyes and talons appearing slightly different in color. The texture of the feathers seems to be slightly distorted, giving it a faintly grainy appearance. Overall, the change is imperceptible, but noticeable enough to suggest that the GAN model was manipulated.\"}"
+                  - paragraph [ref=e253]:
+                    - strong [ref=e254]: "Vulnerability:"
+                    - text: "{\"GAN\": \"The attack exploits the vanishing point attack weakness by manipulating the model's perception of distances and shapes. By introducing subtle perturbations, the attacker can create a convincing illusion that the image has been tampered with.\"}"
+                  - paragraph [ref=e255]:
+                    - strong [ref=e256]: "Detectable:"
+                    - text: "Yes"
+          - text:  
+        - generic [ref=e125]:
+          - generic [ref=e126]:
+            - generic [ref=e127]: "3"
+            - generic [ref=e128]:
+              - heading "Generation + Attack + Defense" [level=2] [ref=e129]
+              - paragraph [ref=e130]: "Full pipeline: generate, attack, then defend"
+            - button "Full Pipeline" [ref=e131] [cursor=pointer]:
+              - generic [ref=e151]: 
+              - generic [ref=e133]: Full Pipeline
+          - generic [ref=e152]:
+            - generic [ref=e153]:
+              - generic [ref=e154]:
+                - heading "Original" [level=4] [ref=e155]
+                - generic [ref=e158]: GAN Output
+              - generic [ref=e159]:
+                - generic [ref=e160]: 
+                - generic [ref=e162]: FGSM
+              - generic [ref=e163]:
+                - heading "Attacked" [level=4] [ref=e164]
+                - generic [ref=e167]: Corrupted
+              - generic [ref=e168]:
+                - generic [ref=e169]: 
+                - generic [ref=e171]: adversarial training
+              - generic [ref=e172]:
+                - heading "Defended" [level=4] [ref=e173]
+                - generic [ref=e176]: "Restored: 55%"
+            - generic [ref=e177]:
+              - generic [ref=e178]:
+                - heading " Attack" [level=4] [ref=e179]:
+                  - generic [ref=e180]: 
+                  - text: Attack
+                - slider [ref=e182]:
+                  - generic [ref=e185]: "77"
+                - text: Attack Success
+                - paragraph [ref=e186]: Image of Owl corrupted with adversarial noise
+              - generic [ref=e187]:
+                - heading " Defense" [level=4] [ref=e188]:
+                  - generic [ref=e189]: 
+                  - text: Defense
+                - generic [ref=e190]:
+                  - generic [ref=e191]:
+                    - slider [ref=e193]:
+                      - generic [ref=e196]: "59"
+                    - generic [ref=e197]: Effectiveness
+                  - generic [ref=e198]:
+                    - slider [ref=e200]:
+                      - generic [ref=e203]: "55"
+                    - generic [ref=e204]: Quality
+                - paragraph [ref=e205]: Applies input smoothing and noise filtering to restore image
+                - paragraph [ref=e206]:
+                  - strong [ref=e207]: "Tip:"
+                  - text: Combine with ensemble methods for stronger protection
+          - text:  
+  - contentinfo [ref=e137]:
+    - paragraph [ref=e142]: © 2026 GAN Security - Diploma Project
+    - paragraph [ref=e143]: "Author: Selbi Weliýewa"

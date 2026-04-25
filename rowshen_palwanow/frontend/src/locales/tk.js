@@ -234,7 +234,7 @@ export default {
     ],
     author: {
       title: 'Awtor',
-      name: 'Rowşen Orazmyhammedow',
+      name: 'Röwşen Pälwanow',
       project: 'Diplom Taslamasy',
       topic: 'Keylogger Detection in Windows Operating System',
       topicTk: 'Windows operasion ulgamynda keylogger-leri ýüze çykarmak'
