@@ -17,7 +17,16 @@
       "Bash(timeout 5 node:*)",
       "Bash(npm run build:*)",
       "Bash(lsof:*)",
-      "Bash(xargs kill:*)"
+      "Bash(xargs kill:*)",
+      "Bash(git checkout:*)",
+      "Bash(flutter --version)",
+      "Bash(flutter create:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(dart analyze:*)",
+      "Bash(flutter build:*)",
+      "Bash(flutter devices:*)",
+      "Bash(node server.js)",
+      "Bash(kill %1)"
     ]
   }
 }

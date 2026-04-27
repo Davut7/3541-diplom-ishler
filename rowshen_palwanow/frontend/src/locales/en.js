@@ -176,6 +176,57 @@ export default {
         examples: 'Rootkit-based, Driver-based'
       }
     },
+    appArchitecture: {
+      title: 'How KeyGuard Works',
+      subtitle: 'Understanding the internal architecture of KeyGuard',
+      electron: {
+        name: 'Electron Desktop App',
+        desc: 'KeyGuard runs as a native desktop application using Electron. The main process has full access to your operating system, while the renderer (UI) communicates through a secure bridge (IPC). This architecture ensures both security and deep system access.'
+      },
+      scanning: {
+        name: 'Multi-Layer Scanning Engine',
+        desc: 'The scan engine runs 5 independent checks in sequence: Process Analysis, Keyboard Hook Detection, File System Scan, Persistence Mechanism Check, and Network Connection Audit. Each layer targets a different attack vector used by keyloggers.'
+      },
+      detection: {
+        name: 'Signature-Based Detection',
+        desc: 'KeyGuard maintains a database of known keylogger signatures — process names (e.g., ardamax, spyrix, refog), suspicious keywords (hook, capture, stealth), and file name patterns. Each running process and file is matched against these signatures.'
+      },
+      heuristic: {
+        name: 'Heuristic Analysis',
+        desc: 'Beyond signatures, KeyGuard uses heuristic rules: processes running from temporary directories get flagged, scripting runtimes are marked as potential carriers, and multiple suspicious keywords in a single process elevate the risk level automatically.'
+      },
+      risk: {
+        name: 'Risk Classification',
+        desc: 'Every detected item receives a risk level: Safe (system process), Low (scripting runtime), Medium (single suspicious keyword or unusual path), or High (known keylogger signature or multiple indicators). This helps you prioritize real threats.'
+      },
+      response: {
+        name: 'Threat Response',
+        desc: 'Detected threats can be quarantined (moved to ~/.keyguard_quarantine with a timestamp) or permanently deleted. Quarantine is reversible — your data is never lost unless you explicitly choose to delete.'
+      }
+    },
+    scanStages: {
+      title: 'Scan Stages Explained',
+      stage1: {
+        name: '1. Process Scan (0-15%)',
+        desc: 'Runs "ps -eo" on macOS/Linux or "Get-Process" on Windows to get all running processes with PID, CPU, memory, user, and full command path. Each process is analyzed against the signature database.'
+      },
+      stage2: {
+        name: '2. Keyboard Hook Detection (15-30%)',
+        desc: 'On macOS: queries the TCC database for apps with Accessibility and Input Monitoring permissions. On Windows: scans for loaded keyboard hook DLLs and processes using keyboard APIs. On Linux: checks /dev/input device access.'
+      },
+      stage3: {
+        name: '3. File System Scan (30-70%)',
+        desc: 'Recursively scans key directories (Desktop, Downloads, Documents, /Applications, /tmp, Library) up to 4 levels deep. Checks file names against 40+ keylogger patterns and suspicious script extensions (.pyw, .ahk, .vbs, .wsf, .hta).'
+      },
+      stage4: {
+        name: '4. Persistence Check (70-85%)',
+        desc: 'Examines LaunchAgents, LaunchDaemons, and Login Items on macOS. On Windows: scans 6 registry Run keys and Startup folders. On Linux: checks systemd services, crontab, autostart, and shell RC files.'
+      },
+      stage5: {
+        name: '5. Network Audit (85-100%)',
+        desc: 'Analyzes active network connections via netstat/ss to identify established connections and listening ports. Keyloggers often transmit captured data to remote servers — this stage helps detect such exfiltration.'
+      }
+    },
     faq: {
       q1: {
         question: 'What is a keylogger?',

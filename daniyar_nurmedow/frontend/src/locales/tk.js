@@ -6,7 +6,8 @@ export default {
     scanner: 'Skanirleýji',
     howItWorks: 'Nähili işleýär',
     liveLab: 'Janly Lab',
-    about: 'Barada'
+    about: 'Barada',
+    comparison: 'Deňeşdir'
   },
   home: {
     title: 'XSS Shield',
@@ -251,6 +252,47 @@ export default {
       topic: 'XSS Attack and Defense Techniques',
       topicTk: 'XSS hüjümi we goranyş usullary'
     }
+  },
+  comparison: {
+    subtitle: 'Şol bir XSS hüjümi bilen ejiz sahypanyň we goragly sahypanyň arasyndaky tapawudy görüň',
+    payloadPlaceholder: 'XSS ýüküni giriziň ýa-da aşakdaky mysallardan saýlaň...',
+    execute: 'HÜJÜMI ÝERINE ÝETIR',
+    quickPayloads: 'Taýýar Ýükler',
+    withoutDefense: 'GORANYŞSYZ',
+    withDefense: 'GORANYŞLY',
+    unprotected: 'EJIZ',
+    protected: 'GORAGLY',
+    searchResults: 'Gözleg netijeleri',
+    blocked: 'HÜJÜM BLOKIRLENDI!',
+    fakeNav: {
+      home: 'Baş sahypa',
+      products: 'Harytlar',
+      contact: 'Aragatnaşyk'
+    },
+    vulnExplain: {
+      title: 'Näme üçin ejiz?',
+      desc: 'Sahypa ulanyjy girişini göni innerHTML arkaly görkezýär, HTML/JS sanjymyna ýol berýär.'
+    },
+    safeExplain: {
+      title: 'Näme üçin howpsuz?',
+      desc: 'Sahypa textContent ulanýar, ähli girişi ýönekeý tekst hökmünde görkezýär, kod ýerine ýetirilmeýär.'
+    },
+    stolenData: {
+      title: 'HÜJÜMÇI TARAPYNDAN OGURLANDY'
+    },
+    defenseLog: {
+      title: 'GORANYŞ ÝAZGYSY',
+      detected: 'Ulanyjy girişinde zyýanly ýük tapyldy',
+      blocked: 'Skript ýerine ýetirmesi arassalaýjy tarapyndan blokirlendi',
+      sanitized: 'Giriş gaçyryldy we tekst hökmünde görkezildi',
+      logged: 'Hüjüm synanyşygy derňew üçin ýazyldy'
+    },
+    defenseSteps: [
+      { title: 'Giriş Barlagy', desc: 'Ähli ulanyjy girişlerini howply nagyşlar üçin barlaň' },
+      { title: 'Çykyş Kodlaşdyrma', desc: 'Ýörite simwollary gaçyryň: < > " \' &' },
+      { title: 'textContent Ulanyň', desc: 'Ulanyjy maglumatlaryny HTML däl-de tekst hökmünde görkeziň' },
+      { title: 'CSP Başlyklary', desc: 'Setir içindäki skriptleri Content Security Policy bilen blokirläň' }
+    ]
   },
   common: {
     loading: 'Ýüklenýär...',

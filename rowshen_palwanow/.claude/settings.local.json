@@ -3,7 +3,11 @@
     "allow": [
       "Bash(npm install)",
       "Bash(npm run build:*)",
-      "Bash(NODE_ENV=development npx electron:*)"
+      "Bash(NODE_ENV=development npx electron:*)",
+      "Bash(npx electron:*)",
+      "Bash(echo \"Electron launched with PID: $!\")",
+      "Bash(node -e \"const { exec } = require\\('child_process'\\); const path = require\\('path'\\); console.log\\('main:', path.join\\(__dirname, 'electron/main.js'\\)\\); console.log\\('exists:', require\\('fs'\\).existsSync\\(path.join\\(__dirname, 'electron/main.js'\\)\\)\\); console.log\\('dist:', require\\('fs'\\).existsSync\\(path.join\\(__dirname, 'frontend/dist/index.html'\\)\\)\\);\")",
+      "Bash(ELECTRON_ENABLE_LOGGING=1 ./node_modules/.bin/electron .)"
     ]
   }
 }

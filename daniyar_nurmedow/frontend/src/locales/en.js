@@ -6,7 +6,8 @@ export default {
     scanner: 'Scanner',
     howItWorks: 'How It Works',
     liveLab: 'Live Lab',
-    about: 'About'
+    about: 'About',
+    comparison: 'Compare'
   },
   home: {
     title: 'XSS Shield',
@@ -251,6 +252,47 @@ export default {
       topic: 'XSS Attack and Defense Techniques',
       topicTk: 'XSS hüjümi we goranyş usullary'
     }
+  },
+  comparison: {
+    subtitle: 'See the difference between a vulnerable site and a protected site with the same XSS attack',
+    payloadPlaceholder: 'Enter XSS payload or select from examples below...',
+    execute: 'EXECUTE ATTACK',
+    quickPayloads: 'Quick Payloads',
+    withoutDefense: 'WITHOUT DEFENSE',
+    withDefense: 'WITH DEFENSE',
+    unprotected: 'VULNERABLE',
+    protected: 'PROTECTED',
+    searchResults: 'Search results for',
+    blocked: 'ATTACK BLOCKED!',
+    fakeNav: {
+      home: 'Home',
+      products: 'Products',
+      contact: 'Contact'
+    },
+    vulnExplain: {
+      title: 'Why is it vulnerable?',
+      desc: 'The site uses innerHTML to render user input directly, allowing HTML/JS injection.'
+    },
+    safeExplain: {
+      title: 'Why is it safe?',
+      desc: 'The site uses textContent which treats all input as plain text, preventing code execution.'
+    },
+    stolenData: {
+      title: 'DATA STOLEN BY ATTACKER'
+    },
+    defenseLog: {
+      title: 'DEFENSE LOG',
+      detected: 'Malicious payload detected in user input',
+      blocked: 'Script execution blocked by sanitizer',
+      sanitized: 'Input escaped and rendered as text',
+      logged: 'Attack attempt logged for analysis'
+    },
+    defenseSteps: [
+      { title: 'Input Validation', desc: 'Check all user inputs for dangerous patterns' },
+      { title: 'Output Encoding', desc: 'Escape special characters: < > " \' &' },
+      { title: 'Use textContent', desc: 'Render user data as text, not HTML' },
+      { title: 'CSP Headers', desc: 'Block inline scripts with Content Security Policy' }
+    ]
   },
   common: {
     loading: 'Loading...',

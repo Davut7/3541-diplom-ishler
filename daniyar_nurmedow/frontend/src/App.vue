@@ -32,6 +32,9 @@
           <router-link to="/defense" class="nav-item">
             <span class="nav-prefix">./</span>defense
           </router-link>
+          <router-link to="/comparison" class="nav-item">
+            <span class="nav-prefix">./</span>compare
+          </router-link>
           <router-link to="/scanner" class="nav-item">
             <span class="nav-prefix">./</span>scanner
           </router-link>
@@ -99,6 +102,9 @@
         </router-link>
         <router-link to="/defense" class="mobile-nav-item" @click="mobileMenuOpen = false">
           <span class="nav-prefix">./</span>defense
+        </router-link>
+        <router-link to="/comparison" class="mobile-nav-item" @click="mobileMenuOpen = false">
+          <span class="nav-prefix">./</span>compare
         </router-link>
         <router-link to="/scanner" class="mobile-nav-item" @click="mobileMenuOpen = false">
           <span class="nav-prefix">./</span>scanner

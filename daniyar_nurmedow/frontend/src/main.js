@@ -35,11 +35,13 @@ import ScannerView from './views/ScannerView.vue'
 import HowItWorksView from './views/HowItWorksView.vue'
 import LiveLabView from './views/LiveLabView.vue'
 import AboutView from './views/AboutView.vue'
+import ComparisonView from './views/ComparisonView.vue'
 
 const routes = [
   { path: '/', component: HomeView },
   { path: '/attack-lab', component: AttackLabView },
   { path: '/defense', component: DefenseView },
+  { path: '/comparison', component: ComparisonView },
   { path: '/scanner', component: ScannerView },
   { path: '/how-it-works', component: HowItWorksView },
   { path: '/live-lab', component: LiveLabView },

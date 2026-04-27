@@ -5,6 +5,64 @@
       <p>{{ t.howItWorks.subtitle }}</p>
     </div>
 
+    <!-- How KeyGuard App Works (NEW SECTION) -->
+    <Card class="app-arch-card">
+      <template #content>
+        <h2><i class="pi pi-shield"></i> {{ t.howItWorks.appArchitecture.title }}</h2>
+        <p class="section-subtitle">{{ t.howItWorks.appArchitecture.subtitle }}</p>
+
+        <div class="arch-grid">
+          <div class="arch-item electron">
+            <div class="arch-icon"><i class="pi pi-desktop"></i></div>
+            <h3>{{ t.howItWorks.appArchitecture.electron.name }}</h3>
+            <p>{{ t.howItWorks.appArchitecture.electron.desc }}</p>
+          </div>
+          <div class="arch-item scanning">
+            <div class="arch-icon"><i class="pi pi-search"></i></div>
+            <h3>{{ t.howItWorks.appArchitecture.scanning.name }}</h3>
+            <p>{{ t.howItWorks.appArchitecture.scanning.desc }}</p>
+          </div>
+          <div class="arch-item detection">
+            <div class="arch-icon"><i class="pi pi-database"></i></div>
+            <h3>{{ t.howItWorks.appArchitecture.detection.name }}</h3>
+            <p>{{ t.howItWorks.appArchitecture.detection.desc }}</p>
+          </div>
+          <div class="arch-item heuristic">
+            <div class="arch-icon"><i class="pi pi-chart-line"></i></div>
+            <h3>{{ t.howItWorks.appArchitecture.heuristic.name }}</h3>
+            <p>{{ t.howItWorks.appArchitecture.heuristic.desc }}</p>
+          </div>
+          <div class="arch-item risk">
+            <div class="arch-icon"><i class="pi pi-exclamation-triangle"></i></div>
+            <h3>{{ t.howItWorks.appArchitecture.risk.name }}</h3>
+            <p>{{ t.howItWorks.appArchitecture.risk.desc }}</p>
+          </div>
+          <div class="arch-item response">
+            <div class="arch-icon"><i class="pi pi-trash"></i></div>
+            <h3>{{ t.howItWorks.appArchitecture.response.name }}</h3>
+            <p>{{ t.howItWorks.appArchitecture.response.desc }}</p>
+          </div>
+        </div>
+      </template>
+    </Card>
+
+    <!-- Scan Stages Explained (NEW SECTION) -->
+    <Card class="stages-card">
+      <template #content>
+        <h2><i class="pi pi-sync"></i> {{ t.howItWorks.scanStages.title }}</h2>
+        <div class="stages-timeline">
+          <div v-for="(stage, i) in scanStages" :key="i" class="stage-item" :class="'stage-' + (i + 1)">
+            <div class="stage-progress-bar">
+              <div class="stage-fill" :style="{ width: stageWidths[i] }"></div>
+            </div>
+            <h3>{{ stage.name }}</h3>
+            <p>{{ stage.desc }}</p>
+          </div>
+        </div>
+      </template>
+    </Card>
+
+    <!-- Detection Steps Flow -->
     <div class="steps-flow">
       <div v-for="(step, i) in steps" :key="i" class="step-item">
         <div class="step-number">{{ i + 1 }}</div>
@@ -116,7 +174,17 @@ export default {
       props.t.howItWorks.faq.q4
     ])
 
-    return { steps, faqs }
+    const scanStages = computed(() => [
+      props.t.howItWorks.scanStages.stage1,
+      props.t.howItWorks.scanStages.stage2,
+      props.t.howItWorks.scanStages.stage3,
+      props.t.howItWorks.scanStages.stage4,
+      props.t.howItWorks.scanStages.stage5
+    ])
+
+    const stageWidths = ['15%', '15%', '40%', '15%', '15%']
+
+    return { steps, faqs, scanStages, stageWidths }
   }
 }
 </script>
@@ -132,6 +200,134 @@ export default {
   margin-bottom: 2rem;
 }
 
+/* App Architecture Section */
+.app-arch-card,
+.stages-card {
+  margin-bottom: 1.5rem;
+}
+
+.app-arch-card h2,
+.stages-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.app-arch-card h2 i { color: #ef4444; }
+.stages-card h2 i { color: #22c55e; }
+
+.section-subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.arch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.arch-item {
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.arch-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.arch-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.arch-icon i {
+  font-size: 1.3rem;
+  color: white;
+}
+
+.arch-item.electron .arch-icon { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.arch-item.scanning .arch-icon { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.arch-item.detection .arch-icon { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+.arch-item.heuristic .arch-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.arch-item.risk .arch-icon { background: linear-gradient(135deg, #f97316, #ea580c); }
+.arch-item.response .arch-icon { background: linear-gradient(135deg, #22c55e, #16a34a); }
+
+.arch-item h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.arch-item p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Scan Stages Timeline */
+.stages-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.stage-item {
+  padding: 1rem 1.25rem;
+  background: var(--bg-primary);
+  border-radius: 10px;
+  border-left: 4px solid;
+}
+
+.stage-item.stage-1 { border-color: #3b82f6; }
+.stage-item.stage-2 { border-color: #8b5cf6; }
+.stage-item.stage-3 { border-color: #ef4444; }
+.stage-item.stage-4 { border-color: #f59e0b; }
+.stage-item.stage-5 { border-color: #22c55e; }
+
+.stage-progress-bar {
+  height: 6px;
+  background: var(--border-color);
+  border-radius: 3px;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+
+.stage-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s;
+}
+
+.stage-item.stage-1 .stage-fill { background: #3b82f6; }
+.stage-item.stage-2 .stage-fill { background: #8b5cf6; }
+.stage-item.stage-3 .stage-fill { background: #ef4444; }
+.stage-item.stage-4 .stage-fill { background: #f59e0b; }
+.stage-item.stage-5 .stage-fill { background: #22c55e; }
+
+.stage-item h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+}
+
+.stage-item p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Steps Flow */
 .steps-flow {
   display: flex;
   justify-content: space-between;
@@ -302,7 +498,8 @@ export default {
     display: none;
   }
 
-  .types-grid {
+  .types-grid,
+  .arch-grid {
     grid-template-columns: 1fr;
   }
 
@@ -353,6 +550,26 @@ export default {
   }
 
   .api-item p {
+    font-size: 0.8rem;
+  }
+
+  .arch-item {
+    padding: 1rem;
+  }
+
+  .arch-item h3 {
+    font-size: 0.9rem;
+  }
+
+  .arch-item p {
+    font-size: 0.8rem;
+  }
+
+  .stage-item h3 {
+    font-size: 0.9rem;
+  }
+
+  .stage-item p {
     font-size: 0.8rem;
   }
 }
