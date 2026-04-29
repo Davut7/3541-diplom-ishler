@@ -747,17 +747,24 @@ export default {
       return imageData
     }
 
-    // Apply defense to recover image
+    // Apply defense to recover image — each defense has unique visual logic
     const applyDefense = (canvas, attackType, defenseType, strength) => {
       if (!canvas || !originalImageData) return
       const ctx = canvas.getContext('2d')
       const width = canvas.width
       const height = canvas.height
-      const imageData = ctx.createImageData(width, height)
       const strengthFactor = strength / 100
 
-      // Defense effectiveness varies by attack type
-      const defenseEffectiveness = {
+      // Get attacked image data ONCE (not per pixel)
+      const attackedData = attackedCanvas.value
+        ? attackedCanvas.value.getContext('2d').getImageData(0, 0, width, height)
+        : null
+      if (!attackedData) return
+
+      const outData = ctx.createImageData(width, height)
+
+      // Defense effectiveness matrix
+      const defenseEff = {
         adversarialTraining: { fgsm: 0.65, pgd: 0.45, cw: 0.3, deepfool: 0.6, default: 0.4 },
         inputPreprocessing: { fgsm: 0.75, pgd: 0.6, cw: 0.4, deepfool: 0.65, dataPoisoning: 0.55, default: 0.5 },
         defensiveDistillation: { fgsm: 0.65, pgd: 0.45, cw: 0.0, deepfool: 0.55, default: 0.3 },
@@ -767,34 +774,181 @@ export default {
         inputDetection: { fgsm: 0.85, pgd: 0.75, dataPoisoning: 0.7, modeCollapse: 0.8, default: 0.6 }
       }
 
-      const effectiveness = defenseEffectiveness[defenseType]?.[attackType] ||
-                           defenseEffectiveness[defenseType]?.default || 0.5
+      const eff = defenseEff[defenseType]?.[attackType] || defenseEff[defenseType]?.default || 0.5
+      const recovery = eff * (1 - strengthFactor * 0.3)
 
-      for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-          const idx = (y * width + x) * 4
+      // Helper: clamp 0-255
+      const clamp = (v) => Math.max(0, Math.min(255, Math.round(v)))
 
-          // Blend between attacked and original based on defense effectiveness
-          const origR = originalImageData.data[idx]
-          const origG = originalImageData.data[idx + 1]
-          const origB = originalImageData.data[idx + 2]
+      // ── DEFENSE-SPECIFIC VISUAL PROCESSING ──
 
-          // Get current canvas data (attacked)
-          const attR = attackedCanvas.value?.getContext('2d').getImageData(0, 0, width, height).data[idx] || origR
-          const attG = attackedCanvas.value?.getContext('2d').getImageData(0, 0, width, height).data[idx + 1] || origG
-          const attB = attackedCanvas.value?.getContext('2d').getImageData(0, 0, width, height).data[idx + 2] || origB
+      if (defenseType === 'inputPreprocessing') {
+        // Spatial smoothing (median filter simulation) — removes high-freq noise
+        const kernelSize = Math.max(1, Math.round(3 * recovery))
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4
+            let sumR = 0, sumG = 0, sumB = 0, count = 0
+            for (let ky = -kernelSize; ky <= kernelSize; ky++) {
+              for (let kx = -kernelSize; kx <= kernelSize; kx++) {
+                const ny = Math.max(0, Math.min(height - 1, y + ky))
+                const nx = Math.max(0, Math.min(width - 1, x + kx))
+                const ni = (ny * width + nx) * 4
+                sumR += attackedData.data[ni]; sumG += attackedData.data[ni + 1]; sumB += attackedData.data[ni + 2]
+                count++
+              }
+            }
+            // Blend smoothed with original based on effectiveness
+            const smoothR = sumR / count, smoothG = sumG / count, smoothB = sumB / count
+            outData.data[idx] = clamp(smoothR + (originalImageData.data[idx] - smoothR) * recovery * 0.5)
+            outData.data[idx + 1] = clamp(smoothG + (originalImageData.data[idx + 1] - smoothG) * recovery * 0.5)
+            outData.data[idx + 2] = clamp(smoothB + (originalImageData.data[idx + 2] - smoothB) * recovery * 0.5)
+            outData.data[idx + 3] = 255
+          }
+        }
 
-          // Recovery amount based on defense effectiveness and attack strength
-          const recovery = effectiveness * (1 - strengthFactor * 0.3)
+      } else if (defenseType === 'adversarialTraining') {
+        // Learns to resist: subtracts estimated perturbation pattern
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4
+            // Estimate perturbation = attacked - original
+            const pertR = attackedData.data[idx] - originalImageData.data[idx]
+            const pertG = attackedData.data[idx + 1] - originalImageData.data[idx + 1]
+            const pertB = attackedData.data[idx + 2] - originalImageData.data[idx + 2]
+            // Subtract perturbation scaled by effectiveness
+            outData.data[idx] = clamp(attackedData.data[idx] - pertR * recovery)
+            outData.data[idx + 1] = clamp(attackedData.data[idx + 1] - pertG * recovery)
+            outData.data[idx + 2] = clamp(attackedData.data[idx + 2] - pertB * recovery)
+            outData.data[idx + 3] = 255
+          }
+        }
 
-          imageData.data[idx] = attR + (origR - attR) * recovery
-          imageData.data[idx + 1] = attG + (origG - attG) * recovery
-          imageData.data[idx + 2] = attB + (origB - attB) * recovery
-          imageData.data[idx + 3] = 255
+      } else if (defenseType === 'defensiveDistillation') {
+        // Smooths decision boundaries — soft thresholding
+        const temperature = 20 * recovery
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4
+            for (let c = 0; c < 3; c++) {
+              const att = attackedData.data[idx + c]
+              const orig = originalImageData.data[idx + c]
+              // Soft blend with temperature scaling
+              const diff = att - orig
+              const softened = att - diff * (1 - 1 / (1 + Math.abs(diff) / temperature)) * recovery
+              outData.data[idx + c] = clamp(softened)
+            }
+            outData.data[idx + 3] = 255
+          }
+        }
+
+      } else if (defenseType === 'differentialPrivacy') {
+        // Adds calibrated noise to mask privacy leaks, then reconstructs
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4
+            for (let c = 0; c < 3; c++) {
+              const orig = originalImageData.data[idx + c]
+              const att = attackedData.data[idx + c]
+              // Add small Gaussian noise to hide patterns, blend back to original
+              const noise = (Math.random() - 0.5) * 10 * (1 - recovery)
+              outData.data[idx + c] = clamp(att + (orig - att) * recovery + noise)
+            }
+            outData.data[idx + 3] = 255
+          }
+        }
+
+      } else if (defenseType === 'ensembleMethods') {
+        // Multiple model votes — uses weighted average of attacked + original + smoothed
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4
+            // "Model 1" vote: original
+            // "Model 2" vote: attacked
+            // "Model 3" vote: neighbor average (smoothed)
+            let avgR = 0, avgG = 0, avgB = 0, cnt = 0
+            for (let ky = -1; ky <= 1; ky++) {
+              for (let kx = -1; kx <= 1; kx++) {
+                const ny = Math.max(0, Math.min(height - 1, y + ky))
+                const nx = Math.max(0, Math.min(width - 1, x + kx))
+                const ni = (ny * width + nx) * 4
+                avgR += attackedData.data[ni]; avgG += attackedData.data[ni + 1]; avgB += attackedData.data[ni + 2]
+                cnt++
+              }
+            }
+            avgR /= cnt; avgG /= cnt; avgB /= cnt
+            // Weighted vote: original * eff + attacked * (1-eff) * 0.3 + smoothed * (1-eff) * 0.7
+            const w1 = recovery, w2 = (1 - recovery) * 0.3, w3 = (1 - recovery) * 0.7
+            outData.data[idx] = clamp(originalImageData.data[idx] * w1 + attackedData.data[idx] * w2 + avgR * w3)
+            outData.data[idx + 1] = clamp(originalImageData.data[idx + 1] * w1 + attackedData.data[idx + 1] * w2 + avgG * w3)
+            outData.data[idx + 2] = clamp(originalImageData.data[idx + 2] * w1 + attackedData.data[idx + 2] * w2 + avgB * w3)
+            outData.data[idx + 3] = 255
+          }
+        }
+
+      } else if (defenseType === 'certifiedDefense') {
+        // Randomized smoothing — averages multiple noisy versions
+        const numSamples = 5
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4
+            let accR = 0, accG = 0, accB = 0
+            for (let s = 0; s < numSamples; s++) {
+              const noiseR = (Math.random() - 0.5) * 30 * (1 - recovery)
+              const noiseG = (Math.random() - 0.5) * 30 * (1 - recovery)
+              const noiseB = (Math.random() - 0.5) * 30 * (1 - recovery)
+              accR += attackedData.data[idx] + noiseR
+              accG += attackedData.data[idx + 1] + noiseG
+              accB += attackedData.data[idx + 2] + noiseB
+            }
+            // Average + blend toward original
+            outData.data[idx] = clamp((accR / numSamples) * (1 - recovery * 0.7) + originalImageData.data[idx] * recovery * 0.7)
+            outData.data[idx + 1] = clamp((accG / numSamples) * (1 - recovery * 0.7) + originalImageData.data[idx + 1] * recovery * 0.7)
+            outData.data[idx + 2] = clamp((accB / numSamples) * (1 - recovery * 0.7) + originalImageData.data[idx + 2] * recovery * 0.7)
+            outData.data[idx + 3] = 255
+          }
+        }
+
+      } else if (defenseType === 'inputDetection') {
+        // Detects and masks anomalous pixels — highlights + recovers detected regions
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4
+            const diffR = Math.abs(attackedData.data[idx] - originalImageData.data[idx])
+            const diffG = Math.abs(attackedData.data[idx + 1] - originalImageData.data[idx + 1])
+            const diffB = Math.abs(attackedData.data[idx + 2] - originalImageData.data[idx + 2])
+            const totalDiff = diffR + diffG + diffB
+            const threshold = 30 * (1 - recovery * 0.5)
+
+            if (totalDiff > threshold) {
+              // Detected! Replace with original (recovered)
+              outData.data[idx] = clamp(originalImageData.data[idx] * recovery + attackedData.data[idx] * (1 - recovery))
+              outData.data[idx + 1] = clamp(originalImageData.data[idx + 1] * recovery + attackedData.data[idx + 1] * (1 - recovery))
+              outData.data[idx + 2] = clamp(originalImageData.data[idx + 2] * recovery + attackedData.data[idx + 2] * (1 - recovery))
+            } else {
+              // Below threshold — keep attacked (minor perturbation)
+              outData.data[idx] = attackedData.data[idx]
+              outData.data[idx + 1] = attackedData.data[idx + 1]
+              outData.data[idx + 2] = attackedData.data[idx + 2]
+            }
+            outData.data[idx + 3] = 255
+          }
+        }
+
+      } else {
+        // Default fallback: simple blend
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            const idx = (y * width + x) * 4
+            outData.data[idx] = clamp(attackedData.data[idx] + (originalImageData.data[idx] - attackedData.data[idx]) * recovery)
+            outData.data[idx + 1] = clamp(attackedData.data[idx + 1] + (originalImageData.data[idx + 1] - attackedData.data[idx + 1]) * recovery)
+            outData.data[idx + 2] = clamp(attackedData.data[idx + 2] + (originalImageData.data[idx + 2] - attackedData.data[idx + 2]) * recovery)
+            outData.data[idx + 3] = 255
+          }
         }
       }
 
-      ctx.putImageData(imageData, 0, 0)
+      ctx.putImageData(outData, 0, 0)
     }
 
     const drawDifference = (diffCanvas, canvas1, canvas2) => {

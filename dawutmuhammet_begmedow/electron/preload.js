@@ -27,9 +27,21 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('system-scan-threat', (event, data) => callback(data))
   },
 
+  // Quarantine & Delete
+  quarantineFile: (filePath) => ipcRenderer.invoke('quarantine-file', filePath),
+  deleteFile: (filePath) => ipcRenderer.invoke('delete-file', filePath),
+  getQuarantine: () => ipcRenderer.invoke('get-quarantine'),
+
+  // ClamAV status & setup
+  getClamAvStatus: () => ipcRenderer.invoke('get-clamav-status'),
+  getClamAvSetupStatus: () => ipcRenderer.invoke('get-clamav-setup-status'),
+  setupClamAv: () => ipcRenderer.invoke('setup-clamav'),
+  onSetupProgress: (callback) => {
+    ipcRenderer.on('setup-progress', (event, data) => callback(data))
+  },
+
   // Settings
   getSettings: () => ipcRenderer.invoke('get-settings'),
-  setVirusTotalKey: (key) => ipcRenderer.invoke('set-virustotal-key', key),
 
   // History
   getHistory: () => ipcRenderer.invoke('get-history'),

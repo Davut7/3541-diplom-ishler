@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import '../services/vulnerability_database.dart';
 
 class AppInfo {
   final String appName;
@@ -18,6 +19,11 @@ class AppInfo {
   List<PermissionInfo> analyzedPermissions;
   bool isScanned;
 
+  // New: threat findings
+  List<ThreatFinding> threats;
+  List<SuspiciousCombo> matchedCombos;
+  MalwareEntry? malwareMatch;
+
   AppInfo({
     required this.appName,
     required this.packageName,
@@ -33,6 +39,9 @@ class AppInfo {
     this.dangerousPermCount = 0,
     this.analyzedPermissions = const [],
     this.isScanned = false,
+    this.threats = const [],
+    this.matchedCombos = const [],
+    this.malwareMatch,
   });
 
   String get formattedSize {
@@ -40,6 +49,9 @@ class AppInfo {
     if (appSize < 1024 * 1024) return '${(appSize / 1024).toStringAsFixed(1)} KB';
     return '${(appSize / (1024 * 1024)).toStringAsFixed(1)} MB';
   }
+
+  int get criticalCount => threats.where((t) => t.severity == 'critical').length;
+  int get highCount => threats.where((t) => t.severity == 'high').length;
 
   factory AppInfo.fromMap(Map<dynamic, dynamic> map) {
     return AppInfo(

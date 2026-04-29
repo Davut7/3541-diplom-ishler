@@ -8,7 +8,30 @@
       "Bash(grep -v \"^$\")",
       "Bash(grep -r \"7060\\\\|port\" /Users/macbookpro/Desktop/projects/diplom_ishler/3541/selbi_weliyyewa/frontend/vite.config.*)",
       "Bash(npm run:*)",
-      "Bash(open:*)"
+      "Bash(open:*)",
+      "Bash(lsof -ti:7041)",
+      "Bash(xargs kill:*)",
+      "Bash(chmod +x /Users/macbookpro/Desktop/projects/diplom_ishler/3541/dawutmuhammet_begmedow/scripts/setup-clamav.sh)",
+      "Bash(curl -L -o clamav-win.zip \"https://www.clamav.net/downloads/production/clamav-1.4.2.win.x64.zip\" --progress-bar)",
+      "Bash(mkdir -p /Users/macbookpro/Desktop/projects/diplom_ishler/3541/dawutmuhammet_begmedow/clamav/db)",
+      "Bash(curl -L -o bytecode.cvd \"https://database.clamav.net/bytecode.cvd\" --progress-bar)",
+      "Bash(curl -L -o main.cvd \"https://database.clamav.net/main.cvd\" --progress-bar)",
+      "Bash(curl -L -o daily.cvd \"https://database.clamav.net/daily.cvd\" --progress-bar)",
+      "Bash(unzip -o clamav-win.zip -d _tmp)",
+      "Bash(ls /Users/macbookpro/Desktop/projects/diplom_ishler/3541/dawutmuhammet_begmedow/clamav/_tmp/clamav-1.4.2.win.x64/*.exe /Users/macbookpro/Desktop/projects/diplom_ishler/3541/dawutmuhammet_begmedow/clamav/_tmp/clamav-1.4.2.win.x64/*.dll)",
+      "Bash(rm -f main.cvd daily.cvd bytecode.cvd)",
+      "Bash(curl -L -A \"clamav/1.4.2\" -o main.cvd \"https://database.clamav.net/main.cvd\" --progress-bar -f)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(brew list:*)",
+      "Bash(brew install:*)",
+      "Read(//opt/homebrew/Cellar/clamav/1.5.2/bin/**)",
+      "Read(//opt/homebrew/Cellar/clamav/**)",
+      "Bash(curl -L -o /Users/macbookpro/Desktop/projects/diplom_ishler/3541/dawutmuhammet_begmedow/clamav/db/main.cvd https://packages.clamav.net/main.cvd -f --connect-timeout 15 -A ClamAV/1.4.2)",
+      "Bash(ls -lh /Users/macbookpro/Desktop/projects/diplom_ishler/3541/dawutmuhammet_begmedow/clamav/*.exe)",
+      "Bash(ls /Users/macbookpro/Desktop/projects/diplom_ishler/3541/dawutmuhammet_begmedow/clamav/*.dll)",
+      "Bash(dart analyze:*)",
+      "Bash(find /Users/macbookpro/Desktop/projects/diplom_ishler/3541/selbi_weliyyewa -type f \\\\\\( -name \"*.vue\" -o -name \"*.js\" -o -name \"package.json\" \\\\\\) ! -path \"*/node_modules/*\" ! -path \"*/.playwright-mcp/*\" -exec ls -lh {} \\\\;)",
+      "Bash(wc:*)"
     ]
   }
 }

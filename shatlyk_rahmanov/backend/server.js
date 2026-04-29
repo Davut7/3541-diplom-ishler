@@ -3,12 +3,32 @@ const cors = require('cors')
 const fs = require('fs')
 const path = require('path')
 const os = require('os')
+const dns = require('dns').promises
+const net = require('net')
+const { execSync } = require('child_process') // eslint-disable-line security/detect-child-process
 
 const app = express()
 const PORT = 7081
+const isWin = os.platform() === 'win32'
 
 app.use(cors())
 app.use(express.json())
+
+// Validate hostname — only safe chars
+function sanitizeHost(h) {
+  if (!h || typeof h !== 'string') return null
+  const clean = h.trim().toLowerCase()
+  if (!/^[a-z0-9.\-]+$/.test(clean) || clean.length > 253) return null
+  return clean
+}
+
+// Known port→service map
+const portServiceMap = {
+  20:'FTP-Data', 21:'FTP', 22:'SSH', 23:'Telnet', 25:'SMTP', 53:'DNS',
+  80:'HTTP', 110:'POP3', 143:'IMAP', 443:'HTTPS', 445:'SMB',
+  993:'IMAPS', 995:'POP3S', 3306:'MySQL', 3389:'RDP', 5432:'PostgreSQL',
+  5900:'VNC', 6379:'Redis', 8080:'HTTP-Alt', 8443:'HTTPS-Alt', 27017:'MongoDB'
+}
 
 // Persistent storage
 const dataDir = path.join(__dirname, 'data')
@@ -240,7 +260,153 @@ const generateThreats = () => {
 }
 
 // ============================================
-// API ROUTES
+// REAL NETWORK MONITORING (cross-platform)
+// All execSync commands use HARDCODED strings only.
+// User input (target hostname) is validated via sanitizeHost()
+// which allows only [a-z0-9.-] chars before concatenation.
+// ============================================
+
+function getActiveConnections() {
+  try {
+    const conns = []
+    if (isWin) {
+      const output = execSync('netstat -ano', { encoding: 'utf8', timeout: 10000 }) // eslint-disable-line
+      for (const line of output.split('\n')) {
+        const p = line.trim().split(/\s+/)
+        if (p.length < 4 || !['TCP','UDP'].includes(p[0])) continue
+        const [la, lp] = splitAddr(p[1]), [fa, fp] = splitAddr(p[2])
+        conns.push({ protocol: p[0], localAddress: la, localPort: parseInt(lp)||0, foreignAddress: fa, foreignPort: parseInt(fp)||0, state: p[3]||'', pid: parseInt(p[4])||0 })
+      }
+    } else {
+      const output = execSync('netstat -an 2>/dev/null', { encoding: 'utf8', timeout: 5000 }) // eslint-disable-line
+      for (const line of output.split('\n')) {
+        const p = line.trim().split(/\s+/)
+        if (p.length < 4 || (!p[0].startsWith('tcp') && !p[0].startsWith('udp'))) continue
+        const proto = p[0].startsWith('tcp') ? 'TCP' : 'UDP'
+        const lps = (p[3]||'').split('.'), lPort = lps.pop(), lAddr = lps.join('.')
+        const fps = (p[4]||'').split('.'), fPort = fps.pop(), fAddr = fps.join('.')
+        if (lAddr && fAddr) conns.push({ protocol: proto, localAddress: lAddr, localPort: parseInt(lPort)||0, foreignAddress: fAddr, foreignPort: parseInt(fPort)||0, state: (p[5]||'').replace(/\s+/g,''), pid: 0 })
+      }
+    }
+    return conns
+  } catch (e) { return [] }
+}
+
+function splitAddr(a) { if (!a) return ['','']; if (a.startsWith('[')) { const m = a.match(/\[(.+)\]:(\d+)/); return m ? [m[1],m[2]] : [a,'0'] } const i = a.lastIndexOf(':'); return i===-1 ? [a,'0'] : [a.substring(0,i), a.substring(i+1)] }
+
+function getArpTable() {
+  try {
+    const cmd = isWin ? 'arp -a' : 'arp -an 2>/dev/null'
+    const output = execSync(cmd, { encoding: 'utf8', timeout: 5000 }) // eslint-disable-line
+    const entries = []
+    for (const line of output.split('\n')) {
+      if (isWin) { const m = line.match(/\s+([\d.]+)\s+([\w-]+)\s+(\w+)/); if (m) entries.push({ ip: m[1], mac: m[2], type: m[3] }) }
+      else { const m = line.match(/\(([\d.]+)\)\s+at\s+([\w:]+)/); if (m) entries.push({ ip: m[1], mac: m[2], type: 'dynamic' }) }
+    }
+    return entries
+  } catch (e) { return [] }
+}
+
+let prevBytes = null, prevTime = null
+function getBandwidth() {
+  try {
+    let rx = 0, tx = 0
+    if (isWin) {
+      const o = execSync('netstat -e', { encoding: 'utf8', timeout: 3000 }) // eslint-disable-line
+      const bl = o.split('\n').find(l => l.includes('Bytes'))
+      if (bl) { const n = bl.match(/\d+/g); if (n?.length >= 2) { rx = parseInt(n[0]); tx = parseInt(n[1]) } }
+    } else {
+      try {
+        const o = execSync('netstat -ib 2>/dev/null', { encoding: 'utf8', timeout: 3000 }) // eslint-disable-line
+        for (const l of o.split('\n')) { const p = l.trim().split(/\s+/); if (p.length >= 10 && p[0]!=='Name' && !p[0].startsWith('lo')) { rx += parseInt(p[6])||0; tx += parseInt(p[9])||0 } }
+      } catch (e) {}
+    }
+    const now = Date.now(); let rxR = 0, txR = 0
+    if (prevBytes && prevTime) { const dt = (now-prevTime)/1000; if (dt > 0) { rxR = Math.max(0,(rx-prevBytes.rx)/dt); txR = Math.max(0,(tx-prevBytes.tx)/dt) } }
+    prevBytes = { rx, tx }; prevTime = now
+    const fmt = b => b < 1024 ? `${Math.round(b)} B` : b < 1048576 ? `${(b/1024).toFixed(1)} KB` : b < 1073741824 ? `${(b/1048576).toFixed(1)} MB` : `${(b/1073741824).toFixed(2)} GB`
+    return { totalReceived: fmt(rx), totalSent: fmt(tx), rxRate: fmt(rxR)+'/s', txRate: fmt(txR)+'/s' }
+  } catch (e) { return { totalReceived: '0 B', totalSent: '0 B', rxRate: '0 B/s', txRate: '0 B/s' } }
+}
+
+async function realDnsLookup(domain) {
+  try { const start = Date.now(); const addrs = await dns.resolve4(domain); return { success: true, domain, addresses: addrs, duration: `${Date.now()-start}ms` } }
+  catch (e) { return { success: false, domain, error: e.message } }
+}
+
+function realPing(host) {
+  const safe = sanitizeHost(host); if (!safe) return { success: false, error: 'Invalid host' }
+  try {
+    // safe is validated to contain only [a-z0-9.-]
+    const cmd = isWin ? 'ping -n 3 -w 2000 ' + safe : 'ping -c 3 -W 2 ' + safe
+    const output = execSync(cmd, { encoding: 'utf8', timeout: 10000 }) // eslint-disable-line
+    const lm = output.match(/time[=<](\d+\.?\d*)/g); const lats = lm ? lm.map(l => parseFloat(l.replace(/time[=<]/,''))) : []
+    const ttlM = output.match(/ttl=(\d+)/i)
+    return { success: true, host: safe, latencies: lats, avgLatency: lats.length ? Math.round(lats.reduce((a,b)=>a+b)/lats.length) : null, ttl: ttlM ? parseInt(ttlM[1]) : null }
+  } catch (e) { return { success: false, host: safe, error: 'Unreachable' } }
+}
+
+function checkPort(host, port, timeout = 2000) {
+  return new Promise(r => { const s = new net.Socket(); const t = Date.now(); s.setTimeout(timeout); s.on('connect', () => { s.destroy(); r({ port, status: 'open', duration: `${Date.now()-t}ms`, service: portServiceMap[port]||'unknown' }) }); s.on('timeout', () => { s.destroy(); r({ port, status: 'filtered', duration: `${timeout}ms` }) }); s.on('error', () => { s.destroy(); r({ port, status: 'closed', duration: `${Date.now()-t}ms` }) }); s.connect(port, host) })
+}
+
+// ============================================
+// NETWORK API ROUTES
+// ============================================
+
+app.get('/api/network/connections', (req, res) => {
+  const conns = getActiveConnections()
+  const pc = {}, sc = {}, portC = {}
+  for (const c of conns) { pc[c.protocol] = (pc[c.protocol]||0)+1; sc[c.state||'OTHER'] = (sc[c.state||'OTHER']||0)+1; const p = c.foreignPort||c.localPort; if (p > 0) portC[p] = (portC[p]||0)+1 }
+  const topPorts = Object.entries(portC).map(([p,n]) => ({ port: parseInt(p), name: portServiceMap[parseInt(p)]||`Port ${p}`, count: n })).sort((a,b) => b.count-a.count).slice(0,15)
+  res.json({ success: true, connections: conns.slice(0,100), total: conns.length, protocols: pc, states: sc, topPorts })
+})
+
+app.get('/api/network/hosts', (req, res) => {
+  const conns = getActiveConnections(); const hm = new Map()
+  for (const c of conns) { if (!c.foreignAddress || c.foreignAddress==='*' || c.foreignAddress==='0.0.0.0') continue; const k = c.foreignAddress; if (!hm.has(k)) hm.set(k, { ip: k, connections: 0, ports: new Set(), protocols: new Set() }); const h = hm.get(k); h.connections++; if (c.foreignPort) h.ports.add(c.foreignPort); h.protocols.add(c.protocol) }
+  const hosts = Array.from(hm.values()).map(h => ({ ...h, ports: Array.from(h.ports).sort((a,b)=>a-b), protocols: Array.from(h.protocols), services: Array.from(h.ports).map(p=>portServiceMap[p]).filter(Boolean) })).sort((a,b)=>b.connections-a.connections).slice(0,50)
+  res.json({ success: true, hosts, total: hm.size })
+})
+
+app.get('/api/network/arp', (req, res) => { res.json({ success: true, entries: getArpTable() }) })
+app.get('/api/network/bandwidth', (req, res) => { res.json({ success: true, ...getBandwidth() }) })
+app.get('/api/network/interfaces', (req, res) => {
+  const ifaces = os.networkInterfaces(); const result = []
+  for (const [name, addrs] of Object.entries(ifaces)) { const v4 = addrs.find(a => a.family === 'IPv4'); if (v4) result.push({ name, ip: v4.address, mac: v4.mac, internal: v4.internal, netmask: v4.netmask }) }
+  res.json({ success: true, interfaces: result })
+})
+
+app.post('/api/network/scan', async (req, res) => {
+  const host = sanitizeHost(req.body.target) || 'google.com'; const start = Date.now()
+  const dnsR = await realDnsLookup(host); const targetIP = dnsR.success ? dnsR.addresses[0] : host
+  const pingR = realPing(targetIP)
+  const ports = [21,22,25,53,80,110,143,443,445,993,3306,3389,5432,5900,8080,27017]
+  const portR = await Promise.all(ports.map(p => checkPort(targetIP, p, 1500)))
+  const open = portR.filter(p => p.status === 'open')
+  const anomalies = []
+  if (open.some(p=>p.port===23)) anomalies.push({ type:'Telnet', severity:'critical', desc:'Plaintext access' })
+  if (open.some(p=>p.port===3306)) anomalies.push({ type:'MySQL', severity:'critical', desc:'DB exposed' })
+  if (open.some(p=>p.port===27017)) anomalies.push({ type:'MongoDB', severity:'critical', desc:'No auth' })
+  if (open.some(p=>p.port===3389)) anomalies.push({ type:'RDP', severity:'high', desc:'Brute force target' })
+  if (open.some(p=>p.port===21)) anomalies.push({ type:'FTP', severity:'high', desc:'Unencrypted' })
+  if (open.length > 5) anomalies.push({ type:'Large Surface', severity:'high', desc:`${open.length} ports open` })
+  res.json({ success: true, target: host, targetIP, dns: dnsR, ping: pingR, portScan: { total: ports.length, open, closed: portR.filter(p=>p.status==='closed').length, filtered: portR.filter(p=>p.status==='filtered').length, results: portR }, anomalies, duration: `${Date.now()-start}ms` })
+})
+
+app.post('/api/network/traceroute', (req, res) => {
+  const host = sanitizeHost(req.body.target) || 'google.com'
+  try {
+    // host is validated to contain only [a-z0-9.-]
+    const cmd = isWin ? 'tracert -d -h 15 ' + host : 'traceroute -n -m 15 -w 2 ' + host + ' 2>/dev/null'
+    const output = execSync(cmd, { encoding: 'utf8', timeout: 30000 }) // eslint-disable-line
+    const hops = []; for (const line of output.split('\n')) { const m = isWin ? line.match(/\s+(\d+)\s+(\d+)\s+ms\s+(\d+)\s+ms\s+(\d+)\s+ms\s+([\d.]+)/) : line.match(/\s*(\d+)\s+([\d.]+|\*)\s+([\d.]+|\*)\s+ms/); if (m) hops.push({ hop: parseInt(m[1]), ip: isWin ? m[5] : m[2], rtt: isWin ? parseInt(m[2]) : parseFloat(m[3]) || null }) }
+    res.json({ success: true, target: host, hops })
+  } catch (e) { res.json({ success: false, target: host, error: e.message }) }
+})
+
+// ============================================
+// EXISTING API ROUTES
 // ============================================
 
 // Get firewall rules
@@ -611,22 +777,26 @@ app.get('/api/statistics', (req, res) => {
 
 // Health check
 app.get('/api/health', (req, res) => {
+  const conns = getActiveConnections()
   res.json({
     status: 'healthy',
     message: 'AI Firewall Backend Server Running',
-    version: '2.0.0',
+    version: '3.0.0',
+    platform: os.platform(),
     uptime: process.uptime(),
     aiModelStatus: 'active',
+    networkMonitoring: {
+      activeConnections: conns.length,
+      knownPorts: Object.keys(portServiceMap).length,
+      features: ['netstat', 'arp', 'bandwidth', 'dns', 'ping', 'port_scan', 'traceroute'],
+    },
     endpoints: [
-      '/api/rules',
-      '/api/traffic',
-      '/api/traffic/stats',
-      '/api/threats',
-      '/api/ai/analyze',
-      '/api/ai/suggestions',
-      '/api/ai/model',
-      '/api/ai/learning',
-      '/api/statistics'
+      '/api/rules', '/api/traffic', '/api/traffic/stats', '/api/threats',
+      '/api/ai/analyze', '/api/ai/suggestions', '/api/ai/model', '/api/ai/learning',
+      '/api/statistics',
+      '/api/network/connections', '/api/network/hosts', '/api/network/arp',
+      '/api/network/bandwidth', '/api/network/interfaces',
+      '/api/network/scan', '/api/network/traceroute'
     ]
   })
 })

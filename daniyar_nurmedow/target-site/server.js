@@ -368,6 +368,7 @@ function layout(title, body, activeTab, defenseOn) {
         <a href="/chat" class="${activeTab === 'chat' ? 'active' : ''}">📨 Chat</a>
         <a href="/profile" class="${activeTab === 'profile' ? 'active' : ''}">👤 Profil</a>
         <a href="/login" class="${activeTab === 'login' ? 'active' : ''}">🔐 Giriş</a>
+        <a href="/guides" class="${activeTab === 'guides' ? 'active' : ''}">📚 Gollanmalar</a>
       </div>
     </nav>
   </header>
@@ -716,6 +717,11 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   res.redirect('/login?error=Ýalňyş ulanyjy ady ýa-da parol!');
 });
+
+// GUIDES page - educational XSS examples in 12 languages/frameworks
+// All code examples are stored as plain strings and rendered via escapeHtml()
+// No user input is used on this page - it is purely static educational content
+app.get('/guides', require('./guides'));
 
 // HEALTH
 app.get('/api/health', (req, res) => {

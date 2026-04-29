@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechShop — Online Store</title>
+  <!-- NOTE: This is an INTENTIONALLY VULNERABLE website for WAF testing.
+       All XSS vulnerabilities (innerHTML usage) are DELIBERATE.
+       This application is used in a controlled lab environment for
+       educational/diploma WAF demonstration purposes ONLY. -->
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #333; }
+    nav { background: #1a1a2e; color: white; padding: 0 2rem; display: flex; align-items: center; height: 60px; position: sticky; top: 0; z-index: 100; }
+    nav .logo { font-size: 1.4rem; font-weight: 700; color: #e94560; margin-right: 2rem; }
+    nav a { color: #ccc; text-decoration: none; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s; }
+    nav a:hover, nav a.active { color: white; background: rgba(233,69,96,0.2); }
+    nav .user-info { margin-left: auto; font-size: 0.85rem; color: #aaa; }
+    nav .user-info span { color: #e94560; font-weight: 600; }
+    .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+    h1 { font-size: 1.8rem; margin-bottom: 1rem; }
+    h2 { font-size: 1.3rem; margin-bottom: 0.75rem; color: #1a1a2e; }
+    .page { display: none; } .page.active { display: block; }
+    .card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 1.5rem; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
+    .product-card { background: white; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; }
+    .product-card:hover { transform: translateY(-3px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+    .product-card .emoji { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+    .product-card h3 { font-size: 1rem; margin-bottom: 0.25rem; }
+    .product-card .price { color: #e94560; font-weight: 700; font-size: 1.2rem; }
+    .product-card .category { font-size: 0.75rem; color: #888; background: #f0f0f0; padding: 0.2rem 0.5rem; border-radius: 4px; display: inline-block; margin-top: 0.5rem; }
+    .product-card .stock { font-size: 0.8rem; color: #666; margin-top: 0.5rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 0.3rem; font-size: 0.9rem; }
+    input[type="text"], input[type="password"], textarea { width: 100%; padding: 0.7rem 1rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.95rem; transition: border 0.2s; }
+    input:focus, textarea:focus { border-color: #e94560; outline: none; }
+    textarea { resize: vertical; min-height: 80px; }
+    .btn { padding: 0.7rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
+    .btn-primary { background: #e94560; color: white; }
+    .btn-primary:hover { background: #c53050; }
+    .btn-secondary { background: #1a1a2e; color: white; }
+    .btn-secondary:hover { background: #16213e; }
+    .result-box { background: #1a1a2e; color: #0f0; padding: 1rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.85rem; white-space: pre-wrap; word-break: break-all; max-height: 400px; overflow-y: auto; margin-top: 1rem; }
+    .result-box .error { color: #ff6b6b; }
+    .result-box .success { color: #51cf66; }
+    .result-box .info { color: #74c0fc; }
+    .warning-banner { background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+    .comment { background: #f8f9fa; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; border-left: 3px solid #e94560; }
+    .comment .author { font-weight: 600; font-size: 0.85rem; }
+    .comment .text { margin-top: 0.25rem; font-size: 0.9rem; }
+    .login-container { max-width: 400px; margin: 4rem auto; }
+    .login-container .card { text-align: center; }
+    .login-container h1 { color: #e94560; }
+    .hint { background: #e8f4f8; border-left: 4px solid #17a2b8; padding: 0.75rem 1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.85rem; }
+    .hint code { background: #d4edda; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: monospace; color: #155724; }
+    .flex { display: flex; gap: 1rem; }
+    .flex-1 { flex: 1; }
+    .mt-1 { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">TechShop</span>
+  <a href="#" onclick="showPage('home')" id="nav-home" class="active">Store</a>
+  <a href="#" onclick="showPage('login')" id="nav-login">Login</a>
+  <a href="#" onclick="showPage('search')" id="nav-search">Search</a>
+  <a href="#" onclick="showPage('files')" id="nav-files">Files</a>
+  <a href="#" onclick="showPage('tools')" id="nav-tools">Network Tools</a>
+  <a href="#" onclick="showPage('comments')" id="nav-comments">Comments</a>
+  <div class="user-info" id="userInfo"></div>
+</nav>
+
+<div class="container">
+
+  <div class="page active" id="page-home">
+    <h1>Welcome to TechShop</h1>
+    <div class="warning-banner">
+      <span style="font-size:1.5rem">&#9888;</span>
+      <div><strong>Educational Demo</strong> — This site has intentional vulnerabilities for WAF testing. Try attacking it, then enable WAF protection to see attacks blocked.</div>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+
+  <div class="page" id="page-login">
+    <div class="login-container">
+      <div class="card">
+        <h1>&#128274; Login</h1>
+        <p style="color:#888; margin: 0.5rem 0 1.5rem;">Sign in to your account</p>
+        <div class="form-group"><label>Username</label><input type="text" id="loginUser" placeholder="admin"></div>
+        <div class="form-group"><label>Password</label><input type="password" id="loginPass" placeholder="admin123"></div>
+        <button class="btn btn-primary" style="width:100%" onclick="doLogin()">Sign In</button>
+        <div class="hint mt-1"><strong>SQL Injection:</strong> username: <code>' OR '1'='1' --</code> password: <code>anything</code></div>
+        <div class="hint"><strong>Data leak:</strong> <code>' UNION SELECT 1,username,password,email,role,balance FROM users --</code></div>
+      </div>
+    </div>
+    <div class="result-box" id="loginResult" style="display:none"></div>
+  </div>
+
+  <div class="page" id="page-search">
+    <h1>&#128269; Product Search</h1>
+    <div class="card">
+      <div class="flex">
+        <input type="text" id="searchInput" placeholder="Search products..." class="flex-1">
+        <button class="btn btn-primary" onclick="doSearch()">Search</button>
+      </div>
+      <div class="hint mt-1"><strong>XSS:</strong> <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> or <code>&lt;img src=x onerror=alert(1)&gt;</code></div>
+      <div class="hint"><strong>SQL Injection:</strong> <code>' UNION SELECT 1,password,email,role,username,6 FROM users --</code></div>
+    </div>
+    <div id="searchResults"></div>
+    <div class="result-box" id="searchRaw" style="display:none"></div>
+  </div>
+
+  <div class="page" id="page-files">
+    <h1>&#128193; File Viewer</h1>
+    <div class="card">
+      <div class="flex">
+        <input type="text" id="fileInput" placeholder="Enter filename: readme.txt" class="flex-1">
+        <button class="btn btn-primary" onclick="doFileRead()">Read File</button>
+      </div>
+      <div class="hint mt-1"><strong>Path Traversal:</strong> <code>../../../etc/passwd</code> or <code>../server.js</code></div>
+      <div class="hint"><strong>Config leak:</strong> <code>config.txt</code> (contains DB passwords)</div>
+    </div>
+    <div class="result-box" id="fileResult" style="display:none"></div>
+  </div>
+
+  <div class="page" id="page-tools">
+    <h1>&#128736; Network Tools</h1>
+    <div class="flex">
+      <div class="card flex-1">
+        <h2>Ping</h2>
+        <div class="form-group"><label>Host / IP</label><input type="text" id="pingHost" placeholder="127.0.0.1"></div>
+        <button class="btn btn-primary" onclick="doPing()">Ping</button>
+        <div class="hint mt-1"><strong>CMD Injection:</strong> <code>127.0.0.1; whoami</code> or <code>127.0.0.1 &amp;&amp; cat /etc/passwd</code></div>
+      </div>
+      <div class="card flex-1">
+        <h2>DNS Lookup</h2>
+        <div class="form-group"><label>Domain</label><input type="text" id="lookupDomain" placeholder="google.com"></div>
+        <button class="btn btn-secondary" onclick="doLookup()">Lookup</button>
+        <div class="hint mt-1"><strong>CMD Injection:</strong> <code>google.com; ls -la /</code></div>
+      </div>
+    </div>
+    <div class="result-box" id="toolsResult" style="display:none"></div>
+  </div>
+
+  <div class="page" id="page-comments">
+    <h1>&#128172; Product Comments</h1>
+    <div class="card">
+      <h2>Add Comment (Product #1)</h2>
+      <div class="form-group"><label>Your Name</label><input type="text" id="commentUser" placeholder="Your name"></div>
+      <div class="form-group"><label>Comment</label><textarea id="commentText" placeholder="Write your review..."></textarea></div>
+      <button class="btn btn-primary" onclick="doComment()">Post Comment</button>
+      <div class="hint mt-1"><strong>Stored XSS:</strong> try name or comment with HTML/JS tags</div>
+    </div>
+    <h2 class="mt-1">Comments for Product #1</h2>
+    <div id="commentsList"></div>
+  </div>
+
+</div>
+
+<script>
+// NOTE: innerHTML usage below is INTENTIONAL to demonstrate XSS vulnerabilities
+// This is an educational WAF-testing application, NOT production code
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active') })
+  document.querySelectorAll('nav a').forEach(function(a) { a.classList.remove('active') })
+  document.getElementById('page-' + page).classList.add('active')
+  var navEl = document.getElementById('nav-' + page)
+  if (navEl) navEl.classList.add('active')
+  if (page === 'home') loadProducts()
+  if (page === 'comments') loadComments()
+}
+
+function setHTML(id, html) {
+  // INTENTIONALLY UNSAFE — this is the XSS vulnerability we're demonstrating
+  document.getElementById(id).innerHTML = html // eslint-disable-line
+}
+
+function showResult(id, html) {
+  var el = document.getElementById(id)
+  el.style.display = 'block'
+  el.innerHTML = html // eslint-disable-line — intentional for demo
+}
+
+async function loadProducts() {
+  var res = await fetch('/api/products').then(function(r) { return r.json() })
+  var emojis = ['&#128187;', '&#128433;', '&#128268;', '&#9000;', '&#128421;', '&#127911;', '&#128247;', '&#128190;']
+  setHTML('productsGrid', res.products.map(function(p, i) {
+    return '<div class="product-card"><span class="emoji">' + (emojis[i]||'&#128230;') + '</span><h3>' + p.name + '</h3><div class="price">$' + p.price + '</div><p style="font-size:0.85rem;color:#666;margin-top:0.5rem">' + (p.description||'') + '</p><span class="category">' + p.category + '</span><div class="stock">In stock: ' + p.stock + '</div></div>'
+  }).join(''))
+}
+
+async function doLogin() {
+  var username = document.getElementById('loginUser').value
+  var password = document.getElementById('loginPass').value
+  showResult('loginResult', '<span class="info">Sending login request...</span>\n')
+  try {
+    var res = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: username, password: password }) }).then(function(r) { return r.json() })
+    if (res.success) {
+      showResult('loginResult', '<span class="success">LOGIN SUCCESS!</span>\nUser: ' + JSON.stringify(res.user, null, 2))
+      setHTML('userInfo', 'Logged in as: <span>' + res.user.username + '</span> (' + res.user.role + ') | Balance: $' + res.user.balance)
+    } else {
+      var msg = '<span class="error">LOGIN FAILED: ' + res.error + '</span>\n'
+      if (res.query) msg += '<span class="info">SQL Query: ' + res.query + '</span>\n'
+      showResult('loginResult', msg)
+    }
+  } catch(e) { showResult('loginResult', '<span class="error">Error: ' + e.message + '</span>') }
+}
+
+async function doSearch() {
+  var q = document.getElementById('searchInput').value
+  try {
+    var res = await fetch('/api/search?q=' + encodeURIComponent(q)).then(function(r) { return r.json() })
+    showResult('searchRaw', '<span class="info">Query: "' + res.query + '"</span>\nFound: ' + res.total + ' results' + (res.error ? '\n<span class="error">SQL Error: ' + res.error + '</span>' : ''))
+    // INTENTIONALLY renders raw query (reflected XSS demo)
+    setHTML('searchResults', res.results.length
+      ? '<div class="card mt-1"><h2>Results for: ' + res.query + '</h2>' + res.results.map(function(p) { return '<div style="padding:0.5rem 0;border-bottom:1px solid #eee"><strong>' + p.name + '</strong> — $' + p.price + ' <span class="category">' + p.category + '</span></div>' }).join('') + '</div>'
+      : '<div class="card mt-1">No results for: ' + res.query + '</div>')
+  } catch(e) { showResult('searchRaw', '<span class="error">Error: ' + e.message + '</span>') }
+}
+
+async function doFileRead() {
+  var name = document.getElementById('fileInput').value
+  try {
+    var res = await fetch('/api/files?name=' + encodeURIComponent(name)).then(function(r) { return r.json() })
+    showResult('fileResult', res.success
+      ? '<span class="success">File: ' + res.filename + '</span>\n<span class="info">Path: ' + res.path + '</span>\n\n' + res.content
+      : '<span class="error">' + res.error + '</span>\n<span class="info">Attempted: ' + res.path + '</span>')
+  } catch(e) { showResult('fileResult', '<span class="error">Error: ' + e.message + '</span>') }
+}
+
+async function doPing() {
+  var host = document.getElementById('pingHost').value
+  showResult('toolsResult', '<span class="info">Executing ping...</span>\n')
+  try {
+    var res = await fetch('/api/tools/ping', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ host: host }) }).then(function(r) { return r.json() })
+    showResult('toolsResult', res.success ? '<span class="success">$ ping ' + host + '</span>\n\n' + res.output : '<span class="error">' + res.error + '</span>')
+  } catch(e) { showResult('toolsResult', '<span class="error">Error: ' + e.message + '</span>') }
+}
+
+async function doLookup() {
+  var domain = document.getElementById('lookupDomain').value
+  showResult('toolsResult', '<span class="info">Running DNS lookup...</span>\n')
+  try {
+    var res = await fetch('/api/tools/lookup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ domain: domain }) }).then(function(r) { return r.json() })
+    showResult('toolsResult', res.success ? '<span class="success">$ lookup ' + domain + '</span>\n\n' + res.output : '<span class="error">' + res.error + '</span>')
+  } catch(e) { showResult('toolsResult', '<span class="error">Error: ' + e.message + '</span>') }
+}
+
+async function doComment() {
+  await fetch('/api/comments', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product_id: 1, username: document.getElementById('commentUser').value, text: document.getElementById('commentText').value }) })
+  document.getElementById('commentUser').value = ''
+  document.getElementById('commentText').value = ''
+  loadComments()
+}
+
+async function loadComments() {
+  var res = await fetch('/api/comments/1').then(function(r) { return r.json() })
+  // INTENTIONALLY renders raw HTML (stored XSS demo)
+  setHTML('commentsList', res.comments.map(function(c) { return '<div class="comment"><div class="author">' + c.username + '</div><div class="text">' + c.text + '</div></div>' }).join('') || '<p style="color:#888">No comments yet</p>')
+}
+
+loadProducts()
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+DB_HOST=localhost
+DB_USER=shop_admin
+DB_PASS=secret_password_123
+API_KEY=sk-live-abc123xyz

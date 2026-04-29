@@ -14,19 +14,32 @@ echo "╚═══════════════════════�
 
 [ ! -d "$SCRIPT_DIR/backend/node_modules" ] && cd "$SCRIPT_DIR/backend" && npm install
 [ ! -d "$SCRIPT_DIR/frontend/node_modules" ] && cd "$SCRIPT_DIR/frontend" && npm install
+[ ! -d "$SCRIPT_DIR/target-site/node_modules" ] && cd "$SCRIPT_DIR/target-site" && npm install
 
+# 1. Start vulnerable target site
+cd "$SCRIPT_DIR/target-site" && npm start &
+TARGET_PID=$!
+sleep 1
+
+# 2. Start WAF backend
 cd "$SCRIPT_DIR/backend" && npm start &
 BACKEND_PID=$!
 sleep 2
+
+# 3. Start WAF frontend
 cd "$SCRIPT_DIR/frontend" && npm run dev &
 FRONTEND_PID=$!
 
 echo ""
 echo "╔══════════════════════════════════════════════════════════════╗"
-echo "║  Frontend: http://localhost:7010                             ║"
-echo "║  Backend:  http://localhost:7011                             ║"
-echo "║  Press Ctrl+C to stop                                        ║"
+echo "║  Target Site (vulnerable): http://localhost:7012              ║"
+echo "║  WAF Frontend:             http://localhost:7010              ║"
+echo "║  WAF Backend:              http://localhost:7011              ║"
+echo "║                                                               ║"
+echo "║  1. Open target site → try attacks                            ║"
+echo "║  2. Open WAF → see attacks blocked in real-time               ║"
+echo "║  Press Ctrl+C to stop                                         ║"
 echo "╚══════════════════════════════════════════════════════════════╝"
 
-trap "kill $BACKEND_PID $FRONTEND_PID 2>/dev/null; exit" INT TERM
+trap "kill $TARGET_PID $BACKEND_PID $FRONTEND_PID 2>/dev/null; exit" INT TERM
 wait

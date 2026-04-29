@@ -2,6 +2,45 @@
   "scans": [
     {
       "success": true,
+      "scanId": "0b48312a-b91f-4f5c-b6c2-ae52969d56ba",
+      "type": "quick",
+      "processesScanned": 620,
+      "filesScanned": 1000,
+      "threatsFound": 1,
+      "threats": [
+        {
+          "id": "d1b45c63-6246-4091-bfee-cfa916f2ae55",
+          "name": "screencaptureui",
+          "type": "Screen Capture",
+          "location": "/System/Library/CoreServices/screencaptureui.app/Contents/MacOS/screencaptureui",
+          "risk": "High",
+          "pid": 58137,
+          "cpu": 1.9,
+          "memory": "19.2 MB",
+          "category": "process",
+          "detectedAt": "2026-04-29T16:37:07.841Z"
+        }
+      ],
+      "summary": {
+        "critical": 0,
+        "high": 1,
+        "medium": 0,
+        "processes": 1,
+        "files": 0,
+        "persistence": 0
+      },
+      "scannedAreas": [
+        "processes",
+        "filesystem_quick",
+        "startup"
+      ],
+      "duration": "172ms",
+      "platform": "darwin",
+      "knownKeyloggersInDB": 34,
+      "scannedAt": "2026-04-29T16:37:07.924Z"
+    },
+    {
+      "success": true,
       "scanId": "238b0002-c18a-4004-8251-131c4ce5f35f",
       "type": "full",
       "processesScanned": 417,

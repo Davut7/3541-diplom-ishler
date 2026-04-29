@@ -1,6 +1,16 @@
 {
   "investigations": [
     {
+      "id": 1777484048147,
+      "target": "google.com",
+      "ip": "142.250.154.102",
+      "riskScore": 15,
+      "riskLevel": "LOW",
+      "openPorts": 3,
+      "country": "United States",
+      "analyzedAt": "2026-04-29T17:34:08.141Z"
+    },
+    {
       "id": 1776492868257,
       "target": "8.8.8.8",
       "ip": "198.18.224.201",

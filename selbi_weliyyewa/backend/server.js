@@ -1347,25 +1347,51 @@ app.get('/api/health', (req, res) => {
 const OLLAMA_URL = process.env.OLLAMA_URL || 'http://localhost:11434'
 const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'llama3.2:1b'
 
-// Curated real photo IDs from picsum.photos by category
+// Curated real photo IDs from picsum.photos by category (60+ photos)
 const imageDatabase = {
   animals: [
     { id: 237, name: 'Dog' }, { id: 1074, name: 'Bird' },
     { id: 1025, name: 'Pug' }, { id: 582, name: 'Tiger Cat' },
     { id: 593, name: 'Monkey' }, { id: 659, name: 'Duckling' },
-    { id: 40, name: 'Fox' }, { id: 1084, name: 'Owl' }
+    { id: 40, name: 'Fox' }, { id: 1084, name: 'Owl' },
+    { id: 200, name: 'Wolf' }, { id: 219, name: 'Deer' },
+    { id: 1062, name: 'Parrot' }, { id: 1069, name: 'Butterfly' },
+    { id: 1024, name: 'Cat' }, { id: 1061, name: 'Hummingbird' },
+    { id: 1076, name: 'Eagle' }, { id: 577, name: 'Horse' },
   ],
   cities: [
     { id: 274, name: 'City Night' }, { id: 599, name: 'Street' },
     { id: 1044, name: 'Skyscraper' }, { id: 1055, name: 'Tower' },
     { id: 366, name: 'Bridge' }, { id: 376, name: 'Urban' },
-    { id: 416, name: 'Building' }, { id: 57, name: 'Architecture' }
+    { id: 416, name: 'Building' }, { id: 57, name: 'Architecture' },
+    { id: 164, name: 'Highway' }, { id: 260, name: 'Downtown' },
+    { id: 325, name: 'Station' }, { id: 356, name: 'Rooftop' },
+    { id: 399, name: 'Harbor' }, { id: 442, name: 'Mall' },
+    { id: 514, name: 'Square' }, { id: 696, name: 'Skyline' },
   ],
   landscapes: [
     { id: 10, name: 'Forest' }, { id: 15, name: 'River' },
     { id: 29, name: 'Mountain' }, { id: 433, name: 'Sunset' },
     { id: 490, name: 'Ocean' }, { id: 527, name: 'Hills' },
-    { id: 651, name: 'Lake' }, { id: 1039, name: 'Waterfall' }
+    { id: 651, name: 'Lake' }, { id: 1039, name: 'Waterfall' },
+    { id: 47, name: 'Meadow' }, { id: 110, name: 'Desert' },
+    { id: 167, name: 'Canyon' }, { id: 240, name: 'Beach' },
+    { id: 351, name: 'Valley' }, { id: 425, name: 'Glacier' },
+    { id: 506, name: 'Cliff' }, { id: 610, name: 'Volcano' },
+  ],
+  people: [
+    { id: 64, name: 'Portrait' }, { id: 65, name: 'Woman' },
+    { id: 91, name: 'Man' }, { id: 177, name: 'Group' },
+    { id: 203, name: 'Couple' }, { id: 342, name: 'Child' },
+    { id: 447, name: 'Worker' }, { id: 550, name: 'Athlete' },
+    { id: 633, name: 'Artist' }, { id: 669, name: 'Musician' },
+  ],
+  technology: [
+    { id: 0, name: 'Computer' }, { id: 60, name: 'Laptop' },
+    { id: 119, name: 'Phone' }, { id: 180, name: 'Camera' },
+    { id: 201, name: 'Server' }, { id: 367, name: 'Circuit' },
+    { id: 403, name: 'Robot' }, { id: 452, name: 'Screen' },
+    { id: 546, name: 'Drone' }, { id: 688, name: 'Lab' },
   ]
 }
 
