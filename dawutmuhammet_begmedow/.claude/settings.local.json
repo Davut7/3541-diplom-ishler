@@ -34,7 +34,8 @@
       "Bash(wc:*)",
       "Bash(mkdir -p /Users/macbookpro/Desktop/projects/diplom_ishler/3541/university_logo)",
       "Bash(cp '/Users/macbookpro/Desktop/2026-05-01 10.02.59.jpg' /Users/macbookpro/Desktop/projects/diplom_ishler/3541/university_logo/logo_original.jpg)",
-      "Bash(sips -s format png -Z 256 /Users/macbookpro/Desktop/projects/diplom_ishler/3541/university_logo/logo_original.jpg --out /Users/macbookpro/Desktop/projects/diplom_ishler/3541/university_logo/logo-256.png)"
+      "Bash(sips -s format png -Z 256 /Users/macbookpro/Desktop/projects/diplom_ishler/3541/university_logo/logo_original.jpg --out /Users/macbookpro/Desktop/projects/diplom_ishler/3541/university_logo/logo-256.png)",
+      "Bash(ls:*)"
     ]
   }
 }

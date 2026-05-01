@@ -188,18 +188,18 @@ for entry in "${PROJECTS[@]}"; do
     fi
 
     # Start backend
-    cd "$SCRIPT_DIR/$dir/backend" && nohup npm start > "$LOG_DIR/${dir}-backend.log" 2>&1 &
-    echo $! >> "$PID_FILE"
+    (cd "$SCRIPT_DIR/$dir/backend" && nohup node server.js > "$LOG_DIR/${dir}-backend.log" 2>&1 &)
+    sleep 0.3
 
     # Start target-site if present (batyr:7012, daniyar:7032)
-    if [ -d "$SCRIPT_DIR/$dir/target-site" ]; then
-        cd "$SCRIPT_DIR/$dir/target-site" && nohup npm start > "$LOG_DIR/${dir}-target.log" 2>&1 &
-        echo $! >> "$PID_FILE"
+    if [ -d "$SCRIPT_DIR/$dir/target-site" ] && [ -f "$SCRIPT_DIR/$dir/target-site/server.js" ]; then
+        (cd "$SCRIPT_DIR/$dir/target-site" && nohup node server.js > "$LOG_DIR/${dir}-target.log" 2>&1 &)
+        sleep 0.3
     fi
 
     # Start frontend
-    cd "$SCRIPT_DIR/$dir/frontend" && nohup npm run dev > "$LOG_DIR/${dir}-frontend.log" 2>&1 &
-    echo $! >> "$PID_FILE"
+    (cd "$SCRIPT_DIR/$dir/frontend" && nohup npx vite --host > "$LOG_DIR/${dir}-frontend.log" 2>&1 &)
+    sleep 0.3
 
     if [ -d "$SCRIPT_DIR/$dir/target-site" ]; then
         echo -e "${GREEN}  ✓ ${name}${NC} - :${front_port} | :${back_port} | target-site"
