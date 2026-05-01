@@ -158,7 +158,8 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import en from './locales/en.js'
 import tk from './locales/tk.js'
-import ru from './locales/ru'import LoginView from './views/LoginView.vue'
+import ru from './locales/ru'
+import LoginView from './views/LoginView.vue'
 
 
 export default {

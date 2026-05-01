@@ -16,8 +16,8 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-# All ports
-ALL_PORTS="7010 7011 7020 7021 7030 7031 7040 7041 7050 7051 7060 7061 7070 7071 7080 7081 7090 7091"
+# All ports (including target-site ports 7012, 7032)
+ALL_PORTS="7010 7011 7012 7020 7021 7030 7031 7032 7040 7041 7050 7051 7060 7061 7070 7071 7080 7081 7090 7091"
 
 # Project definitions: "dir|name|front_port|back_port"
 PROJECTS=(
@@ -146,6 +146,13 @@ for entry in "${PROJECTS[@]}"; do
             cd "$SCRIPT_DIR/$dir/frontend" && npm install --silent > /dev/null 2>&1
         fi
 
+        # Install target-site dependencies if present
+        if [ -d "$SCRIPT_DIR/$dir/target-site" ]; then
+            if [ ! -d "$SCRIPT_DIR/$dir/target-site/node_modules" ] || [ "$FORCE_INSTALL" = true ]; then
+                cd "$SCRIPT_DIR/$dir/target-site" && npm install --silent > /dev/null 2>&1
+            fi
+        fi
+
         echo -e "\r${GREEN}  ✓ ${name} - installed${NC}                    "
         ((install_count++))
     else
@@ -184,28 +191,38 @@ for entry in "${PROJECTS[@]}"; do
     cd "$SCRIPT_DIR/$dir/backend" && nohup npm start > "$LOG_DIR/${dir}-backend.log" 2>&1 &
     echo $! >> "$PID_FILE"
 
+    # Start target-site if present (batyr:7012, daniyar:7032)
+    if [ -d "$SCRIPT_DIR/$dir/target-site" ]; then
+        cd "$SCRIPT_DIR/$dir/target-site" && nohup npm start > "$LOG_DIR/${dir}-target.log" 2>&1 &
+        echo $! >> "$PID_FILE"
+    fi
+
     # Start frontend
     cd "$SCRIPT_DIR/$dir/frontend" && nohup npm run dev > "$LOG_DIR/${dir}-frontend.log" 2>&1 &
     echo $! >> "$PID_FILE"
 
-    echo -e "${GREEN}  ✓ ${name}${NC} - :${front_port} | :${back_port}"
+    if [ -d "$SCRIPT_DIR/$dir/target-site" ]; then
+        echo -e "${GREEN}  ✓ ${name}${NC} - :${front_port} | :${back_port} | target-site"
+    else
+        echo -e "${GREEN}  ✓ ${name}${NC} - :${front_port} | :${back_port}"
+    fi
 done
 
 echo ""
 echo -e "${CYAN}╔══════════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${CYAN}║                    ALL PROJECTS RUNNING!                        ║${NC}"
 echo -e "${CYAN}╠══════════════════════════════════════════════════════════════════╣${NC}"
-echo -e "${CYAN}║  #   Project                      Frontend    Backend          ║${NC}"
+echo -e "${CYAN}║  #   Project                      Frontend  Backend  Target    ║${NC}"
 echo -e "${CYAN}╠══════════════════════════════════════════════════════════════════╣${NC}"
-echo -e "${CYAN}║  1.  Batyr - WAF Analysis         :7010       :7011            ║${NC}"
-echo -e "${CYAN}║  2.  Bayram - Android Security    :7020       :7021            ║${NC}"
-echo -e "${CYAN}║  3.  Daniyar - XSS Shield         :7030       :7031            ║${NC}"
-echo -e "${CYAN}║  4.  Dawutmuhammet - VirusDetect  :7040       :7041            ║${NC}"
-echo -e "${CYAN}║  5.  Rowshen - KeyGuard           :7050       :7051            ║${NC}"
-echo -e "${CYAN}║  6.  Selbi - GAN Security         :7060       :7061            ║${NC}"
-echo -e "${CYAN}║  7.  Shanur - Wireshark Monitor   :7070       :7071            ║${NC}"
-echo -e "${CYAN}║  8.  Shatlyk - AI Firewall        :7080       :7081            ║${NC}"
-echo -e "${CYAN}║  9.  Suleyman - OSINT.AI          :7090       :7091            ║${NC}"
+echo -e "${CYAN}║  1.  Batyr - WAF Analysis         :7010     :7011    :7012     ║${NC}"
+echo -e "${CYAN}║  2.  Bayram - Android Security    :7020     :7021              ║${NC}"
+echo -e "${CYAN}║  3.  Daniyar - XSS Shield         :7030     :7031    :7032     ║${NC}"
+echo -e "${CYAN}║  4.  Dawutmuhammet - VirusDetect  :7040     :7041              ║${NC}"
+echo -e "${CYAN}║  5.  Rowshen - KeyGuard           :7050     :7051              ║${NC}"
+echo -e "${CYAN}║  6.  Selbi - GAN Security         :7060     :7061              ║${NC}"
+echo -e "${CYAN}║  7.  Shanur - Wireshark Monitor   :7070     :7071              ║${NC}"
+echo -e "${CYAN}║  8.  Shatlyk - AI Firewall        :7080     :7081              ║${NC}"
+echo -e "${CYAN}║  9.  Suleyman - OSINT.AI          :7090     :7091              ║${NC}"
 echo -e "${CYAN}╠══════════════════════════════════════════════════════════════════╣${NC}"
 echo -e "${CYAN}║  Servers running in background                                 ║${NC}"
 echo -e "${CYAN}║  Logs: .logs/                                                  ║${NC}"
