@@ -107,7 +107,7 @@
           <div class="header-right">
             <button class="header-btn" @click="toggleLanguage" v-tooltip.bottom="'Switch Language'">
               <i class="pi pi-globe"></i>
-              <span>{{ language === 'en' ? 'EN' : 'TM' }}</span>
+              <span>{{ language === 'en' ? 'EN' : language === 'ru' ? 'RU' : 'TM' }}</span>
             </button>
             <button class="header-btn theme-toggle" @click="toggleTheme" v-tooltip.bottom="darkMode ? 'Light Mode' : 'Dark Mode'">
               <i :class="darkMode ? 'pi pi-sun' : 'pi pi-moon'"></i>
@@ -158,7 +158,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import en from './locales/en.js'
 import tk from './locales/tk.js'
-import LoginView from './views/LoginView.vue'
+import ru from './locales/ru'import LoginView from './views/LoginView.vue'
 
 
 export default {
@@ -173,7 +173,7 @@ export default {
     const mobileMenuOpen = ref(false)
     const sidebarCollapsed = ref(false)
 
-    const t = computed(() => language.value === 'en' ? en : tk)
+    const t = computed(() => language.value === 'en' ? en : language.value === 'ru' ? ru : tk)
 
     const currentPageTitle = computed(() => {
       const titles = {
@@ -197,7 +197,7 @@ export default {
     }
 
     const toggleLanguage = () => {
-      language.value = language.value === 'en' ? 'tk' : 'en'
+      language.value = language.value === 'en' ? 'tk' : language.value === 'tk' ? 'ru' : 'en'
       localStorage.setItem('waf-language', language.value)
     }
 

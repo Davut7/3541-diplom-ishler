@@ -1,14 +1,17 @@
 import en from './en.js'
 import tk from './tk.js'
+import ru from './ru.js'
 
 export const messages = {
   en,
-  tk
+  tk,
+  ru
 }
 
 export const availableLocales = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'tk', name: 'Türkmen', flag: '🇹🇲' }
+  { code: 'tk', name: 'Türkmen', flag: '🇹🇲' },
+  { code: 'ru', name: 'Русский', flag: '🇷🇺' }
 ]
 
 export function createI18n() {

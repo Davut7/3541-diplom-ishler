@@ -60,7 +60,7 @@
           </div>
           <button class="lang-btn" @click="toggleLanguage">
             <span class="btn-bracket">[</span>
-            {{ language === 'en' ? 'EN' : 'TM' }}
+            {{ language === 'en' ? 'EN' : language === 'ru' ? 'RU' : 'TM' }}
             <span class="btn-bracket">]</span>
           </button>
           <button class="theme-btn" @click="toggleTheme">
@@ -143,14 +143,14 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import en from './locales/en.js'
 import tk from './locales/tk.js'
-
+import ru from './locales/ru'
 export default {
   name: 'App',
   setup() {
     const darkMode = ref(true)
     const language = ref('en')
 
-    const t = computed(() => language.value === 'en' ? en : tk)
+    const t = computed(() => language.value === 'en' ? en : language.value === 'ru' ? ru : tk)
 
     const toggleTheme = () => {
       darkMode.value = !darkMode.value
@@ -158,7 +158,7 @@ export default {
     }
 
     const toggleLanguage = () => {
-      language.value = language.value === 'en' ? 'tk' : 'en'
+      language.value = language.value === 'en' ? 'tk' : language.value === 'tk' ? 'ru' : 'en'
       localStorage.setItem('language', language.value)
     }
 

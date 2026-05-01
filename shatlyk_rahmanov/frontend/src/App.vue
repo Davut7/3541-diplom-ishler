@@ -122,7 +122,7 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import en from './locales/en.js'
 import tk from './locales/tk.js'
-
+import ru from './locales/ru'
 export default {
   name: 'App',
   setup() {
@@ -146,7 +146,7 @@ export default {
       { path: '/about', key: 'about', icon: 'pi pi-info-circle' }
     ]
 
-    const t = computed(() => language.value === 'en' ? en : tk)
+    const t = computed(() => language.value === 'en' ? en : language.value === 'ru' ? ru : tk)
 
     const toggleTheme = () => {
       darkMode.value = !darkMode.value
@@ -154,7 +154,7 @@ export default {
     }
 
     const toggleLanguage = () => {
-      language.value = language.value === 'en' ? 'tk' : 'en'
+      language.value = language.value === 'en' ? 'tk' : language.value === 'tk' ? 'ru' : 'en'
       localStorage.setItem('language', language.value)
     }
 

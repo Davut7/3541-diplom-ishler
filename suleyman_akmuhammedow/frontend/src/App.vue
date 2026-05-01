@@ -55,6 +55,10 @@
             :class="{ active: language === 'tk' }"
             class="lang-btn"
           >TM</button>
+            <button
+              @click="setLanguage('ru')"
+              :class="{ active: language === 'ru' }"
+              class="lang-btn">RU</button>
         </div>
         <button @click="toggleDarkMode" class="theme-toggle">
           <i :class="isDarkMode ? 'pi pi-sun' : 'pi pi-moon'"></i>
